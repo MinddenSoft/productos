@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mindden Suite · Plataforma Integral de Gestion Empresarial</title>
+    <meta
+      name="description"
+      content="Mindden Suite centraliza comercial, finanzas, operaciones y RRHH en una sola plataforma. Automatice facturacion, detecte impagos y tome decisiones con datos en tiempo real."
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* === Calculadora ROI Premium con Sliders === */
+      .calc-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 6px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal));
+        outline: none;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+      .calc-slider:hover { opacity: 0.9; }
+      .calc-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--cyan-light);
+        border: 3px solid var(--bg-deep);
+        box-shadow: 0 0 16px rgba(34, 211, 238, 0.5);
+        cursor: grab;
+        transition: box-shadow 0.2s, transform 0.15s;
+      }
+      .calc-slider::-webkit-slider-thumb:hover {
+        box-shadow: 0 0 24px rgba(34, 211, 238, 0.7);
+        transform: scale(1.15);
+      }
+      .calc-slider::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--cyan-light);
+        border: 3px solid var(--bg-deep);
+        box-shadow: 0 0 16px rgba(34, 211, 238, 0.5);
+        cursor: grab;
+      }
+
+      /* === Acordeon premium con difuminado === */
+      .faq-item { border-bottom: 1px solid var(--line); }
+      .faq-question {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 0;
+        font-weight: 600;
+        color: var(--text);
+        transition: color 0.25s;
+      }
+      .faq-question:hover { color: var(--cyan-light); }
+      .faq-icon {
+        transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), color 0.25s;
+        color: var(--text-muted);
+        flex-shrink: 0;
+      }
+      .faq-item.open .faq-icon { transform: rotate(180deg); color: var(--cyan-light); }
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1), padding 0.3s, opacity 0.3s;
+        opacity: 0;
+      }
+      .faq-item.open .faq-answer { max-height: 400px; opacity: 1; padding-bottom: 1.25rem; }
+      .faq-answer p { color: var(--text-soft); font-size: 0.95rem; line-height: 1.65; }
+      .faq-item:not(.open) { opacity: 0.55; transition: opacity 0.3s; }
+      .faq-item.open { opacity: 1; }
+
+      /* === Micro-interacciones premium === */
+      .icon-tile, .brand-chip, .roi-chip {
+        transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s, border-color 0.3s;
+      }
+      .icon-tile:hover, .brand-chip:hover, .roi-chip:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 8px 24px rgba(34, 211, 238, 0.15);
+      }
+
+      /* === Glow premium en glass-card destacado === */
+      .glow-card {
+        box-shadow: 0 0 25px -5px rgba(34, 211, 238, 0.15);
+      }
+      .glow-card:hover {
+        box-shadow: 0 0 40px -5px rgba(34, 211, 238, 0.25), 0 18px 40px -20px rgba(6, 182, 212, 0.25);
+      }
+
+      /* === Section connector gradient === */
+      .section-connector {
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.3), transparent);
+        margin: 0 auto;
+      }
+
+      /* === Hero inline calc === */
+      .hero-calc-result {
+        background: linear-gradient(135deg, rgba(34, 211, 238, 0.12) 0%, rgba(20, 184, 166, 0.06) 100%);
+        border: 1px solid rgba(34, 211, 238, 0.3);
+        border-radius: 16px;
+        padding: 1.5rem;
+        text-align: center;
+      }
+      .hero-calc-result .result-number {
+        font-size: 2.8rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #22d3ee 0%, #14b8a6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+      }
+
+      /* === Audience card top accent === */
+      .audience-card {
+        position: relative;
+        overflow: hidden;
+      }
+      .audience-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal));
+      }
+
+      /* === Shield icons === */
+      .shield-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(34, 211, 238, 0.12), rgba(20, 184, 166, 0.06));
+        border: 1px solid rgba(34, 211, 238, 0.2);
+        margin-bottom: 1rem;
+      }
+      .shield-icon i { color: var(--cyan-light); }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================================
+         SLIDE 1 · HERO — H6 Interactivo: calculadora inline
+         ============================================================ -->
+    <section class="slide items-center" id="hero">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content">
+        <div class="hero-logo reveal" style="--reveal-delay: 0s">
+          <img src="img/mindden.png" alt="Mindden" />
+        </div>
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="brand-chip mb-6 reveal float">
+              <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+              <span>CRM · ERP · Analitica · IA — Todo en uno</span>
+            </div>
+            <h1 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+              Mindden <span class="gradient-text">Suite</span><br /> <br /> 
+              Su empresa merece<br />    
+              <span class="gradient-text">una plataforma integral</span>
+            </h1>
+            <div class="w-20 h-1 gradient-bar rounded-full mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+            <p class="text-lg text-slate-300 leading-relaxed mb-8 reveal" style="--reveal-delay: 0.3s">
+              Del lead al cobro, facturacion automatica, gestion de proyectos, control de personal y analitica predictiva con IA.
+              <span class="text-cyan-300 font-semibold">Una sola plataforma. Sin fragmentacion.</span>
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 reveal" style="--reveal-delay: 0.45s">
+              <a href="mailto:info@mindden.com" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn">
+                <i data-lucide="mail" class="w-5 h-5"></i>
+                info@mindden.com
+              </a>
+              <a href="tel:+34965349770" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn">
+                <i data-lucide="phone" class="w-5 h-5"></i>
+                +34 965 349 770
+              </a>
+            </div>
+          </div>
+
+          <!-- Calculadora inline en el hero -->
+          <div class="reveal" style="--reveal-delay: 0.5s">
+            <div class="glass-card p-7 glow-card">
+              <div class="flex items-center gap-3 mb-5">
+                <div class="icon-tile"><i data-lucide="calculator" class="w-5 h-5"></i></div>
+                <h3 class="text-white font-bold">Calcule su ahorro anual</h3>
+              </div>
+              <div class="space-y-5">
+                <div>
+                  <div class="flex justify-between items-center mb-2">
+                    <label class="text-sm text-slate-400">Facturas mensuales</label>
+                    <span class="text-sm font-bold text-cyan-300" id="hero-fact-val">200</span>
+                  </div>
+                  <input type="range" id="hero-fact" class="calc-slider" min="20" max="2000" value="200" step="10" oninput="calcHero()" />
+                </div>
+                <div>
+                  <div class="flex justify-between items-center mb-2">
+                    <label class="text-sm text-slate-400">Minutos por factura (manual)</label>
+                    <span class="text-sm font-bold text-cyan-300" id="hero-min-val">18 min</span>
+                  </div>
+                  <input type="range" id="hero-min" class="calc-slider" min="5" max="60" value="18" step="1" oninput="calcHero()" />
+                </div>
+                <div>
+                  <div class="flex justify-between items-center mb-2">
+                    <label class="text-sm text-slate-400">Coste hora administrativo (EUR)</label>
+                    <span class="text-sm font-bold text-cyan-300" id="hero-cost-val">EUR 28</span>
+                  </div>
+                  <input type="range" id="hero-cost" class="calc-slider" min="10" max="80" value="28" step="1" oninput="calcHero()" />
+                </div>
+              </div>
+              <div class="hero-calc-result mt-6" id="hero-result">
+                <div class="text-xs text-cyan-300 mb-2 uppercase tracking-wider">Ahorro anual en facturacion</div>
+                <div class="result-number" id="hero-ahorro">EUR 10,080</div>
+                <div class="text-xs text-slate-400 mt-2">+ 70-80% menos tiempo dedicado a facturas</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <span>Descubra mas</span>
+        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 2 · IMPACTO FINANCIERO — big-stat + roi-chip
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">01 · El impacto financiero</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Ahorro real que se mide<br />
+          <span class="gradient-text">desde el primer mes</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-14 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div class="big-stat reveal" style="--reveal-delay: 0.2s">
+            <div class="big-stat-num gradient">80%</div>
+            <div class="big-stat-label">Reduccion del tiempo de facturacion por factura</div>
+          </div>
+          <div class="big-stat reveal" style="--reveal-delay: 0.28s">
+            <div class="big-stat-num gradient">15-20</div>
+            <div class="big-stat-unit">min ahorados</div>
+            <div class="big-stat-label">Por factura generada automaticamente en segundo plano</div>
+          </div>
+          <div class="big-stat reveal" style="--reveal-delay: 0.36s">
+            <div class="big-stat-num gradient">5</div>
+            <div class="big-stat-unit">tareas automaticas</div>
+            <div class="big-stat-label">Procesos criticos ejecutados diariamente sin intervencion</div>
+          </div>
+          <div class="big-stat reveal" style="--reveal-delay: 0.44s">
+            <div class="big-stat-num gradient">40+</div>
+            <div class="big-stat-unit">paginas</div>
+            <div class="big-stat-label">De frontend especializado por modulo de negocio</div>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-5">
+          <div class="roi-chip reveal" style="--reveal-delay: 0.5s">
+            <div class="roi-chip-num">EUR 84K</div>
+            <div class="roi-chip-label">Ahorro anual estimado</div>
+            <p class="roi-chip-sub">Empresa con 200 facturas/mes y 18 min/factura manual</p>
+          </div>
+          <div class="roi-chip reveal" style="--reveal-delay: 0.58s">
+            <div class="roi-chip-num">2-3h</div>
+            <div class="roi-chip-label">Semanales liberadas</div>
+            <p class="roi-chip-sub">En tareas de supervision y seguimiento de cobros</p>
+          </div>
+          <div class="roi-chip reveal" style="--reveal-delay: 0.66s">
+            <div class="roi-chip-num">0</div>
+            <div class="roi-chip-label">Errores de facturacion</div>
+            <p class="roi-chip-sub">Datos fiscales congelados, numeracion secuencial automatica</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 3 · PROBLEMA vs SOLUCION — vs-grid
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">02 · El problema</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Su empresa esta perdiendo<br />
+          <span class="gradient-text">dinero y control</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="vs-grid reveal" style="--reveal-delay: 0.2s">
+          <div class="vs-card before">
+            <div class="vs-pill"><i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> Sin Mindden Suite</div>
+            <h3>Caos operativo</h3>
+            <ul class="vs-list">
+              <li>Leads en Excel, seguimiento ad-hoc, presupuestos en Word</li>
+              <li>Facturacion manual con errores y retrazos</li>
+              <li>Sin control de impagos — descubrimiento tardio</li>
+              <li>Proyectos sin trazabilidad ni hitos claros</li>
+              <li>Decisiones basadas en intuicion, no en datos</li>
+              <li>Sin auditoria ni registro de cambios</li>
+            </ul>
+          </div>
+          <div class="vs-arrow"><i data-lucide="arrow-right" class="w-8 h-8"></i></div>
+          <div class="vs-card after">
+            <div class="vs-pill"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i> Con Mindden Suite</div>
+            <h3>Control total</h3>
+            <ul class="vs-list">
+              <li>Pipeline visual con seguimiento automatico y alertas</li>
+              <li>Facturacion automatica con datos congelados y PDFs</li>
+              <li>Semaforo de riesgo que detecta impagos diariamente</li>
+              <li>Hitos, asignaciones, control de horas y margen</li>
+              <li>Dashboard ejecutivo en tiempo real con proyecciones ML</li>
+              <li>Auditoria inmutable con trazabilidad completa</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 4 · FUNCIONALIDADES → BENEFICIOS — agent-card grid 3 cols
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">03 · Capacidades que transforman</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Cada modulo, un <span class="gradient-text">beneficio de negocio</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="agent-card reveal" style="--reveal-delay: 0.2s">
+            <div class="agent-badge">COMERCIAL</div>
+            <div class="agent-title">Ficha 360 del Cliente</div>
+            <div class="agent-desc">Datos fiscales, contactos, semaforo de riesgo y wiki de cuenta en un solo lugar.</div>
+            <div class="agent-demo">→ Eliminacion de busquedas en multiples herramientas</div>
+          </div>
+          <div class="agent-card reveal" style="--reveal-delay: 0.28s">
+            <div class="agent-badge">FINANZAS</div>
+            <div class="agent-title">Motor de Facturacion Automatica</div>
+            <div class="agent-desc">Generacion de facturas con datos congelados, PDFs automaticos y numeracion secuencial.</div>
+            <div class="agent-demo">→ 70-80% menos tiempo en generacion de facturas</div>
+          </div>
+          <div class="agent-card reveal" style="--reveal-delay: 0.36s">
+            <div class="agent-badge">COBROS</div>
+            <div class="agent-title">Semaforo de Riesgo Automatico</div>
+            <div class="agent-desc">Evaluacion diaria: 3+ facturas vencidas o 10K EUR = alerta ROJO. Bloqueo automatico.</div>
+            <div class="agent-demo">→ Deteccion antes de que el cliente se convierta en problema</div>
+          </div>
+          <div class="agent-card reveal" style="--reveal-delay: 0.44s">
+            <div class="agent-badge">PROYECTOS</div>
+            <div class="agent-title">Gestion con Hitos y Capacity</div>
+            <div class="agent-desc">Planificacion, asignacion de equipo, control de horas y margen por proyecto.</div>
+            <div class="agent-demo">→ Creacion automatica del proyecto al cerrar oportunidad</div>
+          </div>
+          <div class="agent-card reveal" style="--reveal-delay: 0.52s">
+            <div class="agent-badge">RRHH</div>
+            <div class="agent-title">Capacity Planning y Skills</div>
+            <div class="agent-desc">Perfiles con seniority, skills, capacidad semanal y asignaciones con % dedicacion.</div>
+            <div class="agent-demo">→ Deteccion automatica de sobreasignacion</div>
+          </div>
+          <div class="agent-card reveal" style="--reveal-delay: 0.6s">
+            <div class="agent-badge">IA</div>
+            <div class="agent-title">Proyecciones ML y Health Score</div>
+            <div class="agent-desc">Predicciones de ingresos a 6 meses y puntuacion de salud por cliente (0-100).</div>
+            <div class="agent-demo">→ Planificacion financiera con meses de antelacion</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 5 · SEGURIDAD Y CUMPLIMIENTO — 4 glass-card con escudo
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">04 · Seguridad y cumplimiento</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Proteccion de nivel<br />
+          <span class="gradient-text">empresarial</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+          <div class="glass-card p-6 text-center reveal glow-card" style="--reveal-delay: 0.2s">
+            <div class="shield-icon mx-auto"><i data-lucide="shield-check" class="w-7 h-7"></i></div>
+            <h3 class="font-bold text-white mb-2">JWT + Roles</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Access token 2h, refresh 7d. Roles ADMIN, SALES, SUPPORT con permisos granulares.</p>
+          </div>
+          <div class="glass-card p-6 text-center reveal glow-card" style="--reveal-delay: 0.28s">
+            <div class="shield-icon mx-auto"><i data-lucide="lock" class="w-7 h-7"></i></div>
+            <h3 class="font-bold text-white mb-2">Rate Limiting</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">20 intentos login/min y 200 requests API/min por IP. Proteccion contra fuerza bruta.</p>
+          </div>
+          <div class="glass-card p-6 text-center reveal glow-card" style="--reveal-delay: 0.36s">
+            <div class="shield-icon mx-auto"><i data-lucide="file-check" class="w-7 h-7"></i></div>
+            <h3 class="font-bold text-white mb-2">Auditoria Inmutable</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Registro automatico de CREATE/UPDATE/DELETE en modelos criticos con usuario y timestamp.</p>
+          </div>
+          <div class="glass-card p-6 text-center reveal glow-card" style="--reveal-delay: 0.44s">
+            <div class="shield-icon mx-auto"><i data-lucide="ban" class="w-7 h-7"></i></div>
+            <h3 class="font-bold text-white mb-2">Inmutabilidad Financiera</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">Facturas emitidas no se editan. Correccion solo via notas de credito. Integridad contable garantizada.</p>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 reveal" style="--reveal-delay: 0.5s">
+          <div class="grid md:grid-cols-3 gap-6">
+            <div class="flex items-start gap-3">
+              <i data-lucide="check" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+              <div>
+                <p class="text-white font-semibold text-sm">Security Headers</p>
+                <p class="text-xs text-slate-400">X-Content-Type, X-Frame-Options, Referrer-Policy, X-XSS-Protection</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i data-lucide="check" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+              <div>
+                <p class="text-white font-semibold text-sm">CORS Controlado</p>
+                <p class="text-xs text-slate-400">Whitelist en produccion. Cache-Control no-store en endpoints API</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <i data-lucide="check" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+              <div>
+                <p class="text-white font-semibold text-sm">RGPD Integrado</p>
+                <p class="text-xs text-slate-400">Trazabilidad completa. Datos congelados. Politica de privacidad integrada</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 6 · METRICAS DE RENDIMIENTO TECNICO — big-stat + glass-card
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">05 · Rendimiento tecnico</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Disenado para escalar<br />
+          <span class="gradient-text">sin reescrituras</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-14 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div class="big-stat reveal" style="--reveal-delay: 0.2s">
+            <div class="big-stat-num gradient">30+</div>
+            <div class="big-stat-unit">modelos de datos</div>
+            <div class="big-stat-label">UUID como clave primaria, nunca IDs secuenciales</div>
+          </div>
+          <div class="big-stat reveal" style="--reveal-delay: 0.28s">
+            <div class="big-stat-num gradient">40+</div>
+            <div class="big-stat-unit">endpoints REST</div>
+            <div class="big-stat-label">Organizados por dominio de negocio</div>
+          </div>
+          <div class="big-stat reveal" style="--reveal-delay: 0.36s">
+            <div class="big-stat-num gradient">7</div>
+            <div class="big-stat-unit">modulos frontend</div>
+            <div class="big-stat-label">Auth, dashboard, employees, finance, operations, payment, sales</div>
+          </div>
+          <div class="big-stat reveal" style="--reveal-delay: 0.44s">
+            <div class="big-stat-num gradient">5</div>
+            <div class="big-stat-unit">capas de proteccion</div>
+            <div class="big-stat-label">Rate Limiting, CORS, JWT, Permissions, Security Headers</div>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-5">
+          <div class="glass-card p-5 reveal" style="--reveal-delay: 0.5s">
+            <div class="flex items-center gap-3 mb-3">
+              <i data-lucide="database" class="w-5 h-5 text-cyan-400"></i>
+              <span class="font-semibold text-white text-sm">Backend</span>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Framework</span>
+                <span class="text-cyan-300 font-bold">Django 5 + DRF</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Base de datos</span>
+                <span class="text-cyan-300 font-bold">PostgreSQL 17</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Cache + Cola</span>
+                <span class="text-cyan-300 font-bold">Redis 7</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Async tasks</span>
+                <span class="text-cyan-300 font-bold">Celery + Beat</span>
+              </div>
+            </div>
+          </div>
+          <div class="glass-card p-5 reveal" style="--reveal-delay: 0.58s">
+            <div class="flex items-center gap-3 mb-3">
+              <i data-lucide="monitor" class="w-5 h-5 text-cyan-400"></i>
+              <span class="font-semibold text-white text-sm">Frontend</span>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Framework</span>
+                <span class="text-cyan-300 font-bold">React 19 + TS</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Estilos</span>
+                <span class="text-cyan-300 font-bold">Tailwind CSS</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Graficos</span>
+                <span class="text-cyan-300 font-bold">Recharts</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Calendario</span>
+                <span class="text-cyan-300 font-bold">FullCalendar</span>
+              </div>
+            </div>
+          </div>
+          <div class="glass-card p-5 reveal" style="--reveal-delay: 0.66s">
+            <div class="flex items-center gap-3 mb-3">
+              <i data-lucide="cloud" class="w-5 h-5 text-cyan-400"></i>
+              <span class="font-semibold text-white text-sm">Infraestructura</span>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Despliegue</span>
+                <span class="text-cyan-300 font-bold">Docker + despliegue automatico</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">CI/CD</span>
+                <span class="text-cyan-300 font-bold">GitHub Actions</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Almacenamiento</span>
+                <span class="text-cyan-300 font-bold">MinIO (S3)</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">PDF</span>
+                <span class="text-cyan-300 font-bold">WeasyPrint async</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 7 · PROCESO DE INTEGRACION — pipeline-mock
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">06 · Implementacion sencilla</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          De la decision a la<br />
+          <span class="gradient-text">produccion en dias</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="glass-card p-8 reveal" style="--reveal-delay: 0.2s">
+          <div class="pipeline-mock">
+            <div class="pipeline-step">
+              <div class="pipeline-bubble ok">
+                <i data-lucide="settings" class="w-6 h-6"></i>
+              </div>
+              <div class="pipeline-step-label">Paso 1</div>
+              <div class="pipeline-step-value">Configuracion</div>
+              <div class="pipeline-step-sub">Clientes, productos y roles</div>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="w-5 h-5"></i></div>
+            <div class="pipeline-step">
+              <div class="pipeline-bubble ok">
+                <i data-lucide="database" class="w-6 h-6"></i>
+              </div>
+              <div class="pipeline-step-label">Paso 2</div>
+              <div class="pipeline-step-value">Migracion</div>
+              <div class="pipeline-step-sub">Datos existentes importados</div>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="w-5 h-5"></i></div>
+            <div class="pipeline-step">
+              <div class="pipeline-bubble ok">
+                <i data-lucide="rocket" class="w-6 h-6"></i>
+              </div>
+              <div class="pipeline-step-label">Paso 3</div>
+              <div class="pipeline-step-value">Produccion</div>
+              <div class="pipeline-step-sub">Despliegue automatico CI/CD</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5 mt-8">
+          <div class="glass-card p-5 text-center reveal" style="--reveal-delay: 0.3s">
+            <div class="text-3xl font-extrabold text-cyan-400 mb-2">1</div>
+            <h3 class="font-semibold text-white mb-1">Comando unico</h3>
+            <p class="text-xs text-slate-400">push a main despliega frontend + backend + celery en minutos</p>
+          </div>
+          <div class="glass-card p-5 text-center reveal" style="--reveal-delay: 0.38s">
+            <div class="text-3xl font-extrabold text-cyan-400 mb-2">4</div>
+            <h3 class="font-semibold text-white mb-1">Contenedores Docker</h3>
+            <p class="text-xs text-slate-400">Backend, Celery Worker, Celery Beat, Redis, MinIO</p>
+          </div>
+          <div class="glass-card p-5 text-center reveal" style="--reveal-delay: 0.46s">
+            <div class="text-3xl font-extrabold text-cyan-400 mb-2">0</div>
+            <h3 class="font-semibold text-white mb-1">Intervencion manual</h3>
+            <p class="text-xs text-slate-400">Health checks y verificacion automatica post-despliegue</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 8 · COMPARATIVA DIRECTA — tco-table
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">07 · Comparativa directa</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Soluciones fragmentadas<br />
+          <span class="gradient-text">vs Mindden Suite</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="reveal" style="--reveal-delay: 0.2s">
+          <table class="tco-table">
+            <thead>
+              <tr>
+                <th class="col-dim">Dimension</th>
+                <th class="col-before">Herramientas Dispersas</th>
+                <th class="col-after">Mindden Suite</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-dim">Gestion comercial</td>
+                <td class="col-before">Leads en Excel. <span class="col-before tco-num">Sin pipeline visual</span></td>
+                <td class="col-after">Pipeline con estados y alertas automaticas. <span class="tco-num">100% visible</span></td>
+              </tr>
+              <tr>
+                <td class="col-dim">Facturacion</td>
+                <td class="col-before">Manual en contabilidad. <span class="col-before tco-num">15-20 min/factura</span></td>
+                <td class="col-after">Automatica con PDF y datos congelados. <span class="tco-num">Segundos</span></td>
+              </tr>
+              <tr>
+                <td class="col-dim">Cobros</td>
+                <td class="col-before">Sin control de impagos. <span class="col-before tco-num">Descubrimiento tardio</span></td>
+                <td class="col-after">Semaforo automatico diario. <span class="tco-num">Alerta proactiva</span></td>
+              </tr>
+              <tr>
+                <td class="col-dim">Proyectos</td>
+                <td class="col-before">Reuniones sin trazabilidad. <span class="col-before tco-num">Sin hitos claros</span></td>
+                <td class="col-after">Hitos, horas, gastos y margen. <span class="tco-num">Control total</span></td>
+              </tr>
+              <tr>
+                <td class="col-dim">Decisiones</td>
+                <td class="col-before">Reuniones largas para revisar numeros. <span class="col-before tco-num">Intuicion</span></td>
+                <td class="col-after">Dashboard en tiempo real + proyecciones ML. <span class="tco-num">Datos</span></td>
+              </tr>
+              <tr>
+                <td class="col-dim">Cumplimiento</td>
+                <td class="col-before">Sin auditoria. <span class="col-before tco-num">Riesgo legal</span></td>
+                <td class="col-after">Registro inmutable + RGPD. <span class="tco-num">Trazabilidad 100%</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-8 glass-card p-6 text-center reveal glow-card" style="--reveal-delay: 0.3s">
+          <p class="text-lg text-white mb-2">
+            <span class="font-semibold">Mindden Suite:</span> 7 modulos, 40+ paginas, desplegado e
+          </p>
+          <p class="text-cyan-300 font-semibold">
+            con despliegue automatico y monitoreo continuo
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 9 · RESUMEN POR AUDIENCIA — 3 audience-card
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">08 · Beneficio por rol</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Cada decisior obtiene<br />
+          <span class="gradient-text">su valor inmediato</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="glass-card p-7 audience-card reveal glow-card" style="--reveal-delay: 0.2s">
+            <div class="w-14 h-14 rounded-full bg-cyan-900/30 flex items-center justify-center mb-5">
+              <i data-lucide="calculator" class="w-7 h-7 text-cyan-400"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">CFO / Director Financiero</h3>
+            <p class="text-sm text-slate-400 mb-5 leading-relaxed">
+              Facturacion automatica que reduce 70-80% el tiempo manual. Semaforo de riesgo que detecta impagos antes de que crezcan.
+            </p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>70-80% menos tiempo en facturacion</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Deteccion automatica de impagos</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Proyecciones ML a 6 meses</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-7 audience-card reveal" style="--reveal-delay: 0.3s">
+            <div class="w-14 h-14 rounded-full bg-cyan-900/30 flex items-center justify-center mb-5">
+              <i data-lucide="settings" class="w-7 h-7 text-cyan-400"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">COO / Director de Operaciones</h3>
+            <p class="text-sm text-slate-400 mb-5 leading-relaxed">
+              Proyectos con hitos visibles, capacity planning basado en datos y asignaciones optimizadas automaticamente.
+            </p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Capacity planning basado en datos</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Deteccion de sobreasignacion automatica</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Timeline visual de proyectos</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-7 audience-card reveal" style="--reveal-delay: 0.4s">
+            <div class="w-14 h-14 rounded-full bg-cyan-900/30 flex items-center justify-center mb-5">
+              <i data-lucide="trending-up" class="w-7 h-7 text-cyan-400"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">CEO / Director General</h3>
+            <p class="text-sm text-slate-400 mb-5 leading-relaxed">
+              Dashboard ejecutivo en tiempo real con KPIs, CLV, churn y health scores. Decisiones basadas en datos, no en intuicion.
+            </p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Dashboard ejecutivo en tiempo real</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Proyecciones predictivas con IA</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Plataforma preparada para escalar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 10 · FAQ — Acordeon vertical premium con difuminado
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">09 · Preguntas frecuentes</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Resolvemos sus dudas<br />
+          <span class="gradient-text">antes de que las tenga</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="space-y-3 max-w-3xl mx-auto reveal" style="--reveal-delay: 0.2s" id="faq-accordion">
+          <div class="glass-card p-5 faq-item">
+            <div class="faq-question">
+              <span>De cuantos modulos dispone Mindden Suite?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>7 modulos integrados: Comercial (CRM), Financiero (facturacion, cobros, contratos), Proyectos y Operaciones, Recursos Humanos, Analitica e IA, Dashboard Ejecutivo y Automatizaciones. Cada modulo es independiente pero comparte datos en tiempo real.</p>
+            </div>
+          </div>
+          <div class="glass-card p-5 faq-item">
+            <div class="faq-question">
+              <span>Cuanto tiempo tarda la implementacion?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>El despliegue tecnico se ejecuta en minutos con un push a GitHub Actions. La configuracion inicial (clientes, productos, roles) toma 1-2 dias. La migracion de datos existentes depende de la complejidad, pero el equipo operativo puede empezar a usar la plataforma desde el dia 1.</p>
+            </div>
+          </div>
+          <div class="glass-card p-5 faq-item">
+            <div class="faq-question">
+              <span>Mis facturas emitidas pueden editarse?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>No. Mindden Suite garantiza la inmutabilidad financiera: las facturas emitidas no pueden modificarse. Cualquier correccion se realiza via notas de credito. Los datos fiscales (razon social, NIF/CIF) se congelan al momento de emision, preservando la integridad del registro contable.</p>
+            </div>
+          </div>
+          <div class="glass-card p-5 faq-item">
+            <div class="faq-question">
+              <span>Como detecta los impagos?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>El semaforo de riesgo se actualiza automaticamente todos los dias a las 07:00. Si un cliente tiene 3 o mas facturas vencidas o 10.000 EUR o mas en impagos, se marca como ROJO y se bloquea automaticamente la facturacion para evitar ampliar la deuda.</p>
+            </div>
+          </div>
+          <div class="glass-card p-5 faq-item">
+            <div class="faq-question">
+              <span>Que tecnologia utiliza?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Python + Django 5 en backend, React 19 + TypeScript en frontend, PostgreSQL 17 como base de datos, Redis 7 para cache y colas, Celery para tareas asincronas, MinIO para almacenamiento de documentos, desplegadocon Docker y CI/CD.</p>
+            </div>
+          </div>
+          <div class="glass-card p-5 faq-item">
+            <div class="faq-question">
+              <span>Puedo escalar con el crecimiento de mi empresa?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Si. La arquitectura modular permite escalar cada componente de forma independiente. PostgreSQL soporta escalado vertical y read replicas. Los workers de Celery se escalan horizontalmente. Docker permite anyadir contenedores segun la demanda.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 11 · CTA FINAL
+         ============================================================ -->
+    <section class="slide items-center" id="contacto">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content text-center">
+        <div class="brand-chip mb-6 reveal float">
+          <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+          <span>Siguiente paso</span>
+        </div>
+        <h2 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+          Deje de perder dinero con<br />
+          <span class="gradient-text">procesos manuales</span>
+        </h2>
+        <div class="w-20 h-1 gradient-bar rounded-full mx-auto mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+        <p class="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto mb-10 reveal" style="--reveal-delay: 0.3s">
+          Mindden Suite ya esta en produccion. Su empresa puede operar con esta plataforma en dias, y optimizar todas sus operaciones.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center reveal" style="--reveal-delay: 0.45s">
+          <a href="mailto:info@mindden.com" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn">
+            <i data-lucide="mail" class="w-5 h-5"></i>
+            Solicitar demo
+          </a>
+          <a href="tel:+34965349770" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn">
+            <i data-lucide="phone" class="w-5 h-5"></i>
+            +34 965 349 770
+          </a>
+        </div>
+        <p class="mt-12 text-xs text-slate-600 reveal" style="--reveal-delay: 0.6s">
+          Mindden Suite by <b>Mindden Soft Tech</b>
+        </p>
+      </div>
+    </section>
+
+    <!-- Runtime -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script>
+      if (window.lucide) lucide.createIcons();
+    </script>
+    <script src="js/presentation.js"></script>
+    <script>
+      function calcHero() {
+        var fact = parseInt(document.getElementById('hero-fact').value);
+        var min = parseInt(document.getElementById('hero-min').value);
+        var cost = parseInt(document.getElementById('hero-cost').value);
+        document.getElementById('hero-fact-val').textContent = fact;
+        document.getElementById('hero-min-val').textContent = min + ' min';
+        document.getElementById('hero-cost-val').textContent = 'EUR ' + cost;
+        var ahorro = Math.round(fact * 12 * (min / 60) * cost * 0.75);
+        document.getElementById('hero-ahorro').textContent = 'EUR ' + ahorro.toLocaleString('es-ES');
+      }
+
+      (function() {
+        var items = document.querySelectorAll('#faq-accordion .faq-item');
+        items.forEach(function(item) {
+          var header = item.querySelector('.faq-question');
+          header.addEventListener('click', function() {
+            var wasOpen = item.classList.contains('open');
+            items.forEach(function(i) { i.classList.remove('open'); });
+            if (!wasOpen) item.classList.add('open');
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

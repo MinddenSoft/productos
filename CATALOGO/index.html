@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mindden — Catálogo de Soluciones</title>
+    <meta
+      name="description"
+      content="Explore todas las plataformas Mindden: IoT, energía, RRHH, process mining y gestión empresarial. Soluciones B2B de alta intensidad para tomadores de decisión."
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .catalog-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      @media (min-width: 768px) {
+        .catalog-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .catalog-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      .catalog-card {
+        animation: cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+        animation-delay: var(--card-delay, 0s);
+      }
+
+      .filter-btn {
+        padding: 0.5rem 1.2rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        background: transparent;
+        border: 1px solid var(--line);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .filter-btn:hover {
+        color: var(--cyan-light);
+        border-color: rgba(34, 211, 238, 0.3);
+        background: rgba(34, 211, 238, 0.06);
+      }
+      .filter-btn.active {
+        color: var(--bg-deep);
+        background: var(--cyan-light);
+        border-color: var(--cyan-light);
+        box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+
+      .hero-stat-card {
+        background: linear-gradient(180deg, rgba(15, 31, 55, 0.85) 0%, rgba(10, 22, 40, 0.85) 100%);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 1.25rem;
+        backdrop-filter: blur(10px);
+        transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      }
+      .hero-stat-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(34, 211, 238, 0.3);
+        box-shadow: 0 12px 30px -10px rgba(34, 211, 238, 0.15);
+      }
+
+      .hero-stat-num {
+        font-size: 1.8rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        background: linear-gradient(135deg, #22d3ee 0%, #38bdf8 60%, #14b8a6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+      }
+
+      .hero-stat-label {
+        margin-top: 0.4rem;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        letter-spacing: 0.04em;
+      }
+
+      [data-theme="light"] .filter-btn {
+        border-color: rgba(148, 163, 184, 0.25);
+        color: #64748b;
+      }
+      [data-theme="light"] .filter-btn:hover {
+        color: #6797CD;
+        border-color: rgba(103, 151, 205, 0.35);
+        background: rgba(103, 151, 205, 0.06);
+      }
+      [data-theme="light"] .filter-btn.active {
+        color: #fff;
+        background: #6797CD;
+        border-color: #6797CD;
+      }
+      [data-theme="light"] .hero-stat-card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+        border-color: rgba(148, 163, 184, 0.2);
+      }
+      [data-theme="light"] .hero-stat-card:hover {
+        border-color: rgba(103, 151, 205, 0.35);
+        box-shadow: 0 12px 30px -10px rgba(103, 151, 205, 0.12);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================================
+         SLIDE 1 · HERO — H2 Grid: texto izq + stats der
+         ============================================================ -->
+    <section class="slide items-center" id="hero">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content">
+        <div class="hero-logo reveal" style="--reveal-delay: 0s">
+          <img src="img/mindden.png" alt="Mindden" />
+        </div>
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="brand-chip mb-6 reveal float">
+              <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+              <span>Catálogo de soluciones empresariales</span>
+            </div>
+            <h1 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+              Plataformas que transforman<br />
+              <span class="gradient-text">su negocio hoy</span>
+            </h1>
+            <div class="w-20 h-1 gradient-bar rounded-full mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+            <p class="text-lg text-slate-300 leading-relaxed mb-8 reveal" style="--reveal-delay: 0.3s">
+              6 soluciones specializadas. IA integrada. Despliegue en días, no en meses.
+              <span class="text-cyan-300 font-semibold">Explore cada plataforma y descubra cuál transforma su operación.</span>
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 reveal" style="--reveal-delay: 0.45s">
+              <a
+                href="mailto:info@mindden.com"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+              >
+                <i data-lucide="mail" class="w-5 h-5"></i>
+                info@mindden.com
+              </a>
+              <a
+                href="tel:+34965349770"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+              >
+                <i data-lucide="phone" class="w-5 h-5"></i>
+                +34 965 349 770
+              </a>
+            </div>
+          </div>
+          <div class="hero-stats reveal" style="--reveal-delay: 0.5s">
+            <div class="hero-stat-card">
+              <div class="hero-stat-num">6</div>
+              <div class="hero-stat-label">Plataformas specializadas</div>
+            </div>
+            <div class="hero-stat-card">
+              <div class="hero-stat-num">16+</div>
+              <div class="hero-stat-label">Protocolos soportados</div>
+            </div>
+            <div class="hero-stat-card">
+              <div class="hero-stat-num">5</div>
+              <div class="hero-stat-label">Días para piloto</div>
+            </div>
+            <div class="hero-stat-card">
+              <div class="hero-stat-num">IA</div>
+              <div class="hero-stat-label">Integrada en todas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <span>Explore el catálogo</span>
+        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 2 · CATÁLOGO GRID — Tarjetas de aplicaciones
+         ============================================================ -->
+    <section class="slide" id="catalogo">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Nuestras soluciones</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Elija la plataforma que<br />
+          <span class="gradient-text">transforma su operación</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-6 reveal" style="--reveal-delay: 0.15s"></div>
+        <p class="text-slate-400 mb-8 reveal max-w-2xl" style="--reveal-delay: 0.2s">
+          Cada solución está diseñada para un dominio específico. Todas comparten la misma arquitectura robusta, IA integrada y despliegue en días.
+        </p>
+
+        <!-- Filtros -->
+        <div class="flex flex-wrap gap-3 mb-10 reveal" style="--reveal-delay: 0.25s">
+          <button class="filter-btn active" data-filter="all">Todas</button>
+          <button class="filter-btn" data-filter="iot">IoT &amp; Datos</button>
+          <button class="filter-btn" data-filter="energia">Energía</button>
+          <button class="filter-btn" data-filter="rrhh">RRHH</button>
+          <button class="filter-btn" data-filter="operaciones">Operaciones</button>
+        </div>
+
+        <!-- Grid de tarjetas -->
+        <div class="catalog-grid" id="catalog-grid">
+
+          <!-- AQUA_INT -->
+          <a href="../AQUA_INT/index.html" class="catalog-card featured" data-category="iot" style="--card-delay: 0.1s">
+            <div class="card-icon">
+              <i data-lucide="droplets" class="w-7 h-7"></i>
+            </div>
+            <h3 class="card-title">AQUA INT</h3>
+            <p class="card-desc">
+              Plataforma IoT para redes de agua. 16 protocolos, IA que genera conectores y dashboard en tiempo real.
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">
+                <i data-lucide="wifi" class="w-3 h-3"></i>
+                IoT
+              </span>
+              <span class="card-tag">
+                <i data-lucide="brain" class="w-3 h-3"></i>
+                IA
+              </span>
+              <span class="card-tag">
+                <i data-lucide="activity" class="w-3 h-3"></i>
+                Real-time
+              </span>
+            </div>
+            <div class="space-y-2 mb-4">
+              <div class="stat-row">
+                <div class="stat-icon"><i data-lucide="zap" class="w-4 h-4"></i></div>
+                <span class="stat-text"><strong>100K+</strong> lecturas/segundo</span>
+              </div>
+              <div class="stat-row">
+                <div class="stat-icon"><i data-lucide="timer" class="w-4 h-4"></i></div>
+                <span class="stat-text"><strong>15 min</strong> por fuente</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="card-link-text">Ver detalles</span>
+              <div class="card-arrow">
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+          </a>
+
+          <!-- POWER_INT -->
+          <a href="../POWER_INT/index.html" class="catalog-card featured" data-category="energia" style="--card-delay: 0.2s">
+            <div class="card-icon">
+              <i data-lucide="zap" class="w-7 h-7"></i>
+            </div>
+            <h3 class="card-title">POWER INT</h3>
+            <p class="card-desc">
+              Gestión energética inteligente. 19 workers en paralelo, validación de facturas y mantenimiento predictivo.
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">
+                <i data-lucide="factory" class="w-3 h-3"></i>
+                Energía
+              </span>
+              <span class="card-tag">
+                <i data-lucide="brain" class="w-3 h-3"></i>
+                IA
+              </span>
+              <span class="card-tag">
+                <i data-lucide="shield-check" class="w-3 h-3"></i>
+                ISO 50001
+              </span>
+            </div>
+            <div class="space-y-2 mb-4">
+              <div class="stat-row">
+                <div class="stat-icon"><i data-lucide="trending-down" class="w-4 h-4"></i></div>
+                <span class="stat-text"><strong>-15%</strong> factura eléctrica</span>
+              </div>
+              <div class="stat-row">
+                <div class="stat-icon"><i data-lucide="clock" class="w-4 h-4"></i></div>
+                <span class="stat-text"><strong>10h/sem</strong> ahorradas</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="card-link-text">Ver detalles</span>
+              <div class="card-arrow">
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+          </a>
+
+          <!-- FLOW -->
+          <a href="../FLOW/index.html" class="catalog-card" data-category="operaciones" style="--card-delay: 0.3s">
+            <div class="card-icon">
+              <i data-lucide="git-branch" class="w-7 h-7"></i>
+            </div>
+            <h3 class="card-title">MINDDEN FLOW</h3>
+            <p class="card-desc">
+              Process mining e inteligencia operativa. 8 agentes IA, 24 pantallas y 12 dominios verticales.
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">
+                <i data-lucide="workflow" class="w-3 h-3"></i>
+                Process Mining
+              </span>
+              <span class="card-tag">
+                <i data-lucide="brain" class="w-3 h-3"></i>
+                8 Agentes IA
+              </span>
+            </div>
+            <div class="space-y-2 mb-4">
+              <div class="stat-row">
+                <div class="stat-icon"><i data-lucide="monitor" class="w-4 h-4"></i></div>
+                <span class="stat-text"><strong>24</strong> pantallas analíticas</span>
+              </div>
+              <div class="stat-row">
+                <div class="stat-icon"><i data-lucide="layers" class="w-4 h-4"></i></div>
+                <span class="stat-text"><strong>12</strong> dominios verticales</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="card-link-text">Ver detalles</span>
+              <div class="card-arrow">
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+          </a>
+
+          <!-- PEOPLE -->
+          <a href="../PEOPLE/index.html" class="catalog-card" data-category="rrhh" style="--card-delay: 0.4s">
+            <div class="card-icon">
+              <i data-lucide="users" class="w-7 h-7"></i>
+            </div>
+            <h3 class="card-title">MINDDEN PEOPLE</h3>
+            <p class="card-desc">
+              Gestión integral de RRHH. Ausencias, fichaje, nómina, contratos y compliance en una sola plataforma.
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">
+                <i data-lucide="heart" class="w-3 h-3"></i>
+                RRHH
+              </span>
+              <span class="card-tag">
+                <i data-lucide="file-check" class="w-3 h-3"></i>
+                Compliance
+              </span>
+            </div>
+            <div class="space-y-2 mb-4">
+              <div class="stat-row">
+                <div class="stat-icon"><i data-lucide="clock" class="w-4 h-4"></i></div>
+                <span class="stat-text"><strong>20h/mes</strong> ahorradas en RRHH</span>
+              </div>
+              <div class="stat-row">
+                <div class="stat-icon"><i data-lucide="check-circle" class="w-4 h-4"></i></div>
+                <span class="stat-text"><strong>100%</strong> compliance digital</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="card-link-text">Ver detalles</span>
+              <div class="card-arrow">
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+          </a>
+
+          <!-- ACADEMY -->
+          <a href="../ACADEMY/index.html" class="catalog-card" data-category="operaciones" style="--card-delay: 0.5s">
+            <div class="card-icon">
+              <i data-lucide="graduation-cap" class="w-7 h-7"></i>
+            </div>
+            <h3 class="card-title">MINDDEN ACADEMY</h3>
+            <p class="card-desc">
+              Plataforma educativa de nueva generación. Cursos online con dashboard en tiempo real y autenticación multicapa.
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">
+                <i data-lucide="book-open" class="w-3 h-3"></i>
+                EdTech
+              </span>
+              <span class="card-tag">
+                <i data-lucide="shield" class="w-3 h-3"></i>
+                Seguridad
+              </span>
+            </div>
+            <div class="space-y-2 mb-4">
+              <div class="stat-row">
+                <div class="stat-icon"><i data-lucide="lock" class="w-4 h-4"></i></div>
+                <span class="stat-text"><strong>3 capas</strong> de autenticación</span>
+              </div>
+              <div class="stat-row">
+                <div class="stat-icon"><i data-lucide="bar-chart" class="w-4 h-4"></i></div>
+                <span class="stat-text"><strong>Dashboard</strong> en tiempo real</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="card-link-text">Ver detalles</span>
+              <div class="card-arrow">
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+          </a>
+
+          <!-- SUITE -->
+          <a href="../SUITE/index.html" class="catalog-card featured" data-category="operaciones" style="--card-delay: 0.6s">
+            <div class="card-icon">
+              <i data-lucide="briefcase" class="w-7 h-7"></i>
+            </div>
+            <h3 class="card-title">MINDDEN SUITE</h3>
+            <p class="card-desc">
+              Gestión empresarial integral. Comercial, finanzas, operaciones y RRHH centralizados en una plataforma.
+            </p>
+            <div class="card-tags">
+              <span class="card-tag">
+                <i data-lucide="building" class="w-3 h-3"></i>
+                Enterprise
+              </span>
+              <span class="card-tag">
+                <i data-lucide="brain" class="w-3 h-3"></i>
+                IA
+              </span>
+              <span class="card-tag">
+                <i data-lucide="trending-up" class="w-3 h-3"></i>
+                ROI
+              </span>
+            </div>
+            <div class="space-y-2 mb-4">
+              <div class="stat-row">
+                <div class="stat-icon"><i data-lucide="layers" class="w-4 h-4"></i></div>
+                <span class="stat-text"><strong>4 módulos</strong> integrados</span>
+              </div>
+              <div class="stat-row">
+                <div class="stat-icon"><i data-lucide="euro" class="w-4 h-4"></i></div>
+                <span class="stat-text"><strong>Automatización</strong> de facturación</span>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="card-link-text">Ver detalles</span>
+              <div class="card-arrow">
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 3 · POR QUÉ MINDDEN — Diferenciadores
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Por qué Mindden</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          La ventaja de elegir<br />
+          <span class="gradient-text">una plataforma unificada</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.2s">
+            <div class="icon-tile mb-4"><i data-lucide="cpu" class="w-5 h-5"></i></div>
+            <h3 class="font-bold text-white text-lg mb-2">IA integrada</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              Cada plataforma incluye inteligencia artificial nativa. Generación de conectores, recomendaciones y consultas en lenguaje natural.
+            </p>
+          </div>
+
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.3s">
+            <div class="icon-tile mb-4"><i data-lucide="rocket" class="w-5 h-5"></i></div>
+            <h3 class="font-bold text-white text-lg mb-2">Despliegue en días</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              Piloto en 5 días. Producción en una semana. Sin meses de implementación. Sin proyectos a medida costosos.
+            </p>
+          </div>
+
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.4s">
+            <div class="icon-tile mb-4"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+            <h3 class="font-bold text-white text-lg mb-2">Seguridad empresarial</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              JWT RS256, MFA obligatorio, WAF, auditoría inmutable. Cumplimiento ENS, RGPD e ISO garantizado.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 4 · CTA FINAL
+         ============================================================ -->
+    <section class="slide items-center" id="contacto">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content text-center">
+        <div class="brand-chip mb-6 reveal float">
+          <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+          <span>Siguiente paso</span>
+        </div>
+        <h2 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+          ¿Listo para transformar<br />
+          <span class="gradient-text">su operación?</span>
+        </h2>
+        <div class="w-20 h-1 gradient-bar rounded-full mx-auto mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+        <p class="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto mb-10 reveal" style="--reveal-delay: 0.3s">
+          En 5 días conectamos sus primeras fuentes de datos. En el día 6 verá el ahorro real.
+          Sin compromiso a largo plazo. Sin cambiar sus equipos.
+        </p>
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center items-center reveal"
+          style="--reveal-delay: 0.45s"
+        >
+          <a
+            href="mailto:info@mindden.com"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+          >
+            <i data-lucide="mail" class="w-5 h-5"></i>
+            Solicitar demo
+          </a>
+          <a
+            href="tel:+34965349770"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+          >
+            <i data-lucide="phone" class="w-5 h-5"></i>
+            +34 965 349 770
+          </a>
+        </div>
+        <p class="mt-12 text-xs text-slate-600 reveal" style="--reveal-delay: 0.6s">
+          by <b>Mindden Soft Tech</b>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Runtime
+         ============================================================ -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script>
+      if (window.lucide) lucide.createIcons();
+    </script>
+
+    <script src="js/presentation.js"></script>
+  </body>
+</html>

@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mindden Academy · Plataforma de Gestión de Contenido y Aprendizaje</title>
+    <meta
+      name="description"
+      content="Mindden Academy: plataforma integral para cursos online con dashboard en tiempo real, autenticación multicapa y despliegue automatizado."
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .faq-item { border-bottom: 1px solid var(--line); }
+      .faq-question { cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 0; font-weight: 600; color: var(--text); transition: color 0.2s; }
+      .faq-question:hover { color: var(--cyan-light); }
+      .faq-icon { transition: transform 0.3s cubic-bezier(0.16,1,0.3,1); color: var(--text-muted); }
+      .faq-item.open .faq-icon { transform: rotate(180deg); color: var(--cyan-light); }
+      .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1), padding 0.3s; }
+      .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 1.1rem; }
+      .faq-answer p { color: var(--text-soft); font-size: 0.95rem; line-height: 1.6; }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================================
+         SLIDE 1 · HERO — Split asimétrico (H3)
+         ============================================================ -->
+    <section class="slide" id="hero">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content">
+        <div class="grid lg:grid-cols-5 gap-12 items-center">
+          <div class="lg:col-span-3">
+            <div class="hero-logo reveal" style="--reveal-delay: 0s">
+              <img src="img/mindden.png" alt="Mindden" />
+            </div>
+            <div class="brand-chip mb-6 reveal float">
+              <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
+              <span>Plataforma educativa de nueva generación</span>
+            </div>
+            <h1 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+              Gestione su academia online<br />
+              <span class="gradient-text">con control total y sin código</span>
+            </h1>
+            <div class="w-20 h-1 gradient-bar rounded-full mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+            <p
+              class="text-lg text-slate-300 leading-relaxed mb-8 reveal"
+              style="--reveal-delay: 0.3s"
+            >
+              Dashboard en tiempo real, autenticación multicapa y despliegue con un solo comando.
+              <span class="text-cyan-300 font-semibold">La plataforma que su equipo de contenido va a querer usar.</span>
+            </p>
+            <div
+              class="flex flex-col sm:flex-row gap-4 reveal"
+              style="--reveal-delay: 0.45s"
+            >
+              <a
+                href="mailto:info@mindden.com"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+              >
+                <i data-lucide="mail" class="w-5 h-5"></i>
+                info@mindden.com
+              </a>
+              <a
+                href="tel:+34965349770"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+              >
+                <i data-lucide="phone" class="w-5 h-5"></i>
+                +34 965 349 770
+              </a>
+            </div>
+          </div>
+          <div class="lg:col-span-2 reveal" style="--reveal-delay: 0.5s">
+            <div class="mock-window">
+              <div class="mock-window-header">
+                <div class="mock-dot r"></div>
+                <div class="mock-dot y"></div>
+                <div class="mock-dot g"></div>
+                <span style="margin-left: auto">mindden.academy</span>
+              </div>
+              <div style="padding: 1.5rem;">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center">
+                    <i data-lucide="layout-dashboard" class="w-5 h-5 text-white"></i>
+                  </div>
+                  <div>
+                    <div class="text-sm font-semibold text-white">Dashboard Admin</div>
+                    <div class="text-xs text-slate-400">Última actualización: hace 30s</div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-3 gap-3 mb-4">
+                  <div class="glass-card p-3 text-center">
+                    <div class="text-lg font-bold text-cyan-300">1,247</div>
+                    <div class="text-xs text-slate-400">Estudiantes</div>
+                  </div>
+                  <div class="glass-card p-3 text-center">
+                    <div class="text-lg font-bold text-cyan-300">38</div>
+                    <div class="text-xs text-slate-400">Cursos</div>
+                  </div>
+                  <div class="glass-card p-3 text-center">
+                    <div class="text-lg font-bold text-cyan-300">94%</div>
+                    <div class="text-xs text-slate-400">Completado</div>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full" style="width: 78%"></div>
+                  </div>
+                  <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full" style="width: 62%"></div>
+                  </div>
+                  <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full" style="width: 91%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <span>Desplázate ↓</span>
+        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 2 · PROCESO DE INTEGRACIÓN — 3 Pasos (pipeline-mock)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">01 · Proceso simple</p>
+        <h2 class="title-2 mt-3 mb-6 reveal" style="--reveal-delay: 0.1s">
+          De la decisión a producción<br />
+          <span class="gradient-text">en 3 pasos</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="glass-card p-6 mb-10 reveal" style="--reveal-delay: 0.2s">
+          <div class="pipeline-mock">
+            <div class="pipeline-step">
+              <div class="pipeline-bubble ok">
+                <i data-lucide="settings" class="w-5 h-5"></i>
+              </div>
+              <div class="pipeline-step-label">Paso 1</div>
+              <div class="pipeline-step-value">Configuración</div>
+              <div class="pipeline-step-sub">Defina academias, módulos y roles</div>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="arrow-right" class="w-5 h-5"></i></div>
+            <div class="pipeline-step">
+              <div class="pipeline-bubble ok">
+                <i data-lucide="upload" class="w-5 h-5"></i>
+              </div>
+              <div class="pipeline-step-label">Paso 2</div>
+              <div class="pipeline-step-value">Contenido</div>
+              <div class="pipeline-step-sub">Cargue cursos y multimedia</div>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="arrow-right" class="w-5 h-5"></i></div>
+            <div class="pipeline-step">
+              <div class="pipeline-bubble ok">
+                <i data-lucide="rocket" class="w-5 h-5"></i>
+              </div>
+              <div class="pipeline-step-label">Paso 3</div>
+              <div class="pipeline-step-value">Lanzamiento</div>
+              <div class="pipeline-step-sub">Despliegue con un comando</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-6">
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.3s">
+            <div class="icon-tile mb-4"><i data-lucide="clock" class="w-5 h-5"></i></div>
+            <h3 class="font-bold text-white mb-2">Operativo en 1 día</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              Configure sus academias y roles. El editor TipTap le permite crear contenido sin código desde el primer momento.
+            </p>
+          </div>
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.38s">
+            <div class="icon-tile mb-4"><i data-lucide="upload-cloud" class="w-5 h-5"></i></div>
+            <h3 class="font-bold text-white mb-2">Contenido en 2-3 días</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              Suba cursos, multimedia con metadatos accesibles y páginas estáticas. Categorías y tags para organización completa.
+            </p>
+          </div>
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.46s">
+            <div class="icon-tile mb-4"><i data-lucide="rocket" class="w-5 h-5"></i></div>
+            <h3 class="font-bold text-white mb-2">Producción día 5</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">
+              Docker Compose arranca todo. Dashboard en vivo, autenticación activa y tracking de progreso funcionando.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 3 · FUNCIONALIDADES → BENEFICIOS (agent-card)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">02 · Capacidades que transforman</p>
+        <h2 class="title-2 mt-3 mb-6 reveal" style="--reveal-delay: 0.1s">
+          Cada función, un <span class="gradient-text">beneficio de negocio</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="agent-card reveal" style="--reveal-delay: 0.2s">
+            <div class="agent-badge">CORE</div>
+            <div class="agent-title">Dashboard con KPIs en tiempo real</div>
+            <div class="agent-desc">Visibilidad total de estudiantes, posts, cursos y comentarios. Se actualiza cada 30 segundos.</div>
+            <div class="agent-demo">→ Reducción del 60% en carga de base de datos con caché inteligente</div>
+          </div>
+          <div class="agent-card reveal" style="--reveal-delay: 0.28s">
+            <div class="agent-badge">SEGURIDAD</div>
+            <div class="agent-title">Autenticación multicapa</div>
+            <div class="agent-desc">JWT con rotación, 2FA compatible con Google Authenticator, bcrypt con salt automático.</div>
+            <div class="agent-demo">→ 70-80% menos tickets de soporte por problemas de acceso</div>
+          </div>
+          <div class="agent-card reveal" style="--reveal-delay: 0.36s">
+            <div class="agent-badge">CMS</div>
+            <div class="agent-title">Editor de contenido enriquecido</div>
+            <div class="agent-desc">TipTap permite crear posts con formato sin conocimientos de HTML. Categorías y tags incluidos.</div>
+            <div class="agent-demo">→ Publicación de contenido en minutos, no en horas</div>
+          </div>
+          <div class="agent-card reveal" style="--reveal-delay: 0.44s">
+            <div class="agent-badge">DATOS</div>
+            <div class="agent-title">Caché inteligente con fallback</div>
+            <div class="agent-desc">Redis 7 con FakeRedis automático. Reduce carga en DB entre 40% y 60% sin interrupciones.</div>
+            <div class="agent-demo">→ Consultas O(1) en lugar de O(n) por carga de página</div>
+          </div>
+          <div class="agent-card reveal" style="--reveal-delay: 0.52s">
+            <div class="agent-badge">CONTROL</div>
+            <div class="agent-title">RBAC granular</div>
+            <div class="agent-desc">Tres roles (admin, editor, student) con permisos por endpoint. Control total sobre accesos.</div>
+            <div class="agent-demo">→ Trazabilidad completa con ActivityLog y dirección IP</div>
+          </div>
+          <div class="agent-card reveal" style="--reveal-delay: 0.6s">
+            <div class="agent-badge">DEVOPS</div>
+            <div class="agent-title">CI/CD automatizado</div>
+            <div class="agent-desc">Lint, tests y despliegue en cada push a GitHub. 6 jobs en paralelo por commit.</div>
+            <div class="agent-demo">→ Tiempo de release de días a minutos</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 4 · PROBLEMA vs SOLUCIÓN (glass-card 2 cols)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">03 · Los problemas que enfrenta</p>
+        <h2 class="title-2 mt-3 mb-6 reveal" style="--reveal-delay: 0.1s">
+          Su equipo dedica horas a tareas<br />
+          <span class="gradient-text">que deberían ser automáticas</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid lg:grid-cols-2 gap-8">
+          <div class="space-y-4">
+            <div class="glass-card p-5 border-l-4 border-l-rose-500 reveal" style="--reveal-delay: 0.22s">
+              <div class="flex items-start gap-4">
+                <div class="icon-tile shrink-0" style="background: linear-gradient(135deg, rgba(244,63,94,0.15), rgba(244,63,94,0.05)); border-color: rgba(244,63,94,0.25); color: #fb7185;">
+                  <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-white mb-1">Gestión fragmentada</h3>
+                  <p class="text-sm text-slate-400 leading-relaxed">Múltiples herramientas que no se comunican. Contenido disperso entre plataformas.</p>
+                </div>
+              </div>
+            </div>
+            <div class="glass-card p-5 border-l-4 border-l-rose-500 reveal" style="--reveal-delay: 0.3s">
+              <div class="flex items-start gap-4">
+                <div class="icon-tile shrink-0" style="background: linear-gradient(135deg, rgba(244,63,94,0.15), rgba(244,63,94,0.05)); border-color: rgba(244,63,94,0.25); color: #fb7185;">
+                  <i data-lucide="clock" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-white mb-1">Seguimiento manual</h3>
+                  <p class="text-sm text-slate-400 leading-relaxed">Sin visibilidad del progreso de estudiantes. Herramientas externas costosas.</p>
+                </div>
+              </div>
+            </div>
+            <div class="glass-card p-5 border-l-4 border-l-rose-500 reveal" style="--reveal-delay: 0.38s">
+              <div class="flex items-start gap-4">
+                <div class="icon-tile shrink-0" style="background: linear-gradient(135deg, rgba(244,63,94,0.15), rgba(244,63,94,0.05)); border-color: rgba(244,63,94,0.25); color: #fb7185;">
+                  <i data-lucide="shield-x" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-white mb-1">Seguridad débil</h3>
+                  <p class="text-sm text-slate-400 leading-relaxed">Sin 2FA, sin rate limiting, sin trazabilidad de actividad de usuarios.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="glass-card p-5 border-l-4 border-l-cyan-400 reveal" style="--reveal-delay: 0.26s">
+              <div class="flex items-start gap-4">
+                <div class="icon-tile shrink-0"><i data-lucide="layout-dashboard" class="w-5 h-5"></i></div>
+                <div>
+                  <h3 class="font-semibold text-white mb-1">CMS unificado</h3>
+                  <p class="text-sm text-slate-400 leading-relaxed">Todo en un solo panel: categorías, tags, editor enriquecido y multimedia con metadatos.</p>
+                </div>
+              </div>
+            </div>
+            <div class="glass-card p-5 border-l-4 border-l-cyan-400 reveal" style="--reveal-delay: 0.34s">
+              <div class="flex items-start gap-4">
+                <div class="icon-tile shrink-0"><i data-lucide="activity" class="w-5 h-5"></i></div>
+                <div>
+                  <h3 class="font-semibold text-white mb-1">Tracking automatizado</h3>
+                  <p class="text-sm text-slate-400 leading-relaxed">Estados not_started, in_progress y completed por sección. Porcentajes de avance en vivo.</p>
+                </div>
+              </div>
+            </div>
+            <div class="glass-card p-5 border-l-4 border-l-cyan-400 reveal" style="--reveal-delay: 0.42s">
+              <div class="flex items-start gap-4">
+                <div class="icon-tile shrink-0"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+                <div>
+                  <h3 class="font-semibold text-white mb-1">Seguridad empresarial</h3>
+                  <p class="text-sm text-slate-400 leading-relaxed">JWT + 2FA + RBAC + rate limiting + honeypot anti-spam. Todo incluido.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 5 · ARQUITECTURA TÉCNICA (arch-flow)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">04 · Arquitectura moderna</p>
+        <h2 class="title-2 mt-3 mb-6 reveal" style="--reveal-delay: 0.1s">
+          Diseñada para escalar<br />
+          <span class="gradient-text">sin reescrituras</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="arch-flow reveal" style="--reveal-delay: 0.2s">
+          <div class="arch-node">
+            <div class="arch-tag">INFRAESTRUCTURA</div>
+            <div class="arch-name">Docker Compose</div>
+            <ul class="arch-list">
+              <li>PostgreSQL 16 Alpine</li>
+              <li>Redis 7 con FakeRedis fallback</li>
+              <li>5 servicios contenedorizados</li>
+              <li>Health checks automáticos</li>
+            </ul>
+          </div>
+          <div class="arch-arrow"><i data-lucide="arrow-right" class="w-8 h-8"></i></div>
+          <div class="arch-node accent">
+            <div class="arch-tag">BACKEND</div>
+            <div class="arch-name">FastAPI Asíncrono</div>
+            <ul class="arch-list">
+              <li>19 routers modulares</li>
+              <li>SQLAlchemy 2.0 async</li>
+              <li>Migraciones Alembic automáticas</li>
+              <li>Rate limiting con SlowAPI</li>
+            </ul>
+          </div>
+          <div class="arch-arrow"><i data-lucide="arrow-right" class="w-8 h-8"></i></div>
+          <div class="arch-node">
+            <div class="arch-tag">FRONTEND</div>
+            <div class="arch-name">React 19 + Vite 8</div>
+            <ul class="arch-list">
+              <li>Web pública + Admin panel</li>
+              <li>Tailwind CSS 4</li>
+              <li>Dark mode y accesibilidad</li>
+              <li>CI/CD a GitHub Pages</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 6 · MÉTRICAS DE RENDIMIENTO (big-stat)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">05 · Números que importan</p>
+        <h2 class="title-2 mt-3 mb-6 reveal" style="--reveal-delay: 0.1s">
+          Rendimiento medido,<br />
+          <span class="gradient-text">resultados garantizados</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+          <div class="glass-card big-stat reveal" style="--reveal-delay: 0.2s">
+            <div class="big-stat-num gradient">19</div>
+            <div class="big-stat-unit">routers modulares</div>
+            <p class="big-stat-label">API completa por dominio de negocio</p>
+          </div>
+          <div class="glass-card big-stat reveal" style="--reveal-delay: 0.28s">
+            <div class="big-stat-num gradient">5</div>
+            <div class="big-stat-unit">servicios Docker</div>
+            <p class="big-stat-label">PostgreSQL, Redis, API, Frontend, Admin</p>
+          </div>
+          <div class="glass-card big-stat reveal" style="--reveal-delay: 0.36s">
+            <div class="big-stat-num gradient">30s</div>
+            <div class="big-stat-unit">actualización dashboard</div>
+            <p class="big-stat-label">KPIs en tiempo real sin recargar</p>
+          </div>
+          <div class="glass-card big-stat reveal" style="--reveal-delay: 0.44s">
+            <div class="big-stat-num gradient">7d</div>
+            <div class="big-stat-unit">refresh tokens</div>
+            <p class="big-stat-label">Rotación automática con invalidación</p>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-8 items-center">
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.5s">
+            <h3 class="text-xl font-bold text-white mb-4">Métricas de cada endpoint</h3>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <div class="icon-tile shrink-0"><i data-lucide="bar-chart" class="w-4 h-4"></i></div>
+                <div>
+                  <p class="text-white font-semibold text-sm">Requests totales</p>
+                  <p class="text-xs text-slate-400">Conteo automático por endpoint</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="icon-tile shrink-0"><i data-lucide="alert-circle" class="w-4 h-4"></i></div>
+                <div>
+                  <p class="text-white font-semibold text-sm">Error rate</p>
+                  <p class="text-xs text-slate-400">Status codes ≥ 400 por endpoint</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="icon-tile shrink-0"><i data-lucide="timer" class="w-4 h-4"></i></div>
+                <div>
+                  <p class="text-white font-semibold text-sm">Latencia promedio</p>
+                  <p class="text-xs text-slate-400">Duración media en milisegundos</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.58s">
+            <h3 class="text-xl font-bold text-white mb-4">Stack tecnológico probado</h3>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span class="text-sm text-slate-300">FastAPI 0.115 + SQLAlchemy 2.0 async</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span class="text-sm text-slate-300">PostgreSQL 16 con asyncpg</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span class="text-sm text-slate-300">React 19 + Vite 8 + Tailwind CSS 4</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span class="text-sm text-slate-300">Recharts + TanStack Table + TipTap</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span class="text-sm text-slate-300">pytest + vitest + GitHub Actions</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 7 · FAQ / PREGUNTAS FRECUENTES (acordeón interactivo)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">06 · Preguntas frecuentes</p>
+        <h2 class="title-2 mt-3 mb-6 reveal" style="--reveal-delay: 0.1s">
+          Resolvemos sus <span class="gradient-text">dudas principales</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="glass-card p-6 lg:p-8 reveal" style="--reveal-delay: 0.2s">
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <span>¿Cuánto tiempo tarda la implementación completa?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>La plataforma está operativa en 5 días hábiles. El día 1 se configuran academias y roles, los días 2-3 se carga contenido, y los días 4-5 se despliega con Docker Compose. Sin meses de integración.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <span>¿Necesito conocimientos técnicos para usar la plataforma?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>No. El editor TipTap permite crear contenido enriquecido sin código. El panel administrativo gestiona academias, módulos y secciones con una interfaz intuitiva. Su equipo de contenido puede publicar desde el primer día.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <span>¿Cómo se maneja la seguridad de los datos?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Autenticación multicapa (JWT + bcrypt + 2FA), rate limiting en endpoints críticos, RBAC con tres roles, trazabilidad completa de actividad y honeypot anti-spam. Las variables sensibles son requeridas, sin valores hardcodeados.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <span>¿Puedo escalar a múltiples academias?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Sí. La arquitectura modular con FastAPI asíncrono permite manejar múltiples academias con cientos de estudiantes simultáneos. PostgreSQL soporta escalado vertical y horizontal (read replicas).</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <span>¿Qué incluye el soporte post-implementación?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Recuperación de contraseña autónoma sin intervención del administrador, health checks automáticos para PostgreSQL y Redis, y un sistema de métricas que permite identificar problemas antes de que afecten a los usuarios.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 8 · RESUMEN POR AUDIENCIA
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">07 · Para cada decisor</p>
+        <h2 class="title-2 mt-3 mb-6 reveal" style="--reveal-delay: 0.1s">
+          Una plataforma, <span class="gradient-text">tres beneficios clave</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid lg:grid-cols-3 gap-5">
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.2s">
+            <div class="icon-tile mb-4"><i data-lucide="dollar-sign" class="w-5 h-5"></i></div>
+            <h3 class="font-bold text-white text-lg mb-2">Para el CFO</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mb-3">
+              Reducción del 60% en carga de base de datos. Eliminación de herramientas externas de seguimiento. Despliegue sin costes de infraestructura adicional.
+            </p>
+            <p class="text-xs text-cyan-300/80 leading-snug">
+              <span class="font-semibold">Antes:</span> Múltiples herramientas, costes impredecibles.
+              <span class="font-semibold">Ahora:</span> Plataforma unificada con coste predecible.
+            </p>
+          </div>
+
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.3s">
+            <div class="icon-tile mb-4"><i data-lucide="settings" class="w-5 h-5"></i></div>
+            <h3 class="font-bold text-white text-lg mb-2">Para el Director de Operaciones</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mb-3">
+              Dashboard en tiempo real con KPIs operativos. Gestión de contenido sin dependencia técnica. Progreso del estudiante automatizado y visible.
+            </p>
+            <p class="text-xs text-cyan-300/80 leading-snug">
+              <span class="font-semibold">Antes:</span> Procesos manuales, datos dispersos.
+              <span class="font-semibold">Ahora:</span> Automatización completa, visibilidad total.
+            </p>
+          </div>
+
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.4s">
+            <div class="icon-tile mb-4"><i data-lucide="users" class="w-5 h-5"></i></div>
+            <h3 class="font-bold text-white text-lg mb-2">Para el CEO</h3>
+            <p class="text-sm text-slate-300 leading-relaxed mb-3">
+              Despliegue en días, no meses. Escalabilidad de una academia a múltiples programas. Ventaja competitiva con tecnología moderna y segura.
+            </p>
+            <p class="text-xs text-cyan-300/80 leading-snug">
+              <span class="font-semibold">Antes:</span> Proyectos largos, riesgos de seguridad.
+              <span class="font-semibold">Ahora:</span> Solución lista para producción, escalable.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 9 · IMPACTO FINANCIERO / ROI (gauge)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">08 · Impacto financiero</p>
+        <h2 class="title-2 mt-3 mb-6 reveal" style="--reveal-delay: 0.1s">
+          ROI que se mide en semanas,<br />
+          <span class="gradient-text">no en años</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+          <div class="roi-chip reveal" style="--reveal-delay: 0.2s">
+            <div class="roi-chip-num">−60%</div>
+            <div class="roi-chip-label">Carga en DB</div>
+            <p class="roi-chip-sub">Caché Redis con fallback automático</p>
+          </div>
+          <div class="roi-chip reveal" style="--reveal-delay: 0.28s">
+            <div class="roi-chip-num">O(1)</div>
+            <div class="roi-chip-label">Consultas</div>
+            <p class="roi-chip-sub">Resolución de problemas N+1</p>
+          </div>
+          <div class="roi-chip reveal" style="--reveal-delay: 0.36s">
+            <div class="roi-chip-num">70-80%</div>
+            <div class="roi-chip-label">Menos soporte</div>
+            <p class="roi-chip-sub">Recuperación de contraseña autónoma</p>
+          </div>
+          <div class="roi-chip reveal" style="--reveal-delay: 0.44s">
+            <div class="roi-chip-num">1 comando</div>
+            <div class="roi-chip-label">Despliegue</div>
+            <p class="roi-chip-sub">Docker Compose con 5 servicios</p>
+          </div>
+        </div>
+
+        <div class="glass-card p-6 reveal" style="--reveal-delay: 0.5s">
+          <div class="grid lg:grid-cols-2 gap-8 items-center">
+            <div>
+              <h3 class="text-xl font-bold text-white mb-4">Ahorro operativo en 12 meses</h3>
+              <div class="space-y-4">
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-sm text-slate-300">Gestión de contenido</span>
+                    <span class="text-xs text-cyan-300 font-mono">Minutos vs horas</span>
+                  </div>
+                  <div class="h-3 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full" style="width: 15%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-sm text-slate-300">Seguimiento de progreso</span>
+                    <span class="text-xs text-cyan-300 font-mono">Automático</span>
+                  </div>
+                  <div class="h-3 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full" style="width: 5%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-center justify-between mb-1">
+                    <span class="text-sm text-slate-300">Despliegues</span>
+                    <span class="text-xs text-cyan-300 font-mono">CI/CD automatizado</span>
+                  </div>
+                  <div class="h-3 bg-slate-800 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full" style="width: 8%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-white mb-4">Beneficios medibles</h3>
+              <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                  <i data-lucide="check-circle" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+                  <div>
+                    <p class="text-white font-semibold text-sm">60% menos carga en PostgreSQL</p>
+                    <p class="text-xs text-slate-400">Caché Redis con TTL configurable y fallback a FakeRedis</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <i data-lucide="check-circle" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+                  <div>
+                    <p class="text-white font-semibold text-sm">Tiempo de respuesta de milisegundos</p>
+                    <p class="text-xs text-slate-400">Consultas O(1) en lugar de O(n) por carga de página</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <i data-lucide="check-circle" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+                  <div>
+                    <p class="text-white font-semibold text-sm">Soporte técnico reducido drásticamente</p>
+                    <p class="text-xs text-slate-400">Recuperación de contraseña autónoma sin intervención</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 10 · CIERRE
+         ============================================================ -->
+    <section class="slide items-center text-center" id="contacto">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content">
+        <div class="brand-chip mb-8 reveal float">
+          <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
+          <span>SIGUIENTE PASO</span>
+        </div>
+        <h2 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+          Su equipo de contenido ya tiene todo lo que<br />
+          <span class="gradient-text">necesita para crear cursos</span>
+        </h2>
+        <div class="w-20 h-1 gradient-bar rounded-full mx-auto mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+        <p
+          class="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto reveal"
+          style="--reveal-delay: 0.3s"
+        >
+          Lo que le falta es una plataforma que lo una todo, le dé control total y convierta la gestión de contenido en algo simple.
+          <span class="text-cyan-300 font-semibold">Mindden Academy es esa plataforma.</span>
+        </p>
+        <p
+          class="text-sm text-slate-400 leading-relaxed max-w-xl mx-auto mt-5 reveal"
+          style="--reveal-delay: 0.38s"
+        >
+          Mindden Academy no es una promesa. Es una plataforma en producción, con 19 routers modulares, dashboard en tiempo real y autenticación multicapa que puede ver funcionando ahora mismo.
+        </p>
+        <div
+          class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center reveal"
+          style="--reveal-delay: 0.45s"
+        >
+          <a
+            href="mailto:info@mindden.com"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+          >
+            <i data-lucide="mail" class="w-4 h-4"></i>
+            info@mindden.com
+          </a>
+          <a
+            href="tel:+34965349770"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+          >
+            <i data-lucide="phone" class="w-4 h-4"></i>
+            +34 965 349 770
+          </a>
+        </div>
+        <p class="mt-12 text-xs text-slate-600 reveal" style="--reveal-delay: 0.6s">
+          Mindden Academy · Plataforma de gestión de contenido y aprendizaje by <b>Mindden Soft Tech</b>
+        </p>
+      </div>
+    </section>
+
+    <!-- Runtime -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script>
+      if (window.lucide) lucide.createIcons();
+    </script>
+    <script src="js/presentation.js"></script>
+    <script>
+      function toggleFaq(el) {
+        const item = el.closest('.faq-item');
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      }
+    </script>
+  </body>
+</html>

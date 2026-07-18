@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>POWER INT · Plataforma de Gestion Energetica Inteligente</title>
+    <meta
+      name="description"
+      content="POWER INT centraliza datos de SCADA, facturas y mercado electrico. Reduzca hasta un 15% sus costes energeticos con 19 workers en paralelo."
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* === Calculadora ROI Premium === */
+      .calc-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 6px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal));
+        outline: none;
+        cursor: pointer;
+      }
+      .calc-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--cyan-light);
+        border: 3px solid var(--bg-deep);
+        box-shadow: 0 0 16px rgba(34, 211, 238, 0.5);
+        cursor: grab;
+        transition: box-shadow 0.2s;
+      }
+      .calc-slider::-webkit-slider-thumb:hover {
+        box-shadow: 0 0 24px rgba(34, 211, 238, 0.7);
+      }
+      .calc-slider::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--cyan-light);
+        border: 3px solid var(--bg-deep);
+        box-shadow: 0 0 16px rgba(34, 211, 238, 0.5);
+        cursor: grab;
+      }
+      .result-card {
+        transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s;
+      }
+      .result-card.pulse {
+        transform: scale(1.03);
+        box-shadow: 0 0 32px rgba(34, 211, 238, 0.25);
+      }
+
+      /* === Acordeón premium === */
+      .faq-item { border-bottom: 1px solid var(--line); }
+      .faq-question {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 0;
+        font-weight: 600;
+        color: var(--text);
+        transition: color 0.25s;
+      }
+      .faq-question:hover { color: var(--cyan-light); }
+      .faq-icon {
+        transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), color 0.25s;
+        color: var(--text-muted);
+        flex-shrink: 0;
+      }
+      .faq-item.open .faq-icon { transform: rotate(180deg); color: var(--cyan-light); }
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1), padding 0.3s, opacity 0.3s;
+        opacity: 0;
+      }
+      .faq-item.open .faq-answer { opacity: 1; padding-bottom: 1.25rem; }
+      .faq-answer p { color: var(--text-soft); font-size: 0.95rem; line-height: 1.65; }
+
+      /* === Micro-interacciones premium === */
+      .icon-tile, .brand-chip, .roi-chip, .protocol-chip {
+        transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s, border-color 0.3s;
+      }
+      .icon-tile:hover, .brand-chip:hover, .roi-chip:hover, .protocol-chip:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 8px 24px rgba(34, 211, 238, 0.15);
+      }
+
+      /* === Glow premium en glass-card destacado === */
+      .glow-card {
+        box-shadow: 0 0 25px -5px rgba(34, 211, 238, 0.15);
+      }
+      .glow-card:hover {
+        box-shadow: 0 0 40px -5px rgba(34, 211, 238, 0.25), 0 18px 40px -20px rgba(6, 182, 212, 0.25);
+      }
+
+      /* === Protocol chips === */
+      .protocol-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 12px;
+        background: rgba(34, 211, 238, 0.06);
+        border: 1px solid rgba(34, 211, 238, 0.18);
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text);
+      }
+
+      /* === Section connector gradient === */
+      .section-connector {
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.3), transparent);
+        margin: 0 auto;
+      }
+
+      /* === Arch flow vertical === */
+      .arch-flow-v {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .arch-arrow-v {
+        display: flex;
+        justify-content: center;
+        color: rgba(34, 211, 238, 0.45);
+      }
+
+      /* === Audience card hover === */
+      .audience-card {
+        transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), border-color 0.3s, box-shadow 0.3s;
+      }
+      .audience-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(34, 211, 238, 0.4);
+        box-shadow: 0 20px 50px -20px rgba(6, 182, 212, 0.2);
+      }
+
+      /* === Big stat count animation === */
+      .big-stat-num[data-target] {
+        transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+      }
+      .big-stat-num[data-target].counted {
+        animation: countReveal 0.5s cubic-bezier(0.16,1,0.3,1) both;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================================
+         SLIDE 1 · HERO — H5 Magazine: titulo izq + bullets derecha
+         ============================================================ -->
+    <section class="slide items-center" id="hero">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content">
+        <div class="hero-logo reveal" style="--reveal-delay: 0s">
+          <img src="img/mindden.png" alt="Mindden" />
+        </div>
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <div class="brand-chip mb-6 reveal float">
+              <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+              <span>Plataforma de Gestion Energetica Inteligente</span>
+            </div>
+            <h1 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+              El centro de operaciones<br />
+              energeticas que su empresa<br />
+              <span class="gradient-text">necesita hoy</span>
+            </h1>
+            <div class="w-20 h-1 gradient-bar rounded-full mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+            <p class="text-lg text-slate-300 leading-relaxed mb-8 reveal" style="--reveal-delay: 0.3s">
+              19 workers en paralelo. 48 modulos de API. 16 protocolos de conexion.
+              <span class="text-cyan-300 font-semibold">Una sola plataforma que reduce hasta un 15% sus costes energeticos.</span>
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 reveal" style="--reveal-delay: 0.45s">
+              <a
+                href="mailto:info@mindden.com"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+              >
+                <i data-lucide="mail" class="w-5 h-5"></i>
+                info@mindden.com
+              </a>
+              <a
+                href="tel:+34965349770"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+              >
+                <i data-lucide="phone" class="w-5 h-5"></i>
+                +34 965 349 770
+              </a>
+            </div>
+          </div>
+          <div class="space-y-4 reveal" style="--reveal-delay: 0.5s">
+            <div class="glass-card p-5 flex items-start gap-4 glow-card">
+              <div class="icon-tile shrink-0"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+              <div>
+                <h3 class="font-semibold text-white text-sm mb-1">Validacion automatica de facturas</h3>
+                <p class="text-xs text-slate-400">Cruce en tiempo real contra consumo real. Detecta cobros indebidos y genera importes reclamables.</p>
+              </div>
+            </div>
+            <div class="glass-card p-5 flex items-start gap-4">
+              <div class="icon-tile shrink-0"><i data-lucide="brain" class="w-5 h-5"></i></div>
+              <div>
+                <h3 class="font-semibold text-white text-sm mb-1">IA que genera recomendaciones de ahorro</h3>
+                <p class="text-xs text-slate-400">Modelos OpenRouter/Ollama analizan patrones y proponen acciones concretas de reduccion de costes.</p>
+              </div>
+            </div>
+            <div class="glass-card p-5 flex items-start gap-4">
+              <div class="icon-tile shrink-0"><i data-lucide="activity" class="w-5 h-5"></i></div>
+              <div>
+                <h3 class="font-semibold text-white text-sm mb-1">10+ millones de conexiones MQTT</h3>
+                <p class="text-xs text-slate-400">EMQX 5.8 con listeners TCP y WebSocket. Integracion masiva de dispositivos IoT a escala nacional.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <span>Descubra mas</span>
+        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 2 · IMPACTO FINANCIERO — big-stat numerico masivo
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">01 · El impacto financiero</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Ahorro real que se mide<br />
+          <span class="gradient-text">desde el primer mes</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-14 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div class="big-stat reveal" style="--reveal-delay: 0.2s">
+            <div class="big-stat-num gradient">15%</div>
+            <div class="big-stat-label">Reduccion en factura electrica mediante optimizacion horaria</div>
+          </div>
+          <div class="big-stat reveal" style="--reveal-delay: 0.28s">
+            <div class="big-stat-num gradient">30%</div>
+            <div class="big-stat-label">Menos mantenimiento correctivo con prediccion energetica</div>
+          </div>
+          <div class="big-stat reveal" style="--reveal-delay: 0.36s">
+            <div class="big-stat-num gradient">10h</div>
+            <div class="big-stat-label">Semanales ahorradas por gestor energetico en tareas manuales</div>
+          </div>
+          <div class="big-stat reveal" style="--reveal-delay: 0.44s">
+            <div class="big-stat-num gradient">5</div>
+            <div class="big-stat-unit">dias</div>
+            <div class="big-stat-label">Para ver resultados reales en produccion</div>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-5">
+          <div class="roi-chip reveal" style="--reveal-delay: 0.5s">
+            <div class="roi-chip-num">EUR 1.79M</div>
+            <div class="roi-chip-label">Ahorro anual ejemplo</div>
+            <p class="roi-chip-sub">Instalacion de 100,000 m3/dia</p>
+          </div>
+          <div class="roi-chip reveal" style="--reveal-delay: 0.58s">
+            <div class="roi-chip-num">4 meses</div>
+            <div class="roi-chip-label">ROI comprobado</div>
+            <p class="roi-chip-sub">En la mayoria de implementaciones</p>
+          </div>
+          <div class="roi-chip reveal" style="--reveal-delay: 0.66s">
+            <div class="roi-chip-num">0</div>
+            <div class="roi-chip-label">Equipos a reemplazar</div>
+            <p class="roi-chip-sub">Se integra con su infraestructura actual</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 3 · CALCULADORA ROI INTERACTIVO
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">02 · Calculadora de ahorro</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Calcule su ahorro<br />
+          <span class="gradient-text">en tiempo real</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <div class="glass-card p-8 reveal glow-card" style="--reveal-delay: 0.2s">
+            <h3 class="text-lg font-bold text-white mb-6">Ingrese sus datos</h3>
+
+            <div class="space-y-7">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-sm text-slate-300">Factura electrica anual</label>
+                  <span class="text-sm font-bold text-cyan-300" id="calc-factura-val">EUR 2,000,000</span>
+                </div>
+                <input type="range" id="calc-factura" class="calc-slider" min="100000" max="20000000" value="2000000" step="100000" />
+              </div>
+
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-sm text-slate-300">Numero de CUPS activos</label>
+                  <span class="text-sm font-bold text-cyan-300" id="calc-cups-val">500</span>
+                </div>
+                <input type="range" id="calc-cups" class="calc-slider" min="10" max="5000" value="500" step="10" />
+              </div>
+
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-sm text-slate-300">Horas/semana en gestion manual</label>
+                  <span class="text-sm font-bold text-cyan-300" id="calc-horas-val">15 h</span>
+                </div>
+                <input type="range" id="calc-horas" class="calc-slider" min="1" max="40" value="15" step="1" />
+              </div>
+
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-sm text-slate-300">Coste medio mantenimiento correctivo</label>
+                  <span class="text-sm font-bold text-cyan-300" id="calc-mant-val">EUR 45,000</span>
+                </div>
+                <input type="range" id="calc-mant" class="calc-slider" min="5000" max="500000" value="45000" step="5000" />
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-5">
+            <div class="glass-card p-6 result-card reveal glow-card" style="--reveal-delay: 0.3s" id="result-ahorro">
+              <div class="text-sm text-cyan-300 mb-1">Ahorro anual estimado</div>
+              <div class="text-4xl font-extrabold text-cyan-400 mb-1" id="result-ahorro-num">EUR 428,000</div>
+              <div class="text-xs text-slate-400">Optimizacion horaria + validacion facturas</div>
+            </div>
+
+            <div class="glass-card p-6 result-card reveal" style="--reveal-delay: 0.38s" id="result-horas">
+              <div class="text-sm text-cyan-300 mb-1">Horas liberadas al ano</div>
+              <div class="text-4xl font-extrabold text-cyan-400 mb-1" id="result-horas-num">780 h</div>
+              <div class="text-xs text-slate-400">Equivalentes a 0.4 FTE completo</div>
+            </div>
+
+            <div class="glass-card p-6 result-card reveal" style="--reveal-delay: 0.46s" id="result-mant">
+              <div class="text-sm text-cyan-300 mb-1">Reduccion mantenimiento</div>
+              <div class="text-4xl font-extrabold text-cyan-400 mb-1" id="result-mant-num">EUR 13,500</div>
+              <div class="text-xs text-slate-400">30% menos costes de emergencia</div>
+            </div>
+
+            <div class="glass-card p-6 text-center border-cyan-700/40 reveal glow-card" style="--reveal-delay: 0.54s" id="result-total">
+              <div class="text-sm text-cyan-300 mb-1">Impacto total anual</div>
+              <div class="text-5xl font-extrabold text-cyan-400 mb-2" id="result-total-num">EUR 441,500</div>
+              <div class="text-sm text-slate-400" id="result-pct">22% de reduccion sobre factura actual</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 4 · CASOS DE USO / SECTOR — accordion + result-card
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">03 · Sectores de impacto</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Cada sector tiene sus<br />
+          <span class="gradient-text">propios puntos de ahorro</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <div class="space-y-3 reveal" style="--reveal-delay: 0.2s" id="sector-accordion">
+            <div class="glass-card sector-item p-5 cursor-pointer" data-sector="industria">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="icon-tile"><i data-lucide="factory" class="w-5 h-5"></i></div>
+                  <span class="font-semibold text-white">Industria Manufacturera</span>
+                </div>
+                <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+              </div>
+              <div class="sector-answer" style="max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.16,1,0.3,1),opacity 0.3s;opacity:0;">
+                <div class="pt-4 text-sm text-slate-400 leading-relaxed">
+                  Consumo energico intensivo con picos de demanda variables. POWER_INT optimiza la compra en franjas horarias y valida cada factura contra consumo real de SCADA.
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card sector-item p-5 cursor-pointer" data-sector="hosteleria">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="icon-tile"><i data-lucide="hotel" class="w-5 h-5"></i></div>
+                  <span class="font-semibold text-white">Hosteleria y Grandes Consumidores</span>
+                </div>
+                <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+              </div>
+              <div class="sector-answer" style="max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.16,1,0.3,1),opacity 0.3s;opacity:0;">
+                <div class="pt-4 text-sm text-slate-400 leading-relaxed">
+                  Hoteles con multiples CUPS y facturas complejas. Deteccion automatica de discrepancias y alertas de consumo anomalo por area.
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card sector-item p-5 cursor-pointer" data-sector="salud">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="icon-tile"><i data-lucide="heart-pulse" class="w-5 h-5"></i></div>
+                  <span class="font-semibold text-white">Sanidad e Infraestructuras Criticas</span>
+                </div>
+                <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+              </div>
+              <div class="sector-answer" style="max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.16,1,0.3,1),opacity 0.3s;opacity:0;">
+                <div class="pt-4 text-sm text-slate-400 leading-relaxed">
+                  Hospitales con plantas de frio criticas. Mantenimiento predictivo que evita averias de EUR 80,000+. ISO 50001 integrado.
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card sector-item p-5 cursor-pointer" data-sector="agua">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="icon-tile"><i data-lucide="droplets" class="w-5 h-5"></i></div>
+                  <span class="font-semibold text-white">Sector Agua y Desalinizacion</span>
+                </div>
+                <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+              </div>
+              <div class="sector-answer" style="max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(0.16,1,0.3,1),opacity 0.3s;opacity:0;">
+                <div class="pt-4 text-sm text-slate-400 leading-relaxed">
+                  Desaladoras y estaciones de bombeo con alto consumo especifico. Correlacion energia/produccion para optimizar kWh/m3.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-5">
+            <div class="glass-card p-6 result-card reveal glow-card" style="--reveal-delay: 0.3s">
+              <div class="text-sm text-cyan-300 mb-2">Industria — Resultado medio</div>
+              <div class="text-3xl font-bold text-cyan-400 mb-2">EUR 1.2M / ano</div>
+              <p class="text-xs text-slate-400">Ahorro combinado: factura + mantenimiento + horas</p>
+            </div>
+            <div class="glass-card p-6 result-card reveal" style="--reveal-delay: 0.38s">
+              <div class="text-sm text-cyan-300 mb-2">Hosteleria — Resultado medio</div>
+              <div class="text-3xl font-bold text-cyan-400 mb-2">EUR 340K / ano</div>
+              <p class="text-xs text-slate-400">Validacion de facturas en 45 hoteles con 800 CUPS</p>
+            </div>
+            <div class="glass-card p-6 result-card reveal" style="--reveal-delay: 0.46s">
+              <div class="text-sm text-cyan-300 mb-2">Sanidad — Resultado medio</div>
+              <div class="text-3xl font-bold text-cyan-400 mb-2">EUR 520K / ano</div>
+              <p class="text-xs text-slate-400">Mantenimiento predictivo + ahorro en planta de frio</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 5 · METRICAS RENDIMIENTO TECNICO — big-stat + glass-card
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">04 · Rendimiento tecnico</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Disenado para resistir,<br />
+          <span class="gradient-text">construido para escalar</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-14 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div class="big-stat reveal" style="--reveal-delay: 0.2s">
+            <div class="big-stat-num gradient">19</div>
+            <div class="big-stat-unit">workers</div>
+            <div class="big-stat-label">En paralelo procesando datos en tiempo real</div>
+          </div>
+          <div class="big-stat reveal" style="--reveal-delay: 0.28s">
+            <div class="big-stat-num gradient">48</div>
+            <div class="big-stat-unit">modulos API</div>
+            <div class="big-stat-label">REST versionados bajo /api/v1/</div>
+          </div>
+          <div class="big-stat reveal" style="--reveal-delay: 0.36s">
+            <div class="big-stat-num gradient">25</div>
+            <div class="big-stat-unit">features</div>
+            <div class="big-stat-label">Frontend modular con lazy loading</div>
+          </div>
+          <div class="big-stat reveal" style="--reveal-delay: 0.44s">
+            <div class="big-stat-num gradient">12</div>
+            <div class="big-stat-unit">topics Kafka</div>
+            <div class="big-stat-label">En modo KRaft sin Zookeeper</div>
+          </div>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-5">
+          <div class="glass-card p-5 reveal" style="--reveal-delay: 0.5s">
+            <div class="flex items-center gap-3 mb-3">
+              <i data-lucide="database" class="w-5 h-5 text-cyan-400"></i>
+              <span class="font-semibold text-white text-sm">TimescaleDB</span>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Retencion raw</span>
+                <span class="text-cyan-300 font-bold">5 anos</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Retencion agregados</span>
+                <span class="text-cyan-300 font-bold">10 anos</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Batch insert</span>
+                <span class="text-cyan-300 font-bold">2,000 evt/batch</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-5 reveal" style="--reveal-delay: 0.58s">
+            <div class="flex items-center gap-3 mb-3">
+              <i data-lucide="wifi" class="w-5 h-5 text-cyan-400"></i>
+              <span class="font-semibold text-white text-sm">EMQX 5.8</span>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Conexiones simultaneas</span>
+                <span class="text-cyan-300 font-bold">10M+</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Listeners</span>
+                <span class="text-cyan-300 font-bold">TCP + WebSocket</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Uso</span>
+                <span class="text-cyan-300 font-bold">IoT infraestructura critica</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-5 reveal" style="--reveal-delay: 0.66s">
+            <div class="flex items-center gap-3 mb-3">
+              <i data-lucide="shield" class="w-5 h-5 text-cyan-400"></i>
+              <span class="font-semibold text-white text-sm">Seguridad</span>
+            </div>
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">Autenticacion</span>
+                <span class="text-cyan-300 font-bold">JWT RS256</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">MFA</span>
+                <span class="text-cyan-300 font-bold">TOTP obligatorio</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span class="text-slate-400">WAF</span>
+                <span class="text-cyan-300 font-bold">ModSecurity</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 6 · ARQUITECTURA TECNICA — arch-flow
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">05 · Arquitectura</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Capas independientes,<br />
+          <span class="gradient-text">escalabilidad sin limites</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="arch-flow reveal" style="--reveal-delay: 0.2s">
+          <div class="arch-node">
+            <span class="arch-tag">Capa 1</span>
+            <span class="arch-name">Fuentes de datos</span>
+            <ul class="arch-list">
+              <li>SCADA (OPC-UA)</li>
+              <li>Medidores IoT (MQTT, Modbus)</li>
+              <li>Telelectura (DLMS-COSEM)</li>
+              <li>Mercado (ESIOS/OMIE)</li>
+              <li>Facturas (SFTP/FTP)</li>
+              <li>Plantas FV</li>
+            </ul>
+          </div>
+
+          <div class="arch-arrow">
+            <i data-lucide="arrow-right" class="w-8 h-8"></i>
+          </div>
+
+          <div class="arch-node accent">
+            <span class="arch-tag">Capa 2</span>
+            <span class="arch-name">Pipeline de datos</span>
+            <ul class="arch-list">
+              <li>Validacion y deduplicacion</li>
+              <li>12 topics Apache Kafka</li>
+              <li>Normalizacion automatica</li>
+              <li>Batch insert a TimescaleDB</li>
+              <li>Cola dead-letter (DLQ)</li>
+            </ul>
+          </div>
+
+          <div class="arch-arrow">
+            <i data-lucide="arrow-right" class="w-8 h-8"></i>
+          </div>
+
+          <div class="arch-node">
+            <span class="arch-tag">Capa 3</span>
+            <span class="arch-name">Procesamiento</span>
+            <ul class="arch-list">
+              <li>19 workers en paralelo</li>
+              <li>48 modulos REST (FastAPI)</li>
+              <li>IA con OpenRouter/Ollama</li>
+              <li>Mantenimiento predictivo</li>
+              <li>Recomendaciones automaticas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 7 · PROCESO INTEGRACION — pipeline-mock
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">06 · Proceso de integracion</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          De la decision al ahorro<br />
+          <span class="gradient-text">en 3 pasos</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="glass-card p-8 reveal" style="--reveal-delay: 0.2s">
+          <div class="pipeline-mock">
+            <div class="pipeline-step">
+              <div class="pipeline-bubble ok">
+                <i data-lucide="link" class="w-6 h-6"></i>
+              </div>
+              <div class="pipeline-step-label">Paso 1</div>
+              <div class="pipeline-step-value">Conexion</div>
+              <div class="pipeline-step-sub">5 dias de piloto</div>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="w-5 h-5"></i></div>
+            <div class="pipeline-step">
+              <div class="pipeline-bubble ok">
+                <i data-lucide="check-circle" class="w-6 h-6"></i>
+              </div>
+              <div class="pipeline-step-label">Paso 2</div>
+              <div class="pipeline-step-value">Validacion</div>
+              <div class="pipeline-step-sub">Dia 6: datos en vivo</div>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="w-5 h-5"></i></div>
+            <div class="pipeline-step">
+              <div class="pipeline-bubble ok">
+                <i data-lucide="rocket" class="w-6 h-6"></i>
+              </div>
+              <div class="pipeline-step-label">Paso 3</div>
+              <div class="pipeline-step-value">Escalado</div>
+              <div class="pipeline-step-sub">Decision sin compromiso</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5 mt-8">
+          <div class="glass-card p-5 text-center reveal" style="--reveal-delay: 0.3s">
+            <div class="text-3xl font-extrabold text-cyan-400 mb-2">1</div>
+            <h3 class="font-semibold text-white mb-1">Comando unico</h3>
+            <p class="text-xs text-slate-400">make dev levanta todo el ecosistema con simuladores</p>
+          </div>
+          <div class="glass-card p-5 text-center reveal" style="--reveal-delay: 0.38s">
+            <div class="text-3xl font-extrabold text-cyan-400 mb-2">16</div>
+            <h3 class="font-semibold text-white mb-1">Protocolos de fabrica</h3>
+            <p class="text-xs text-slate-400">Sin desarrollo a medida para conectar sus fuentes</p>
+          </div>
+          <div class="glass-card p-5 text-center reveal" style="--reveal-delay: 0.46s">
+            <div class="text-3xl font-extrabold text-cyan-400 mb-2">0</div>
+            <h3 class="font-semibold text-white mb-1">Cambios en infraestructura</h3>
+            <p class="text-xs text-slate-400">Se integra con lo que ya tiene instalado</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 8 · COMPARATIVA DIRECTA — tco-table
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">07 · Comparativa directa</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Soluciones tradicionales<br />
+          <span class="gradient-text">vs POWER INT</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="reveal" style="--reveal-delay: 0.2s">
+          <table class="tco-table">
+            <thead>
+              <tr>
+                <th class="col-dim">Dimension</th>
+                <th class="col-before">Soluciones Tradicionales</th>
+                <th class="col-after">POWER INT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-dim">Integracion de datos</td>
+                <td class="col-before">Proyecto a medida por protocolo. <span class="col-before tco-num">EUR 50K-200K</span> por fuente</td>
+                <td class="col-after">16 protocolos de fabrica. <span class="tco-num">EUR 0</span> por fuente adicional</td>
+              </tr>
+              <tr>
+                <td class="col-dim">Validacion de facturas</td>
+                <td class="col-before">Revision manual por gestor. <span class="col-before tco-num">15-20h/sem</span> dedicadas</td>
+                <td class="col-after">Automatica en tiempo real. <span class="tco-num">0h</span> de intervencion</td>
+              </tr>
+              <tr>
+                <td class="col-dim">Analisis de mercado</td>
+                <td class="col-before">Scraping manual del portal OMIP. <span class="col-before tco-num">Riesgo</span> de fallo</td>
+                <td class="col-after">Ingesta automatica ESIOS/OMIE. <span class="tco-num">100%</span> fiable</td>
+              </tr>
+              <tr>
+                <td class="col-dim">Mantenimiento</td>
+                <td class="col-before">Reactivo: se repara cuando falla. <span class="col-before tco-num">3-5x</span> mas caro</td>
+                <td class="col-after">Predictivo: detecta degradacion. <span class="tco-num">-30%</span> costes emergencia</td>
+              </tr>
+              <tr>
+                <td class="col-dim">Informes</td>
+                <td class="col-before">Excel manual y distribucion por email. <span class="col-before tco-num">10h/sem</span></td>
+                <td class="col-after">Automaticos con distribucion programada. <span class="tco-num">0h</span></td>
+              </tr>
+              <tr>
+                <td class="col-dim">Cumplimiento normativo</td>
+                <td class="col-before">Auditorias externas costosas. <span class="col-before tco-num">Sin trazabilidad</span></td>
+                <td class="col-after">SGE ISO 50001 integrado. <span class="tco-num">Trazabilidad</span> completa</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-8 glass-card p-6 text-center reveal glow-card" style="--reveal-delay: 0.3s">
+          <p class="text-lg text-white mb-2">
+            <span class="font-semibold">POWER_INT: 19 contenedores Docker,</span> 15 manifests Kubernetes,
+          </p>
+          <p class="text-cyan-300 font-semibold">
+            desplegado con HA activo-pasivo en 2 VMs de 16 vCPU + 64 GB RAM
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 9 · RESUMEN POR AUDIENCIA — 3 audience-card
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">08 · Beneficio por rol</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Cada rol obtiene<br />
+          <span class="gradient-text">su valor inmediato</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="glass-card p-7 audience-card reveal glow-card" style="--reveal-delay: 0.2s">
+            <div class="w-14 h-14 rounded-full bg-cyan-900/30 flex items-center justify-center mb-5">
+              <i data-lucide="calculator" class="w-7 h-7 text-cyan-400"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">CFO / Director Financiero</h3>
+            <p class="text-sm text-slate-400 mb-5 leading-relaxed">
+              Ve el ahorro directo en la factura electrica. Validacion automatica que detecta cobros indebidos y genera importes reclamables.
+            </p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>ROI visible en 4 meses</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>15% ahorro en factura electrica</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Importes reclamables detectados</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-7 audience-card reveal" style="--reveal-delay: 0.3s">
+            <div class="w-14 h-14 rounded-full bg-cyan-900/30 flex items-center justify-center mb-5">
+              <i data-lucide="settings" class="w-7 h-7 text-cyan-400"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">COO / Director de Operaciones</h3>
+            <p class="text-sm text-slate-400 mb-5 leading-relaxed">
+              Centraliza energia, mercado, facturacion, KPIs, GMAO y SGE en un solo sistema. Elimina multiples herramientas.
+            </p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>10h/semana ahorradas por gestor</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Mantenimiento predictivo 30% menos</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Sincronizacion ERP/GMAO automatica</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card p-7 audience-card reveal" style="--reveal-delay: 0.4s">
+            <div class="w-14 h-14 rounded-full bg-cyan-900/30 flex items-center justify-center mb-5">
+              <i data-lucide="shield-check" class="w-7 h-7 text-cyan-400"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">CEO / Director General</h3>
+            <p class="text-sm text-slate-400 mb-5 leading-relaxed">
+              Cumplimiento ENS, RGPD e ISO 50001 garantizado. Auditoria inmutable y gobernanza de datos completa.
+            </p>
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Certificacion ISO 50001 integrada</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>Auditoria inmutable de datos</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs text-slate-300">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                <span>ROI medible y demostrable</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 10 · FAQ — Acordeon vertical premium
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">09 · Preguntas frecuentes</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Resolvemos sus dudas<br />
+          <span class="gradient-text">antes de que las tenga</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="space-y-3 max-w-3xl mx-auto reveal" style="--reveal-delay: 0.2s" id="faq-accordion">
+          <div class="glass-card p-5 faq-item">
+            <div class="faq-question">
+              <span>Cuanto tiempo tarda la implementacion completa?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>El piloto se ejecuta en 5 dias. En el dia 6 vera sus datos fluyendo en tiempo real. La decision de escalado es el dia 7, sin compromiso a largo plazo. El despliegue completo en produccion incluye 15 manifests de Kubernetes con HA activo-pasivo.</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-5 faq-item">
+            <div class="faq-question">
+              <span>Necesito cambiar mis equipos o protocolos actuales?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>No. POWER_INT soporta 16 protocolos de fabrica: OPC-UA, MQTT, Modbus TCP/RTU, DLMS-COSEM, SFTP/FTP, REST API, SNMP y LoRaWAN. Se integra con lo que ya tiene sin reemplazar medidores ni modificar infraestructura existente.</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-5 faq-item">
+            <div class="faq-question">
+              <span>Mis datos energeticos estan seguros?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Totalmente. Autenticacion JWT RS256, MFA (TOTP) obligatorio, RBAC con 5 roles, WAF ModSecurity, CSP + HSTS. Auditoria inmutable con triggers de base de datos. Cifrado en reposo y en transito. Cumplimiento ENS, RGPD e ISO 50001 garantizado.</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-5 faq-item">
+            <div class="faq-question">
+              <span>Que pasa con mi GMAO y ERP actuales?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Sincronizacion bidireccional automatica. El worker-erp-sync ejecuta la sincronizacion diaria de presupuestos desde SQL Server. El worker-gmao-sync mantiene activos y ordenes de trabajo actualizados sin doble captura de datos.</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-5 faq-item">
+            <div class="faq-question">
+              <span>Como funciona la inteligencia artificial integrada?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Utiliza modelos OpenRouter y Ollama local para generar recomendaciones de ahorro energetico. Gobernanza completa: todos los prompts y respuestas se registran. El opt-out de entrenamiento con datos del cliente esta activo por defecto, protegiendo la confidencialidad.</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-5 faq-item">
+            <div class="faq-question">
+              <span>Puedo ver los datos en movil o tablet?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Si. Frontend PWA (Progressive Web App) con dark/light mode, soporte i18n en 4 idiomas (ES, EN, FR, PT) y virtualizacion de tablas para rendimiento optimizado. Indicador visible de conexion SSE para confirmar datos en tiempo real.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradient bar connector -->
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SLIDE 11 · CTA FINAL
+         ============================================================ -->
+    <section class="slide items-center" id="contacto">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content text-center">
+        <div class="brand-chip mb-6 reveal float">
+          <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+          <span>Siguiente paso</span>
+        </div>
+        <h2 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+          Pruebe POWER INT<br />
+          <span class="gradient-text">con sus propios datos</span>
+        </h2>
+        <div class="w-20 h-1 gradient-bar rounded-full mx-auto mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+        <p class="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto mb-10 reveal" style="--reveal-delay: 0.3s">
+          En 5 dias conectamos sus primeras fuentes de datos. En el dia 6 vera el ahorro real.
+          Sin compromiso a largo plazo. Sin cambiar sus equipos.
+        </p>
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center items-center reveal"
+          style="--reveal-delay: 0.45s"
+        >
+          <a
+            href="mailto:info@mindden.com"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+          >
+            <i data-lucide="mail" class="w-5 h-5"></i>
+            Solicitar demo
+          </a>
+          <a
+            href="tel:+34965349770"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+          >
+            <i data-lucide="phone" class="w-5 h-5"></i>
+            +34 965 349 770
+          </a>
+        </div>
+        <p class="mt-12 text-xs text-slate-600 reveal" style="--reveal-delay: 0.6s">
+          POWER INT by <b>Mindden Soft Tech</b>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Runtime
+         ============================================================ -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script>
+      if (window.lucide) lucide.createIcons();
+    </script>
+
+    <script src="js/presentation.js"></script>
+    <script>
+      /* === Calculadora ROI Interactiva === */
+      (function() {
+        const sliders = {
+          factura: document.getElementById('calc-factura'),
+          cups: document.getElementById('calc-cups'),
+          horas: document.getElementById('calc-horas'),
+          mant: document.getElementById('calc-mant')
+        };
+        const vals = {
+          factura: document.getElementById('calc-factura-val'),
+          cups: document.getElementById('calc-cups-val'),
+          horas: document.getElementById('calc-horas-val'),
+          mant: document.getElementById('calc-mant-val')
+        };
+        const results = {
+          ahorro: document.getElementById('result-ahorro-num'),
+          horas: document.getElementById('result-horas-num'),
+          mant: document.getElementById('result-mant-num'),
+          total: document.getElementById('result-total-num'),
+          pct: document.getElementById('result-pct')
+        };
+        const cards = document.querySelectorAll('.result-card');
+
+        function fmt(n) {
+          return 'EUR ' + n.toLocaleString('es-ES');
+        }
+
+        function fmtH(n) {
+          return n + ' h';
+        }
+
+        function pulseCards() {
+          cards.forEach(function(c) {
+            c.classList.add('pulse');
+            setTimeout(function() { c.classList.remove('pulse'); }, 300);
+          });
+        }
+
+        function recalc() {
+          var factura = parseInt(sliders.factura.value);
+          var cups = parseInt(sliders.cups.value);
+          var horas = parseInt(sliders.horas.value);
+          var mant = parseInt(sliders.mant.value);
+
+          vals.factura.textContent = fmt(factura);
+          vals.cups.textContent = cups.toLocaleString('es-ES');
+          vals.horas.textContent = horas + ' h';
+          vals.mant.textContent = fmt(mant);
+
+          var ahorroFactura = Math.round(factura * 0.15);
+          var ahorroHoras = Math.round(horas * 52 * 35);
+          var ahorroMant = Math.round(mant * 0.30);
+          var total = ahorroFactura + ahorroHoras + ahorroMant;
+          var pct = ((total / factura) * 100).toFixed(1);
+
+          results.ahorro.textContent = fmt(ahorroFactura);
+          results.horas.textContent = fmtH(horas * 52);
+          results.mant.textContent = fmt(ahorroMant);
+          results.total.textContent = fmt(total);
+          results.pct.textContent = pct + '% de reduccion sobre factura actual';
+
+          pulseCards();
+        }
+
+        Object.keys(sliders).forEach(function(key) {
+          if (sliders[key]) {
+            sliders[key].addEventListener('input', recalc);
+          }
+        });
+        recalc();
+      })();
+
+      /* === Acordeón de Sectores === */
+      (function() {
+        var items = document.querySelectorAll('.sector-item');
+        items.forEach(function(item) {
+          item.addEventListener('click', function() {
+            var answer = this.querySelector('.sector-answer');
+            var isOpen = this.classList.contains('open');
+            items.forEach(function(i) {
+              i.classList.remove('open');
+              i.querySelector('.sector-answer').style.maxHeight = '0';
+              i.querySelector('.sector-answer').style.opacity = '0';
+            });
+            if (!isOpen) {
+              this.classList.add('open');
+              answer.style.maxHeight = answer.scrollHeight + 'px';
+              answer.style.opacity = '1';
+            }
+          });
+        });
+      })();
+
+      /* === Acordeón FAQ Premium === */
+      (function() {
+        var items = document.querySelectorAll('#faq-accordion .faq-item');
+        items.forEach(function(item) {
+          var q = item.querySelector('.faq-question');
+          q.addEventListener('click', function() {
+            var answer = item.querySelector('.faq-answer');
+            var isOpen = item.classList.contains('open');
+            items.forEach(function(i) {
+              i.classList.remove('open');
+              i.querySelector('.faq-answer').style.maxHeight = '0';
+            });
+            if (!isOpen) {
+              item.classList.add('open');
+              answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

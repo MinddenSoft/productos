@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MINDDEN_FLOW · Process Mining e Inteligencia Operativa</title>
+    <meta
+      name="description"
+      content="MINDDEN_FLOW transforma datos operativos en decisiones accionables. 8 agentes IA, 24 pantallas, 12 dominios verticales."
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .timeline-line {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(180deg, var(--cyan) 0%, var(--sky) 50%, var(--teal) 100%);
+        transform: translateX(-50%);
+      }
+      .timeline-dot {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--cyan);
+        border: 3px solid var(--bg-deep);
+        box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.3);
+        z-index: 10;
+      }
+      .accordion-item {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: border-color 0.3s;
+      }
+      .accordion-item:hover {
+        border-color: var(--line-strong);
+      }
+      .accordion-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 1.5rem;
+        background: linear-gradient(180deg, rgba(15, 31, 55, 0.85) 0%, rgba(10, 22, 40, 0.85) 100%);
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .accordion-header:hover {
+        background: linear-gradient(180deg, rgba(20, 40, 65, 0.9) 0%, rgba(15, 30, 50, 0.9) 100%);
+      }
+      .accordion-icon {
+        transition: transform 0.3s;
+      }
+      .accordion-item.open .accordion-icon {
+        transform: rotate(180deg);
+      }
+      .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        background: rgba(10, 22, 40, 0.6);
+      }
+      .accordion-item.open .accordion-content {
+        max-height: 500px;
+      }
+      .calculator-input {
+        background: rgba(15, 31, 55, 0.8);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        color: var(--text);
+        font-size: 1rem;
+        width: 100%;
+        transition: border-color 0.3s;
+      }
+      .calculator-input:focus {
+        outline: none;
+        border-color: var(--cyan);
+        box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.15);
+      }
+      .calculator-input::placeholder {
+        color: var(--text-muted);
+      }
+      .result-card {
+        background: linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(20, 184, 166, 0.05) 100%);
+        border: 1px solid rgba(34, 211, 238, 0.25);
+        border-radius: 14px;
+        padding: 1.5rem;
+        text-align: center;
+      }
+      .result-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #22d3ee 0%, #14b8a6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .audience-card {
+        position: relative;
+        overflow: hidden;
+      }
+      .audience-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal));
+      }
+      .comparison-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1px;
+        background: var(--line);
+      }
+      .comparison-cell {
+        background: var(--bg-base);
+        padding: 1rem;
+        font-size: 0.9rem;
+        color: var(--text-soft);
+      }
+      .comparison-cell:first-child {
+        font-weight: 600;
+        color: var(--text);
+      }
+      .comparison-cell.highlight {
+        background: rgba(34, 211, 238, 0.05);
+        color: var(--text);
+      }
+      [data-theme="light"] .accordion-header {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
+      }
+      [data-theme="light"] .accordion-header:hover {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(248, 250, 252, 1) 100%);
+      }
+      [data-theme="light"] .accordion-content {
+        background: rgba(248, 250, 252, 0.9);
+      }
+      [data-theme="light"] .calculator-input {
+        background: rgba(255, 255, 255, 0.9);
+        border-color: rgba(148, 163, 184, 0.2);
+        color: #0f172a;
+      }
+      [data-theme="light"] .calculator-input:focus {
+        border-color: #6797CD;
+        box-shadow: 0 0 0 3px rgba(103, 151, 205, 0.1);
+      }
+      [data-theme="light"] .result-card {
+        background: linear-gradient(135deg, rgba(103, 151, 205, 0.08) 0%, rgba(248, 250, 252, 0.9) 100%);
+        border-color: rgba(103, 151, 205, 0.25);
+      }
+      [data-theme="light"] .result-number {
+        background: linear-gradient(135deg, #6797CD 0%, #95BBE5 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      [data-theme="light"] .comparison-cell {
+        background: #f8fafc;
+      }
+      [data-theme="light"] .comparison-cell:first-child {
+        background: #f1f5f9;
+      }
+      [data-theme="light"] .comparison-cell.highlight {
+        background: rgba(103, 151, 205, 0.06);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================================
+         HERO — Inteligencia Operativa Universal
+         ============================================================ -->
+    <section class="slide items-center">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <div class="hero-logo reveal" style="--reveal-delay: 0s">
+              <img src="img/mindden.png" alt="Mindden" />
+            </div>
+            <div class="brand-chip mb-6 reveal float">
+              <i data-lucide="brain" class="w-3.5 h-3.5"></i>
+              <span>Process Mining e Inteligencia Operativa</span>
+            </div>
+            <h1 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+              Transforme sus procesos<br />
+              <span class="gradient-text">en ventaja competitiva</span>
+            </h1>
+            <div class="w-20 h-1 gradient-bar rounded-full mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+            <p
+              class="text-lg text-slate-300 leading-relaxed mb-8 reveal"
+              style="--reveal-delay: 0.3s"
+            >
+              MINDDEN_FLOW analiza cualquier proceso de negocio con 8 agentes de IA. Detecta cuellos de botella, predice fallos y genera informes ejecutivos automaticos. <span class="text-cyan-300 font-semibold">Sin importar la industria.</span>
+            </p>
+            <div
+              class="flex flex-col sm:flex-row gap-4 reveal"
+              style="--reveal-delay: 0.45s"
+            >
+              <a
+                href="#calculadora"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition"
+              >
+                <i data-lucide="calculator" class="w-5 h-5"></i>
+                Calcular su ROI
+              </a>
+              <a
+                href="mailto:info@mindden.com"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition"
+              >
+                <i data-lucide="mail" class="w-5 h-5"></i>
+                info@mindden.com
+              </a>
+            </div>
+          </div>
+          <div class="reveal" style="--reveal-delay: 0.5s">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="roi-chip">
+                <div class="roi-chip-num">90%</div>
+                <div class="roi-chip-label">Menos tiempo en informes</div>
+              </div>
+              <div class="roi-chip">
+                <div class="roi-chip-num">60%</div>
+                <div class="roi-chip-label">Reduccion penalizaciones</div>
+              </div>
+              <div class="roi-chip">
+                <div class="roi-chip-num">8</div>
+                <div class="roi-chip-label">Agentes IA core</div>
+              </div>
+              <div class="roi-chip">
+                <div class="roi-chip-num">12</div>
+                <div class="roi-chip-label">Dominios verticales</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <span>Descubra mas</span>
+        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         IMPACTO FINANCIERO Y ROI
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Impacto financiero</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Resultados que se<br />
+          <span class="gradient-text">miden en euros</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="glass-card p-6 text-center reveal" style="--reveal-delay: 0.2s">
+            <div class="text-5xl font-bold text-cyan-400 mb-3">25%</div>
+            <div class="text-white font-semibold mb-2">Ahorro en mantenimiento</div>
+            <p class="text-sm text-slate-400">Prediccion de fallos vs reparaciones correctivas</p>
+          </div>
+          <div class="glass-card p-6 text-center reveal" style="--reveal-delay: 0.3s">
+            <div class="text-5xl font-bold text-cyan-400 mb-3">90%</div>
+            <div class="text-white font-semibold mb-2">Reduccion informes</div>
+            <p class="text-sm text-slate-400">De semanas a segundos con agentes IA</p>
+          </div>
+          <div class="glass-card p-6 text-center reveal" style="--reveal-delay: 0.4s">
+            <div class="text-5xl font-bold text-cyan-400 mb-3">40%</div>
+            <div class="text-white font-semibold mb-2">Menos tiempos de ciclo</div>
+            <p class="text-sm text-slate-400">Eliminando cuellos de botella automaticamente</p>
+          </div>
+          <div class="glass-card p-6 text-center reveal" style="--reveal-delay: 0.5s">
+            <div class="text-5xl font-bold text-cyan-400 mb-3">60%</div>
+            <div class="text-white font-semibold mb-2">Menos penalizaciones</div>
+            <p class="text-sm text-slate-400">Alertas preventivas de SLA con antelacion</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROBLEMA vs SOLUCION
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">El problema</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Sus procesos le estan<br />
+          <span class="gradient-text">costando dinero</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid lg:grid-cols-2 gap-8">
+          <div class="reveal" style="--reveal-delay: 0.2s">
+            <div class="glass-card p-6 mb-6">
+              <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-3">
+                <i data-lucide="alert-triangle" class="w-6 h-6 text-rose-400"></i>
+                Sin MINDDEN_FLOW
+              </h3>
+              <ul class="space-y-3 text-sm text-slate-400">
+                <li class="flex gap-3">
+                  <i data-lucide="x" class="w-5 h-5 text-rose-400 shrink-0 mt-0.5"></i>
+                  <span>Datos fragmentados en silos (ERP, CRM, GMAO, SCADA)</span>
+                </li>
+                <li class="flex gap-3">
+                  <i data-lucide="x" class="w-5 h-5 text-rose-400 shrink-0 mt-0.5"></i>
+                  <span>Problemas detectados cuando ya han causado dano</span>
+                </li>
+                <li class="flex gap-3">
+                  <i data-lucide="x" class="w-5 h-5 text-rose-400 shrink-0 mt-0.5"></i>
+                  <span>Horas dedicadas a informes manuales obsoletos</span>
+                </li>
+                <li class="flex gap-3">
+                  <i data-lucide="x" class="w-5 h-5 text-rose-400 shrink-0 mt-0.5"></i>
+                  <span>Sin capacidad predictiva para anticipar fallos</span>
+                </li>
+                <li class="flex gap-3">
+                  <i data-lucide="x" class="w-5 h-5 text-rose-400 shrink-0 mt-0.5"></i>
+                  <span>Procesos documentados que no coinciden con la realidad</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="reveal" style="--reveal-delay: 0.3s">
+            <div class="glass-card p-6 border-cyan-700/50">
+              <h3 class="text-lg font-bold text-cyan-300 mb-4 flex items-center gap-3">
+                <i data-lucide="check-circle" class="w-6 h-6 text-cyan-400"></i>
+                Con MINDDEN_FLOW
+              </h3>
+              <ul class="space-y-3 text-sm text-slate-300">
+                <li class="flex gap-3">
+                  <i data-lucide="check" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+                  <span>Visibilidad completa de todos los procesos en 24 pantallas</span>
+                </li>
+                <li class="flex gap-3">
+                  <i data-lucide="check" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+                  <span>Agentes predictivos que anticipan problemas antes de que ocurran</span>
+                </li>
+                <li class="flex gap-3">
+                  <i data-lucide="check" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+                  <span>Informes ejecutivos PDF generados automaticamente por IA</span>
+                </li>
+                <li class="flex gap-3">
+                  <i data-lucide="check" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+                  <span>Descubrimiento automatico del flujo real de procesos</span>
+                </li>
+                <li class="flex gap-3">
+                  <i data-lucide="check" class="w-5 h-5 text-cyan-400 shrink-0 mt-0.5"></i>
+                  <span>Simulacion what-if para validar decisiones antes de implementar</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CASOS DE USO REALES
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Casos de uso reales</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Resultados en<br />
+          <span class="gradient-text">cada sector</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-8 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="space-y-4 max-w-4xl mx-auto">
+          <div class="accordion-item open reveal" style="--reveal-delay: 0.2s">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <div class="flex items-center gap-4">
+                <div class="icon-tile"><i data-lucide="landmark" class="w-5 h-5"></i></div>
+                <div>
+                  <h3 class="font-semibold text-white">Sector Financiero y Contable</h3>
+                  <p class="text-sm text-slate-400">Proceso P2P, cierre contable, aprobaciones</p>
+                </div>
+              </div>
+              <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 class="text-rose-400 font-semibold mb-3">Problema</h4>
+                    <p class="text-sm text-slate-400 mb-4">El proceso P2P tiene 7 pasos con aprobaciones condicionales. El 30% de las compras requieren aprobacion manual. El controller es cuello de botella el 85% de los dias de cierre.</p>
+                    <h4 class="text-cyan-300 font-semibold mb-3">Solucion</h4>
+                    <p class="text-sm text-slate-300">Agente de descubrimiento revela 12 variantes reales. Agente bottleneck identifica al controller como punto de bloqueo. Agente predictivo alerta facturas proximas a vencer.</p>
+                  </div>
+                  <div class="result-card">
+                    <div class="text-sm text-cyan-300 mb-2">Resultado</div>
+                    <div class="result-number">30%</div>
+                    <div class="text-white font-semibold">Reduccion tiempo de cierre</div>
+                    <div class="text-xs text-slate-400 mt-2">Deteccion automatica de desviaciones en compliance</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item reveal" style="--reveal-delay: 0.3s">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <div class="flex items-center gap-4">
+                <div class="icon-tile"><i data-lucide="monitor" class="w-5 h-5"></i></div>
+                <div>
+                  <h3 class="font-semibold text-white">Sector TI (ITSM)</h3>
+                  <p class="text-sm text-slate-400">Incidencias, cambios, problemas, SLA</p>
+                </div>
+              </div>
+              <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 class="text-rose-400 font-semibold mb-3">Problema</h4>
+                    <p class="text-sm text-slate-400 mb-4">Incidencias P1 con SLA de 1 hora pero 22% la incumplen. 40% de problemas stuck en workaround. 8% de cambios fallidos.</p>
+                    <h4 class="text-cyan-300 font-semibold mb-3">Solucion</h4>
+                    <p class="text-sm text-slate-300">Agente predictivo identifica incidencias que van a incumplir SLA. Agente de dependencias revela que 60% dependen de un solo proveedor.</p>
+                  </div>
+                  <div class="result-card">
+                    <div class="text-sm text-cyan-300 mb-2">Resultado</div>
+                    <div class="result-number">45%</div>
+                    <div class="text-white font-semibold">Reduccion incumplimientos SLA</div>
+                    <div class="text-xs text-slate-400 mt-2">Migracion de 40% workarounds a fixes permanentes</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item reveal" style="--reveal-delay: 0.4s">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <div class="flex items-center gap-4">
+                <div class="icon-tile"><i data-lucide="users" class="w-5 h-5"></i></div>
+                <div>
+                  <h3 class="font-semibold text-white">Sector Recursos Humanos</h3>
+                  <p class="text-sm text-slate-400">Onboarding, offboarding, nominas</p>
+                </div>
+              </div>
+              <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 class="text-rose-400 font-semibold mb-3">Problema</h4>
+                    <p class="text-sm text-slate-400 mb-4">Onboarding tarda 14 dias. 70% del retraso por aprovisionamiento de TI. 30% de disputas en offboarding involuntario.</p>
+                    <h4 class="text-cyan-300 font-semibold mb-3">Solucion</h4>
+                    <p class="text-sm text-slate-300">Agente bottleneck cuantifica tiempo perdido en cada paso. Agente de dependencias muestra que IT provisioning bloquea 5 actividades.</p>
+                  </div>
+                  <div class="result-card">
+                    <div class="text-sm text-cyan-300 mb-2">Resultado</div>
+                    <div class="result-number">50%</div>
+                    <div class="text-white font-semibold">Reduccion onboarding</div>
+                    <div class="text-xs text-slate-400 mt-2">De 14 a 7 dias. 90% menos disputas en offboarding</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item reveal" style="--reveal-delay: 0.5s">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <div class="flex items-center gap-4">
+                <div class="icon-tile"><i data-lucide="factory" class="w-5 h-5"></i></div>
+                <div>
+                  <h3 class="font-semibold text-white">Sector Mantenimiento Industrial</h3>
+                  <p class="text-sm text-slate-400">Correctivo, preventivo, predictivo</p>
+                </div>
+              </div>
+              <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 class="text-rose-400 font-semibold mb-3">Problema</h4>
+                    <p class="text-sm text-slate-400 mb-4">28% de reparaciones requieren repuestos sin stock. 10% requieren re-trabajo. 4% de diagnosticos erroneos.</p>
+                    <h4 class="text-cyan-300 font-semibold mb-3">Solucion</h4>
+                    <p class="text-sm text-slate-300">Agente de dependencias correlaciona fallos con activos y proveedores. Agente predictivo estima degradacion y recomienda intervenciones.</p>
+                  </div>
+                  <div class="result-card">
+                    <div class="text-sm text-cyan-300 mb-2">Resultado</div>
+                    <div class="result-number">30%</div>
+                    <div class="text-white font-semibold">Reduccion reparaciones correctivas</div>
+                    <div class="text-xs text-slate-400 mt-2">25% mas en first-time fix rate</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CALCULADORA DE ROI INTERACTIVO
+         ============================================================ -->
+    <section class="slide" id="calculadora">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Calculadora de ROI</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Cuanto puede ahorrar<br />
+          <span class="gradient-text">su organizacion</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div class="glass-card p-8 reveal" style="--reveal-delay: 0.2s">
+            <h3 class="text-lg font-bold text-white mb-6">Introduzca sus datos</h3>
+            <div class="space-y-5">
+              <div>
+                <label class="block text-sm text-slate-400 mb-2">Numero de empleados en procesos operativos</label>
+                <input type="number" id="empleados" class="calculator-input" placeholder="Ej: 50" value="50" oninput="calcularROI()">
+              </div>
+              <div>
+                <label class="block text-sm text-slate-400 mb-2">Horas/semana dedicadas a informes manuales</label>
+                <input type="number" id="horasInforme" class="calculator-input" placeholder="Ej: 20" value="20" oninput="calcularROI()">
+              </div>
+              <div>
+                <label class="block text-sm text-slate-400 mb-2">Coste medio hora (EUR)</label>
+                <input type="number" id="costeHora" class="calculator-input" placeholder="Ej: 35" value="35" oninput="calcularROI()">
+              </div>
+              <div>
+                <label class="block text-sm text-slate-400 mb-2">Penalizaciones SLA anuales (EUR)</label>
+                <input type="number" id="penalizaciones" class="calculator-input" placeholder="Ej: 50000" value="50000" oninput="calcularROI()">
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--reveal-delay: 0.3s">
+            <div class="result-card mb-6">
+              <div class="text-sm text-cyan-300 mb-2">Ahorro anual estimado</div>
+              <div class="result-number" id="ahorroTotal">EUR 146,400</div>
+              <div class="text-white font-semibold mt-2">Reduccion del 37% en costes operativos</div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div class="glass-card p-4 text-center">
+                <div class="text-2xl font-bold text-cyan-400" id="ahorroInformes">EUR 36,400</div>
+                <div class="text-xs text-slate-400 mt-1">Ahorro en informes</div>
+              </div>
+              <div class="glass-card p-4 text-center">
+                <div class="text-2xl font-bold text-cyan-400" id="ahorroPenalizaciones">EUR 30,000</div>
+                <div class="text-xs text-slate-400 mt-1">Penalizaciones evitadas</div>
+              </div>
+              <div class="glass-card p-4 text-center">
+                <div class="text-2xl font-bold text-cyan-400" id="ahorroMantenimiento">EUR 60,000</div>
+                <div class="text-xs text-slate-400 mt-1">Mantenimiento predictivo</div>
+              </div>
+              <div class="glass-card p-4 text-center">
+                <div class="text-2xl font-bold text-cyan-400" id="roiTiempo">4 meses</div>
+                <div class="text-xs text-slate-400 mt-1">Tiempo de retorno</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         AGENTES IA - FUNCIONALIDADES
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Ecosistema de agentes IA</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          8 agentes que trabajan<br />
+          <span class="gradient-text">por su negocio</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="agent-card reveal" style="--reveal-delay: 0.2s">
+            <div class="agent-badge">CORE</div>
+            <div class="agent-title">Descubrimiento</div>
+            <div class="agent-desc">Revela como se ejecutan realmente sus procesos, no como deberian ser</div>
+            <div class="agent-demo">Finanzas: descubre 12 variantes reales en P2P</div>
+          </div>
+
+          <div class="agent-card reveal" style="--reveal-delay: 0.25s">
+            <div class="agent-badge">CORE</div>
+            <div class="agent-title">Conformidad</div>
+            <div class="agent-desc">Calcula indice de cumplimiento contra el modelo de referencia</div>
+            <div class="agent-demo">Legal: verifica 85% conformidad en contratos</div>
+          </div>
+
+          <div class="agent-card reveal" style="--reveal-delay: 0.3s">
+            <div class="agent-badge">CORE</div>
+            <div class="agent-title">Cuellos de Botella</div>
+            <div class="agent-desc">Identifica donde se acumula trabajo y se pierde tiempo</div>
+            <div class="agent-demo">TI: controller bloquea 85% de dias de cierre</div>
+          </div>
+
+          <div class="agent-card reveal" style="--reveal-delay: 0.35s">
+            <div class="agent-badge highlight">NUEVO</div>
+            <div class="agent-title">Predictivo</div>
+            <div class="agent-desc">Predice fallos, tiempos restantes y siguientes actividades</div>
+            <div class="agent-demo">Reduce penalizaciones hasta en 60%</div>
+          </div>
+
+          <div class="agent-card reveal" style="--reveal-delay: 0.4s">
+            <div class="agent-badge highlight">NUEVO</div>
+            <div class="agent-title">Dependencias</div>
+            <div class="agent-desc">Mapea dependencias ocultas y puntos unicos de fallo</div>
+            <div class="agent-demo">60% problemas dependen de un solo proveedor</div>
+          </div>
+
+          <div class="agent-card reveal" style="--reveal-delay: 0.45s">
+            <div class="agent-badge">CORE</div>
+            <div class="agent-title">Simulacion What-If</div>
+            <div class="agent-desc">Ejecuta escenarios hipotesis sin riesgo para el negocio</div>
+            <div class="agent-demo">Valida inversiones antes de implementarlas</div>
+          </div>
+
+          <div class="agent-card reveal" style="--reveal-delay: 0.5s">
+            <div class="agent-badge highlight">NUEVO</div>
+            <div class="agent-title">Informe Ejecutivo</div>
+            <div class="agent-desc">Genera PDF ejecutivos con narrativa IA automaticamente</div>
+            <div class="agent-demo">Elimina horas de trabajo manual repetitivo</div>
+          </div>
+
+          <div class="agent-card reveal" style="--reveal-delay: 0.55s">
+            <div class="agent-badge">CORE</div>
+            <div class="agent-title">Narrativa IA</div>
+            <div class="agent-desc">Interpreta datos complejos en acciones concretas</div>
+            <div class="agent-demo">Traduce Petri Nets en recomendaciones accionables</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         METRICAS DE RENDIMIENTO
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Rendimiento tecnico</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Disenado para escalar<br />
+          <span class="gradient-text">con su negocio</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="glass-card p-6 text-center reveal" style="--reveal-delay: 0.2s">
+            <div class="text-4xl font-bold text-cyan-400 mb-2">24</div>
+            <div class="text-white font-semibold mb-1">Pantallas especializadas</div>
+            <p class="text-xs text-slate-400">Dashboard, descubrimiento, predictivo, informes y mas</p>
+          </div>
+          <div class="glass-card p-6 text-center reveal" style="--reveal-delay: 0.3s">
+            <div class="text-4xl font-bold text-cyan-400 mb-2">12</div>
+            <div class="text-white font-semibold mb-1">Packs verticales</div>
+            <p class="text-xs text-slate-400">Finanzas, RRHH, TI, Legal, Mantenimiento y mas</p>
+          </div>
+          <div class="glass-card p-6 text-center reveal" style="--reveal-delay: 0.4s">
+            <div class="text-4xl font-bold text-cyan-400 mb-2">10M+</div>
+            <div class="text-white font-semibold mb-1">Conexiones MQTT</div>
+            <p class="text-xs text-slate-400">EMQX 5.8 para IoT industrial</p>
+          </div>
+          <div class="glass-card p-6 text-center reveal" style="--reveal-delay: 0.5s">
+            <div class="text-4xl font-bold text-cyan-400 mb-2">OCEL</div>
+            <div class="text-white font-semibold mb-1">Formato canónico</div>
+            <p class="text-xs text-slate-400">Estandar academico de process mining</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PROCESO DE INTEGRACION (3 PASOS)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Implementacion sencilla</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          De la decision a los<br />
+          <span class="gradient-text">resultados en dias</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div class="text-center reveal" style="--reveal-delay: 0.2s">
+            <div class="w-20 h-20 rounded-full bg-cyan-900/30 flex items-center justify-center mx-auto mb-6">
+              <span class="text-3xl font-bold text-cyan-400">1</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Conexion de datos</h3>
+            <p class="text-sm text-slate-400">Configure los conectores a sus fuentes (SCADA, ERP, GMAO, bases de datos). Ingesta automatica en tiempo real via Kafka.</p>
+            <div class="mt-4 text-xs text-cyan-300 font-medium">2-3 dias</div>
+          </div>
+
+          <div class="text-center reveal" style="--reveal-delay: 0.3s">
+            <div class="w-20 h-20 rounded-full bg-cyan-900/30 flex items-center justify-center mx-auto mb-6">
+              <span class="text-3xl font-bold text-cyan-400">2</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Analisis automatico</h3>
+            <p class="text-sm text-slate-400">Los 8 agentes core analizan sus datos sin configuracion adicional. Descubrimiento, conformidad y prediccion en minutos.</p>
+            <div class="mt-4 text-xs text-cyan-300 font-medium">1 dia</div>
+          </div>
+
+          <div class="text-center reveal" style="--reveal-delay: 0.4s">
+            <div class="w-20 h-20 rounded-full bg-cyan-900/30 flex items-center justify-center mx-auto mb-6">
+              <span class="text-3xl font-bold text-cyan-400">3</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Resultados accionables</h3>
+            <p class="text-sm text-slate-400">Dashboard ejecutivo con KPIs en tiempo real. Informes PDF automaticos. Alertas predictivas configurables.</p>
+            <div class="mt-4 text-xs text-cyan-300 font-medium">Dia 5</div>
+          </div>
+        </div>
+
+        <div class="mt-12 glass-card p-6 text-center reveal" style="--reveal-delay: 0.5s">
+          <p class="text-lg text-white">
+            <span class="font-semibold">Sin codigo que desarrollar.</span> <span class="text-cyan-300">Sin backend que modificar.</span> <span class="text-slate-400">Un analista de negocio puede configurar un nuevo dominio sin intervencion de TI.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         COMPARATIVA DIRECTA
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Ventaja competitiva</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          MINDDEN_FLOW vs<br />
+          <span class="gradient-text">soluciones tradicionales</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="glass-card overflow-hidden reveal" style="--reveal-delay: 0.2s">
+          <div class="comparison-row" style="background: var(--line-strong);">
+            <div class="comparison-cell" style="background: var(--bg-elev); font-weight: 700;">Caracteristica</div>
+            <div class="comparison-cell" style="background: var(--bg-elev); color: var(--rose);">Soluciones Tradicionales</div>
+            <div class="comparison-cell highlight" style="background: rgba(34, 211, 238, 0.08); color: var(--cyan-light);">MINDDEN_FLOW</div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell">Ingesta de datos</div>
+            <div class="comparison-cell">Archivos XES/CSV importados manualmente</div>
+            <div class="comparison-cell highlight">Conectores en tiempo real (SCADA, OPC-UA, MQTT, REST)</div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell">Latencia</div>
+            <div class="comparison-cell">Datos de semanas o meses atras</div>
+            <div class="comparison-cell highlight">Datos de segundos o minutos atras</div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell">Analisis</div>
+            <div class="comparison-cell">Descubrimiento y conformidad basicos</div>
+            <div class="comparison-cell highlight">8 agentes incluyendo predictivo, dependencias y NLP</div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell">Informes</div>
+            <div class="comparison-cell">Exportacion manual a PowerPoint/PDF</div>
+            <div class="comparison-cell highlight">PDF ejecutivos generados automaticamente por IA</div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell">Verticalizacion</div>
+            <div class="comparison-cell">Generico, requiere personalizacion costosa</div>
+            <div class="comparison-cell highlight">12 packs verticales preconfigurados</div>
+          </div>
+          <div class="comparison-row">
+            <div class="comparison-cell">Añadir dominio</div>
+            <div class="comparison-cell">Proyecto de desarrollo de meses</div>
+            <div class="comparison-cell highlight">Archivo de configuracion, sin codigo</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         RESUMEN POR AUDIENCIA
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Para cada decisior</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Beneficios adaptados<br />
+          <span class="gradient-text">a su perfil</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="glass-card p-6 audience-card reveal" style="--reveal-delay: 0.2s">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-cyan-900/50 flex items-center justify-center">
+                <i data-lucide="piggy-bank" class="w-6 h-6 text-cyan-400"></i>
+              </div>
+              <div>
+                <div class="text-white font-semibold">CFO</div>
+                <div class="text-xs text-slate-400">Director Financiero</div>
+              </div>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Ahorro financiero directo</h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Hasta 25% reduccion en costes de mantenimiento</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Hasta 60% menos penalizaciones por SLA</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Deteccion automatica de fraudes en P2P</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>ROI medible en 4 meses</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="glass-card p-6 audience-card reveal" style="--reveal-delay: 0.3s">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-cyan-900/50 flex items-center justify-center">
+                <i data-lucide="settings" class="w-6 h-6 text-cyan-400"></i>
+              </div>
+              <div>
+                <div class="text-white font-semibold">Director de Operaciones</div>
+                <div class="text-xs text-slate-400">COO</div>
+              </div>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Eficiencia operativa total</h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Hasta 40% reduccion en tiempos de ciclo</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Visibilidad completa de procesos en 24 pantallas</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Eliminacion de cuellos de botella automatica</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Analisis del 100% de eventos, no muestras</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="glass-card p-6 audience-card reveal" style="--reveal-delay: 0.4s">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-cyan-900/50 flex items-center justify-center">
+                <i data-lucide="trending-up" class="w-6 h-6 text-cyan-400"></i>
+              </div>
+              <div>
+                <div class="text-white font-semibold">CEO</div>
+                <div class="text-xs text-slate-400">Director General</div>
+              </div>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Ventaja competitiva</h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Escalabilidad a cualquier dominio de negocio</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Decisiones basadas en datos, no en intuicion</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Transformacion de reactiva a predictiva</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Plataforma unificada para toda la organizacion</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CTA FINAL
+         ============================================================ -->
+    <section class="slide items-center" id="contacto">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content text-center">
+        <div class="brand-chip mb-6 reveal float">
+          <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+          <span>Siguiente paso</span>
+        </div>
+        <h2 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+          Transforme sus procesos<br />
+          <span class="gradient-text">en ventaja competitiva</span>
+        </h2>
+        <div class="w-20 h-1 gradient-bar rounded-full mx-auto mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+        <p
+          class="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto mb-10 reveal"
+          style="--reveal-delay: 0.3s"
+        >
+          En 5 dias conectamos sus primeras fuentes de datos. En el dia 5 vera el analisis completo de sus procesos. Sin compromiso a largo plazo.
+        </p>
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center items-center reveal"
+          style="--reveal-delay: 0.45s"
+        >
+          <a
+            href="mailto:info@mindden.com"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition"
+          >
+            <i data-lucide="mail" class="w-5 h-5"></i>
+            Solicitar demo
+          </a>
+          <a
+            href="tel:+34965349770"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition"
+          >
+            <i data-lucide="phone" class="w-5 h-5"></i>
+            +34 965 349 770
+          </a>
+        </div>
+        <p class="mt-12 text-xs text-slate-600 reveal" style="--reveal-delay: 0.6s">
+          MINDDEN_FLOW by <b>Mindden Soft Tech</b>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Runtime
+         ============================================================ -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script>
+      if (window.lucide) lucide.createIcons();
+
+      function toggleAccordion(header) {
+        const item = header.parentElement;
+        const wasOpen = item.classList.contains('open');
+        
+        // Close all accordions
+        document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+        
+        // Toggle current
+        if (!wasOpen) {
+          item.classList.add('open');
+        }
+      }
+
+      function calcularROI() {
+        const empleados = parseFloat(document.getElementById('empleados').value) || 0;
+        const horasInforme = parseFloat(document.getElementById('horasInforme').value) || 0;
+        const costeHora = parseFloat(document.getElementById('costeHora').value) || 0;
+        const penalizaciones = parseFloat(document.getElementById('penalizaciones').value) || 0;
+
+        // Ahorro en informes: 90% reduccion
+        const ahorroInformes = horasInforme * 52 * costeHora * 0.9;
+        
+        // Ahorro en penalizaciones: 60% reduccion
+        const ahorroPenalizaciones = penalizaciones * 0.6;
+        
+        // Ahorro en mantenimiento: 25% (estimacion basada en empleados)
+        const ahorroMantenimiento = empleados * costeHora * 40 * 0.25;
+
+        const ahorroTotal = ahorroInformes + ahorroPenalizaciones + ahorroMantenimiento;
+        const roiTiempo = ahorroTotal > 0 ? Math.max(3, Math.round(100000 / (ahorroTotal / 12))) : 12;
+
+        document.getElementById('ahorroInformes').textContent = 'EUR ' + Math.round(ahorroInformes).toLocaleString();
+        document.getElementById('ahorroPenalizaciones').textContent = 'EUR ' + Math.round(ahorroPenalizaciones).toLocaleString();
+        document.getElementById('ahorroMantenimiento').textContent = 'EUR ' + Math.round(ahorroMantenimiento).toLocaleString();
+        document.getElementById('ahorroTotal').textContent = 'EUR ' + Math.round(ahorroTotal).toLocaleString();
+        document.getElementById('roiTiempo').textContent = roiTiempo + ' meses';
+      }
+
+      // Initialize calculator
+      calcularROI();
+    </script>
+
+    <script src="js/presentation.js"></script>
+  </body>
+</html>

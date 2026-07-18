@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MINDDEN PEOPLE · Plataforma Integral de Gestion de RRHH</title>
+    <meta
+      name="description"
+      content="MINDDEN PEOPLE centraliza ausencias, fichaje, nomina, contratos y compliance en una unica plataforma. Hasta 20 horas/mes de ahorro en RRHH."
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* === HERO MAGAZINE (H5) === */
+      .hero-magazine {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+      @media (min-width: 1024px) {
+        .hero-magazine {
+          grid-template-columns: 1.1fr 0.9fr;
+          gap: 4rem;
+        }
+      }
+      .hero-bullet {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .hero-bullet:last-child { border-bottom: none; }
+      .hero-bullet-icon {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, rgba(34, 211, 238, 0.15), rgba(14, 165, 233, 0.05));
+        border: 1px solid rgba(34, 211, 238, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--cyan-light);
+      }
+      .hero-bullet-text h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 0.2rem;
+      }
+      .hero-bullet-text p {
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        line-height: 1.5;
+      }
+
+      /* === CALCULADORA PREMIUM CON SLIDERS === */
+      .calc-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 6px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal));
+        outline: none;
+        cursor: pointer;
+      }
+      .calc-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--cyan-light);
+        border: 3px solid var(--bg-deep);
+        box-shadow: 0 0 16px rgba(34, 211, 238, 0.5);
+        cursor: grab;
+        transition: box-shadow 0.2s, transform 0.2s;
+      }
+      .calc-slider::-webkit-slider-thumb:hover {
+        box-shadow: 0 0 28px rgba(34, 211, 238, 0.7);
+        transform: scale(1.15);
+      }
+      .calc-slider::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--cyan-light);
+        border: 3px solid var(--bg-deep);
+        box-shadow: 0 0 16px rgba(34, 211, 238, 0.5);
+        cursor: grab;
+      }
+      .calc-slider::-moz-range-thumb:hover {
+        box-shadow: 0 0 28px rgba(34, 211, 238, 0.7);
+      }
+      .calc-value {
+        font-family: ui-monospace, monospace;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--cyan-light);
+        min-width: 60px;
+        text-align: right;
+      }
+      .result-card {
+        background: linear-gradient(135deg, rgba(34, 211, 238, 0.1) 0%, rgba(20, 184, 166, 0.05) 100%);
+        border: 1px solid rgba(34, 211, 238, 0.25);
+        border-radius: 14px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s;
+      }
+      .result-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #22d3ee 0%, #14b8a6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .audience-card {
+        position: relative;
+        overflow: hidden;
+      }
+      .audience-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal));
+      }
+      .result-card.pulse {
+        transform: scale(1.04);
+        box-shadow: 0 0 40px rgba(34, 211, 238, 0.3);
+      }
+
+      /* === ACORDEON PREMIUM CON BLUR === */
+      .accordion-item {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        overflow: hidden;
+        transition: border-color 0.3s, opacity 0.35s, filter 0.35s;
+      }
+      .accordion-item.blurred {
+        opacity: 0.45;
+        filter: blur(1.5px);
+      }
+      .accordion-item:hover {
+        border-color: var(--line-strong);
+      }
+      .accordion-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 1.5rem;
+        background: linear-gradient(180deg, rgba(15, 31, 55, 0.85) 0%, rgba(10, 22, 40, 0.85) 100%);
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .accordion-header:hover {
+        background: linear-gradient(180deg, rgba(20, 40, 65, 0.9) 0%, rgba(15, 30, 50, 0.9) 100%);
+      }
+      .accordion-icon {
+        transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+      }
+      .accordion-item.open .accordion-icon {
+        transform: rotate(180deg);
+      }
+      .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        background: rgba(10, 22, 40, 0.6);
+      }
+
+      /* === MICRO-INTERACCIONES PREMIUM === */
+      .icon-tile, .brand-chip, .roi-chip {
+        transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s, border-color 0.3s;
+      }
+      .icon-tile:hover, .brand-chip:hover, .roi-chip:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 8px 24px rgba(34, 211, 238, 0.15);
+      }
+
+      /* === SECCION 9: SEGURIDAD PREMIUM === */
+      .security-card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 2rem 1.5rem;
+        background: linear-gradient(180deg, rgba(15, 31, 55, 0.85) 0%, rgba(10, 22, 40, 0.85) 100%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.3s, box-shadow 0.4s;
+      }
+      .security-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal));
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .security-card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 16px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.4s;
+        box-shadow: 0 0 30px -5px rgba(34, 211, 238, 0.2), inset 0 0 30px -10px rgba(34, 211, 238, 0.05);
+      }
+      .security-card:hover {
+        transform: translateY(-6px) scale(1.02);
+        border-color: rgba(34, 211, 238, 0.4);
+        box-shadow: 0 20px 50px -15px rgba(34, 211, 238, 0.2);
+      }
+      .security-card:hover::before {
+        opacity: 1;
+      }
+      .security-card:hover::after {
+        opacity: 1;
+      }
+      .security-card:hover .security-icon {
+        transform: scale(1.15) rotate(-5deg);
+        box-shadow: 0 0 30px rgba(34, 211, 238, 0.4);
+      }
+      .security-card:hover .security-ring {
+        transform: scale(1.1);
+        opacity: 1;
+      }
+      .security-icon {
+        position: relative;
+        z-index: 2;
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(34, 211, 238, 0.15), rgba(20, 184, 166, 0.08));
+        border: 1px solid rgba(34, 211, 238, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--cyan-light);
+        margin: 0 auto 1.25rem;
+        transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
+      }
+      .security-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border: 2px solid rgba(34, 211, 238, 0.15);
+        opacity: 0;
+        transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.4s;
+        pointer-events: none;
+      }
+      .security-card:hover .security-ring {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+      .security-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.25rem 0.65rem;
+        border-radius: 999px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 0.75rem;
+      }
+      .security-badge.active {
+        background: rgba(16, 185, 129, 0.12);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+      }
+      .security-badge-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #10b981;
+        animation: pulseDot 2s ease-in-out infinite;
+      }
+      @keyframes pulseDot {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+        50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      }
+      .security-features {
+        list-style: none;
+        padding: 0;
+        margin: 0.75rem 0 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .security-features li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        color: var(--text-soft);
+        line-height: 1.45;
+      }
+      .security-features li i {
+        flex-shrink: 0;
+        margin-top: 0.15rem;
+      }
+      .security-glow-bg {
+        position: absolute;
+        bottom: -30%;
+        right: -20%;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.5s;
+      }
+      .security-card:hover .security-glow-bg {
+        opacity: 1;
+      }
+
+      /* === CONNECTOR GRADIENT ENTRE SECCIONES === */
+      .section-connector {
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent 0%, var(--cyan) 20%, var(--teal) 50%, var(--cyan) 80%, transparent 100%);
+        opacity: 0.3;
+        margin: 0 auto;
+      }
+
+      /* === TIMELINE PASOS (S12) === */
+      .timeline-step {
+        display: grid;
+        grid-template-columns: 1fr 50px 1fr;
+        gap: 0;
+        align-items: start;
+        margin-bottom: 0;
+      }
+      .timeline-step:last-child { margin-bottom: 0; }
+      .timeline-step-content {
+        padding: 1.5rem;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, rgba(15, 31, 55, 0.85) 0%, rgba(10, 22, 40, 0.85) 100%);
+      }
+      .timeline-step-center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 1.25rem;
+      }
+      .timeline-num {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(34, 211, 238, 0.2) 0%, rgba(20, 184, 166, 0.1) 100%);
+        border: 2px solid var(--cyan);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: var(--cyan-light);
+      }
+      .timeline-connector {
+        width: 2px;
+        height: 40px;
+        background: linear-gradient(180deg, var(--cyan) 0%, var(--teal) 100%);
+        margin: 0.5rem auto;
+      }
+
+      /* === LIGHT MODE OVERRIDES === */
+      [data-theme="light"] .accordion-header {
+        background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%);
+      }
+      [data-theme="light"] .accordion-header:hover {
+        background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,250,252,1) 100%);
+      }
+      [data-theme="light"] .accordion-content {
+        background: rgba(248,250,252,0.9);
+      }
+      [data-theme="light"] .result-card {
+        background: linear-gradient(135deg, rgba(103, 151, 205, 0.08) 0%, rgba(248, 250, 252, 0.9) 100%);
+        border-color: rgba(103, 151, 205, 0.25);
+      }
+      [data-theme="light"] .result-number {
+        background: linear-gradient(135deg, #6797CD 0%, #95BBE5 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      [data-theme="light"] .calc-slider::-webkit-slider-thumb {
+        border-color: #f8fafc;
+      }
+      [data-theme="light"] .security-card {
+        background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%);
+      }
+      [data-theme="light"] .security-card:hover {
+        box-shadow: 0 20px 50px -15px rgba(103,151,205,0.2);
+      }
+      [data-theme="light"] .security-card:hover::after {
+        box-shadow: 0 0 30px -5px rgba(103,151,205,0.15), inset 0 0 30px -10px rgba(103,151,205,0.04);
+      }
+      [data-theme="light"] .timeline-step-content {
+        background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%);
+      }
+      [data-theme="light"] .hero-bullet-icon {
+        background: linear-gradient(135deg, rgba(103,151,205,0.12), rgba(103,151,205,0.04));
+        border-color: rgba(103,151,205,0.25);
+      }
+
+      @media (max-width: 768px) {
+        .timeline-step {
+          grid-template-columns: 40px 1fr;
+          gap: 1rem;
+        }
+        .timeline-step-center {
+          grid-row: 1;
+          grid-column: 1;
+          justify-content: flex-start;
+          padding-top: 1rem;
+        }
+        .timeline-step-content {
+          grid-column: 2 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================================
+         HERO — H5 MAGAZINE: h1 izquierda + bullets derecha
+         ============================================================ -->
+    <section class="slide items-center">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content">
+        <div class="hero-magazine">
+          <div>
+            <div class="hero-logo reveal" style="--reveal-delay: 0s">
+              <img src="img/mindden.png" alt="Mindden" />
+            </div>
+            <div class="brand-chip mb-6 reveal float">
+              <i data-lucide="users" class="w-3.5 h-3.5"></i>
+              <span>Plataforma Integral de RRHH</span>
+            </div>
+            <h1 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+              Deje de perder tiempo<br />
+              <span class="gradient-text">gestionando RRHH manualmente</span>
+            </h1>
+            <div class="w-20 h-1 gradient-bar rounded-full mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+            <p
+              class="text-lg text-slate-300 leading-relaxed mb-8 reveal"
+              style="--reveal-delay: 0.3s"
+            >
+              MINDDEN PEOPLE unifica ausencias, fichaje, nomina, contratos y compliance en una sola plataforma. <span class="text-cyan-300 font-semibold">Ahorre hasta 20 horas mensuales en tareas repetitivas.</span>
+            </p>
+            <div
+              class="flex flex-col sm:flex-row gap-4 reveal"
+              style="--reveal-delay: 0.45s"
+            >
+              <a
+                href="#calculadora"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition"
+              >
+                <i data-lucide="calculator" class="w-5 h-5"></i>
+                Calcular su ahorro
+              </a>
+              <a
+                href="mailto:info@mindden.com"
+                class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition"
+              >
+                <i data-lucide="mail" class="w-5 h-5"></i>
+                info@mindden.com
+              </a>
+            </div>
+          </div>
+
+          <div class="reveal" style="--reveal-delay: 0.5s">
+            <div class="hero-bullet">
+              <div class="hero-bullet-icon"><i data-lucide="calendar-check" class="w-5 h-5"></i></div>
+              <div class="hero-bullet-text">
+                <h3>Ausencias Inteligentes</h3>
+                <p>Politicas configurables, aprobacion multinivel automatica, contadores en tiempo real y carryover sin errores.</p>
+              </div>
+            </div>
+            <div class="hero-bullet">
+              <div class="hero-bullet-icon"><i data-lucide="fingerprint" class="w-5 h-5"></i></div>
+              <div class="hero-bullet-text">
+                <h3>Fichaje Multi-dispositivo</h3>
+                <p>Web, movil y kiosko con geocerca. Horas extras calculadas automaticamente con 95% menos de errores.</p>
+              </div>
+            </div>
+            <div class="hero-bullet">
+              <div class="hero-bullet-icon"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+              <div class="hero-bullet-text">
+                <h3>Compliance Total</h3>
+                <p>Canal de denuncias anonimo, cifrado RGPD de datos sensibles y audit log completo de cada accion.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <span>Descubra mas</span>
+        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         IMPACTO FINANCIERO — BIG-STAT (numeros masivos)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Impacto financiero</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Resultados que se<br />
+          <span class="gradient-text">miden en euros</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.2s">
+            <div class="big-stat">
+              <div class="big-stat-num gradient count-anim">20<span class="big-stat-unit">h</span></div>
+              <div class="big-stat-label">Ahorro mensual en departamentos RRHH</div>
+            </div>
+          </div>
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.3s">
+            <div class="big-stat">
+              <div class="big-stat-num gradient count-anim">85<span class="big-stat-unit">%</span></div>
+              <div class="big-stat-label">Mas rapido en aprobaciones de ausencia</div>
+            </div>
+          </div>
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.4s">
+            <div class="big-stat">
+              <div class="big-stat-num gradient count-anim">95<span class="big-stat-unit">%</span></div>
+              <div class="big-stat-label">Menos errores en fichaje y control horario</div>
+            </div>
+          </div>
+          <div class="glass-card p-6 reveal" style="--reveal-delay: 0.5s">
+            <div class="big-stat">
+              <div class="big-stat-num gradient count-anim">70<span class="big-stat-unit">%</span></div>
+              <div class="big-stat-label">Reduccion en tiempo de onboarding</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         CALCULADORA ROI — SLIDERS INTERACTIVOS + PULSE
+         ============================================================ -->
+    <section class="slide" id="calculadora">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Calculadora de ROI</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Cuanto puede ahorrar<br />
+          <span class="gradient-text">su organizacion</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div class="glass-card p-8 reveal" style="--reveal-delay: 0.2s">
+            <h3 class="text-lg font-bold text-white mb-6">Introduzca sus datos</h3>
+            <div class="space-y-6">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-sm text-slate-400">Numero de empleados</label>
+                  <span class="calc-value" id="valEmpleados">100</span>
+                </div>
+                <input type="range" id="empleados" class="calc-slider" min="10" max="2000" value="100" step="10" oninput="calcularROI()">
+              </div>
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-sm text-slate-400">Horas/semana en gestion RRHH</label>
+                  <span class="calc-value" id="valHoras">15</span>
+                </div>
+                <input type="range" id="horasGestion" class="calc-slider" min="1" max="60" value="15" oninput="calcularROI()">
+              </div>
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-sm text-slate-400">Coste medio hora RRHH (EUR)</label>
+                  <span class="calc-value" id="valCoste">30</span>
+                </div>
+                <input type="range" id="costeHora" class="calc-slider" min="10" max="80" value="30" step="2" oninput="calcularROI()">
+              </div>
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <label class="text-sm text-slate-400">Empleados nuevos al mes</label>
+                  <span class="calc-value" id="valNuevos">5</span>
+                </div>
+                <input type="range" id="nuevosEmpleados" class="calc-slider" min="0" max="50" value="5" oninput="calcularROI()">
+              </div>
+            </div>
+          </div>
+
+          <div class="reveal" style="--reveal-delay: 0.3s">
+            <div class="result-card mb-6" id="resultMain">
+              <div class="text-sm text-cyan-300 mb-2">Ahorro anual estimado</div>
+              <div class="result-number" id="ahorroTotal">EUR 32,400</div>
+              <div class="text-white font-semibold mt-2">Reduccion del 20% en costes operativos de RRHH</div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div class="glass-card p-4 text-center">
+                <div class="text-2xl font-bold text-cyan-400" id="ahorroGestion">EUR 18,720</div>
+                <div class="text-xs text-slate-400 mt-1">Ahorro en gestion</div>
+              </div>
+              <div class="glass-card p-4 text-center">
+                <div class="text-2xl font-bold text-cyan-400" id="ahorroOnboarding">EUR 9,000</div>
+                <div class="text-xs text-slate-400 mt-1">Onboarding eficiente</div>
+              </div>
+              <div class="glass-card p-4 text-center">
+                <div class="text-2xl font-bold text-cyan-400" id="ahorroCompliance">EUR 4,680</div>
+                <div class="text-xs text-slate-400 mt-1">Compliance evitado</div>
+              </div>
+              <div class="glass-card p-4 text-center">
+                <div class="text-2xl font-bold text-cyan-400" id="roiTiempo">3 meses</div>
+                <div class="text-xs text-400 mt-1">Tiempo de retorno</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         PROBLEMA vs SOLUCION — VS-GRID
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">El problema</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          La gestion de RRHH le esta<br />
+          <span class="gradient-text">costando tiempo y dinero</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="vs-grid reveal" style="--reveal-delay: 0.2s">
+          <div class="vs-card before">
+            <span class="vs-pill"><i data-lucide="alert-triangle" class="w-3 h-3"></i> Sin MINDDEN</span>
+            <h3>Gestion fragmentada</h3>
+            <ul class="vs-list">
+              <li>Ausencias via email y hojas de calculo</li>
+              <li>Fichajes en papel o sistemas sin validacion</li>
+              <li>Envio manual de nominas por email</li>
+              <li>Onboarding caotico con tareas olvidadas</li>
+              <li>Sin compliance RGPD ni canal de denuncias</li>
+              <li>Reportes generados manualmente 10-15h/mes</li>
+            </ul>
+          </div>
+
+          <div class="vs-arrow">
+            <i data-lucide="arrow-right" class="w-8 h-8"></i>
+          </div>
+
+          <div class="vs-card after">
+            <span class="vs-pill"><i data-lucide="check-circle" class="w-3 h-3"></i> Con MINDDEN PEOPLE</span>
+            <h3>Plataforma unificada</h3>
+            <ul class="vs-list">
+              <li>Solicitudes con aprobacion manager/RRHH automatica</li>
+              <li>Fichaje movil, web y kiosko con geocerca</li>
+              <li>Nomina por lotes con matching automatico por DNI</li>
+              <li>Onboarding automatizado con tareas por rol</li>
+              <li>Canal de denuncias anonimo y cifrado RGPD</li>
+              <li>Reportes automaticos en CSV, XLSX y PDF</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         FUNCIONALIDADES — GLASS-CARD + ICON-TILE (grid 2 cols)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Funcionalidades</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Todo lo que su RRHH<br />
+          <span class="gradient-text">necesita en un solo lugar</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-2 gap-5">
+          <div class="glass-card p-6 flex gap-4 items-start reveal" style="--reveal-delay: 0.2s">
+            <div class="icon-tile shrink-0"><i data-lucide="calendar-check" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Ausencias Inteligentes</h3>
+              <p class="text-sm text-slate-400">Politicas configurables, aprobaciones multinivel, contadores en tiempo real y carryover automatico.</p>
+              <p class="text-xs text-cyan-300 mt-2 font-medium">Elimina el 100% de conflictos en gestion de vacaciones</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 flex gap-4 items-start reveal" style="--reveal-delay: 0.25s">
+            <div class="icon-tile shrink-0"><i data-lucide="fingerprint" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Control Horario</h3>
+              <p class="text-sm text-slate-400">Fichaje desde web, movil o kiosko con geocerca. Horas extras calculadas automaticamente.</p>
+              <p class="text-xs text-cyan-300 mt-2 font-medium">Reduce errores en fichaje hasta un 95%</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 flex gap-4 items-start reveal" style="--reveal-delay: 0.3s">
+            <div class="icon-tile shrink-0"><i data-lucide="file-text" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Nomina por Lotes</h3>
+              <p class="text-sm text-slate-400">Carga masiva de PDFs, matching por DNI, descarga segura con links que expiran.</p>
+              <p class="text-xs text-cyan-300 mt-2 font-medium">De 1-2 dias a distribucion instantanea</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 flex gap-4 items-start reveal" style="--reveal-delay: 0.35s">
+            <div class="icon-tile shrink-0"><i data-lucide="rocket" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Onboarding/Offboarding</h3>
+              <p class="text-sm text-slate-400">Flujos automatizados con tareas asignadas por rol (HR, manager, IT, empleado).</p>
+              <p class="text-xs text-cyan-300 mt-2 font-medium">De 2 semanas a 3 dias por incorporacion</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 flex gap-4 items-start reveal" style="--reveal-delay: 0.4s">
+            <div class="icon-tile shrink-0"><i data-lucide="bell-ring" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Notificaciones Multi-canal</h3>
+              <p class="text-sm text-slate-400">In-app, email y push (PWA). Alertas automaticas en cada evento del ciclo de vida.</p>
+              <p class="text-xs text-cyan-300 mt-2 font-medium">Recordatorios de fichaje sin intervencion humana</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 flex gap-4 items-start reveal" style="--reveal-delay: 0.45s">
+            <div class="icon-tile shrink-0"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Compliance RGPD</h3>
+              <p class="text-sm text-slate-400">Canal de denuncias anonimo, cifrado de datos sensibles, audit log completo.</p>
+              <p class="text-xs text-cyan-300 mt-2 font-medium">Evita sanciones del 4% de facturacion anual</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 flex gap-4 items-start reveal" style="--reveal-delay: 0.5s">
+            <div class="icon-tile shrink-0"><i data-lucide="bar-chart-3" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Reportes Automaticos</h3>
+              <p class="text-sm text-slate-400">Informes operativos en CSV, XLSX y PDF. Filtros avanzados por departamento y fecha.</p>
+              <p class="text-xs text-cyan-300 mt-2 font-medium">De 10-15 horas/mes a generacion automatica</p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 flex gap-4 items-start reveal" style="--reveal-delay: 0.55s">
+            <div class="icon-tile shrink-0"><i data-lucide="network" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="text-white font-semibold mb-1">Organigrama Visual</h3>
+              <p class="text-sm text-slate-400">Departamentos, equipos, habilidades y certificaciones con seguimiento de expiracion.</p>
+              <p class="text-xs text-cyan-300 mt-2 font-medium">Visibilidad total de la estructura organizativa</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         METRICAS — TCO-TABLE (antes/despues)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Eficiencia operativa</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Antes vs Despues<br />
+          <span class="gradient-text">con MINDDEN PEOPLE</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="reveal" style="--reveal-delay: 0.2s">
+          <table class="tco-table">
+            <thead>
+              <tr>
+                <th class="col-dim">Metrica</th>
+                <th class="col-before">Sin MINDDEN</th>
+                <th class="col-after">Con MINDDEN PEOPLE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-dim">Aprobacion ausencia</td>
+                <td class="col-before">2-3 dias <span class="tco-num">manual</span></td>
+                <td class="col-after">2-4 horas <span class="tco-num">automatico</span></td>
+              </tr>
+              <tr>
+                <td class="col-dim">Distribucion nomina</td>
+                <td class="col-before">1-2 dias <span class="tco-num">uno a uno</span></td>
+                <td class="col-after">Instantanea <span class="tco-num">por lotes</span></td>
+              </tr>
+              <tr>
+                <td class="col-dim">Alta de empleado</td>
+                <td class="col-before">1-2 semanas <span class="tco-num">caotico</span></td>
+                <td class="col-after">2-3 dias <span class="tco-num">automatizado</span></td>
+              </tr>
+              <tr>
+                <td class="col-dim">Resolucion incidencias</td>
+                <td class="col-before">Horas/dias <span class="tco-num">manual</span></td>
+                <td class="col-after">Minutos <span class="tco-num">asistido</span></td>
+              </tr>
+              <tr>
+                <td class="col-dim">Generacion reportes</td>
+                <td class="col-before">10-15 horas/mes <span class="tco-num">manual</span></td>
+                <td class="col-after">Automatica <span class="tco-num">0 intervencion</span></td>
+              </tr>
+              <tr>
+                <td class="col-dim">Fichaje</td>
+                <td class="col-before">Papel/reloj <span class="tco-num">sin geocerca</span></td>
+                <td class="col-after">Multi-canal <span class="tco-num">con geocerca</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="tco-foot reveal" style="--reveal-delay: 0.3s">Basado en empresas con 100-500 empleados. Ahorro anual estimado: hasta EUR 32,400.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         PROCESO — PIPELINE-MOCK (3 pasos)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Implementacion sencilla</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          De la decision a los<br />
+          <span class="gradient-text">resultados en dias</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="glass-card overflow-hidden reveal" style="--reveal-delay: 0.2s">
+          <div class="pipeline-mock">
+            <div class="pipeline-step">
+              <div class="pipeline-bubble ok"><i data-lucide="settings" class="w-5 h-5"></i></div>
+              <div class="pipeline-step-label">Paso 1</div>
+              <div class="pipeline-step-value">Configuracion</div>
+              <div class="pipeline-step-sub">1-2 dias</div>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="w-5 h-5"></i></div>
+            <div class="pipeline-step">
+              <div class="pipeline-bubble ok"><i data-lucide="zap" class="w-5 h-5"></i></div>
+              <div class="pipeline-step-label">Paso 2</div>
+              <div class="pipeline-step-value">Activacion</div>
+              <div class="pipeline-step-sub">Dia 3</div>
+            </div>
+            <div class="pipeline-arrow"><i data-lucide="chevron-right" class="w-5 h-5"></i></div>
+            <div class="pipeline-step">
+              <div class="pipeline-bubble ok"><i data-lucide="check-circle" class="w-5 h-5"></i></div>
+              <div class="pipeline-step-label">Paso 3</div>
+              <div class="pipeline-step-value">Operativo</div>
+              <div class="pipeline-step-sub">Dia 5</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 mt-8">
+          <div class="glass-card p-5 text-center reveal" style="--reveal-delay: 0.3s">
+            <div class="text-sm text-white font-semibold mb-1">Importe sus datos</div>
+            <p class="text-xs text-slate-400">Empleados via CSV, departamentos y politicas de ausencia. Asigne roles y permisos.</p>
+          </div>
+          <div class="glass-card p-5 text-center reveal" style="--reveal-delay: 0.35s">
+            <div class="text-sm text-white font-semibold mb-1">Active los modulos</div>
+            <p class="text-xs text-slate-400">Ausencias, fichaje, nomina, contratos y onboarding. Configure plantillas y flujos.</p>
+          </div>
+          <div class="glass-card p-5 text-center reveal" style="--reveal-delay: 0.4s">
+            <div class="text-sm text-white font-semibold mb-1">Equipo operativo</div>
+            <p class="text-xs text-slate-400">Sus empleados empiezan a fichar, solicitar ausencias y recibir nomina automaticamente.</p>
+          </div>
+        </div>
+
+        <div class="mt-8 glass-card p-5 text-center reveal" style="--reveal-delay: 0.5s">
+          <p class="text-base text-white">
+            <span class="font-semibold">Sin infraestructura adicional.</span> <span class="text-cyan-300">Desplegado en la nube.</span> <span class="text-slate-400">Soporte incluido.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         SEGURIDAD — SECTION 9 PREMIUM (exprimida al maximo)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Seguridad y cumplimiento</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Sus datos protegidos<br />
+          <span class="gradient-text">con estandares de nivel empresarial</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-6 reveal" style="--reveal-delay: 0.15s"></div>
+        <p class="text-sm text-slate-400 mb-12 max-w-2xl reveal" style="--reveal-delay: 0.2s">
+          Cada capa de la plataforma esta disena para proteger la informacion mas sensible de su empresa y sus empleados. Cumplimiento RGPD por defecto, no como extra.
+        </p>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- Tarjeta 1: Cifrado -->
+          <div class="security-card reveal" style="--reveal-delay: 0.25s">
+            <div class="security-glow-bg"></div>
+            <div style="position:relative; display:flex; justify-content:center;">
+              <div class="security-ring"></div>
+              <div class="security-icon"><i data-lucide="lock" class="w-6 h-6"></i></div>
+            </div>
+            <div class="security-badge active" style="margin: 0 auto 0.5rem;">
+              <span class="security-badge-dot"></span>
+              Activo
+            </div>
+            <h3 class="text-white font-bold text-center mb-2">Cifrado de Datos</h3>
+            <p class="text-xs text-slate-400 text-center mb-3">AES-256 a nivel de base de datos</p>
+            <ul class="security-features">
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> DNI cifrado con pgcrypto</li>
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> IBAN protegido en reposo</li>
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> SSN encriptado permanentemente</li>
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> HTTPS en todas las comunicaciones</li>
+            </ul>
+          </div>
+
+          <!-- Tarjeta 2: RBAC -->
+          <div class="security-card reveal" style="--reveal-delay: 0.3s">
+            <div class="security-glow-bg"></div>
+            <div style="position:relative; display:flex; justify-content:center;">
+              <div class="security-ring"></div>
+              <div class="security-icon"><i data-lucide="shield" class="w-6 h-6"></i></div>
+            </div>
+            <div class="security-badge active" style="margin: 0 auto 0.5rem;">
+              <span class="security-badge-dot"></span>
+              Granular
+            </div>
+            <h3 class="text-white font-bold text-center mb-2">RBAC Granular</h3>
+            <p class="text-xs text-slate-400 text-center mb-3">Control de acceso por permiso y modulo</p>
+            <ul class="security-features">
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> 4 roles base configurables</li>
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> Permisos por modulo y accion</li>
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> Cada usuario solo ve lo suyo</li>
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> SSO corporativo con Keycloak</li>
+            </ul>
+          </div>
+
+          <!-- Tarjeta 3: Auditoria -->
+          <div class="security-card reveal" style="--reveal-delay: 0.35s">
+            <div class="security-glow-bg"></div>
+            <div style="position:relative; display:flex; justify-content:center;">
+              <div class="security-ring"></div>
+              <div class="security-icon"><i data-lucide="eye" class="w-6 h-6"></i></div>
+            </div>
+            <div class="security-badge active" style="margin: 0 auto 0.5rem;">
+              <span class="security-badge-dot"></span>
+              Completa
+            </div>
+            <h3 class="text-white font-bold text-center mb-2">Auditoria Total</h3>
+            <p class="text-xs text-slate-400 text-center mb-3">Trazabilidad de cada accion critica</p>
+            <ul class="security-features">
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> Audit log con usuario y timestamp</li>
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> Soft-delete: nada se pierde</li>
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> Registro de descargas de nomina</li>
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> Listo para inspeccion de trabajo</li>
+            </ul>
+          </div>
+
+          <!-- Tarjeta 4: Aislamiento -->
+          <div class="security-card reveal" style="--reveal-delay: 0.4s">
+            <div class="security-glow-bg"></div>
+            <div style="position:relative; display:flex; justify-content:center;">
+              <div class="security-ring"></div>
+              <div class="security-icon"><i data-lucide="database" class="w-6 h-6"></i></div>
+            </div>
+            <div class="security-badge active" style="margin: 0 auto 0.5rem;">
+              <span class="security-badge-dot"></span>
+              Multi-tenant
+            </div>
+            <h3 class="text-white font-bold text-center mb-2">Aislamiento Total</h3>
+            <p class="text-xs text-slate-400 text-center mb-3">Row-Level Security en PostgreSQL</p>
+            <ul class="security-features">
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> Cada empresa aislada en BD</li>
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> Acceso presigned a archivos</li>
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> Links de nomina que expiran</li>
+              <li><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i> Checksum SHA256 de integridad</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Barra de cumplimiento -->
+        <div class="mt-10 glass-card p-6 reveal" style="--reveal-delay: 0.5s">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-emerald-900/30 flex items-center justify-center">
+                <i data-lucide="badge-check" class="w-5 h-5 text-emerald-400"></i>
+              </div>
+              <div>
+                <div class="text-white font-semibold">Cumplimiento RGPD</div>
+                <div class="text-xs text-slate-400">Ley de Canal de Denuncias incluida</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-6 text-sm">
+              <div class="flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                <span class="text-slate-300">Derecho de acceso</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                <span class="text-slate-300">Derecho de supresion</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                <span class="text-slate-300">Minimizacion de datos</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
+                <span class="text-slate-300">Canal anonimo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         CASOS DE USO — ACORDEON PREMIUM CON BLUR
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Casos de uso reales</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Empresas que ya<br />
+          <span class="gradient-text">transformaron su RRHH</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-8 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="space-y-4 max-w-4xl mx-auto">
+          <div class="accordion-item open reveal" style="--reveal-delay: 0.2s">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <div class="flex items-center gap-4">
+                <div class="icon-tile"><i data-lucide="building-2" class="w-5 h-5"></i></div>
+                <div>
+                  <h3 class="font-semibold text-white">Empresa multisede (200 empleados)</h3>
+                  <p class="text-sm text-slate-400">Festivos por ciudad, ausencias via email, incidencias en Excel</p>
+                </div>
+              </div>
+              <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 class="text-rose-400 font-semibold mb-3">Problema</h4>
+                    <p class="text-sm text-slate-400 mb-4">Festivos diferentes por ciudad gestionados manualmente. Solicitudes de ausencia por email sin seguimiento. Incidencias de fichaje resueltas en hojas de calculo compartidas.</p>
+                    <h4 class="text-cyan-300 font-semibold mb-3">Solucion</h4>
+                    <p class="text-sm text-slate-300">Calendarios de festivos por localidad. Solicitudes con aprobacion manager y RRHH. Fichaje movil con geocerca. Resolucion de incidencias con propuesta automatica.</p>
+                  </div>
+                  <div class="result-card">
+                    <div class="text-sm text-cyan-300 mb-2">Resultado</div>
+                    <div class="result-number">70%</div>
+                    <div class="text-white font-semibold">Reduccion tiempo gestion ausencias</div>
+                    <div class="text-xs text-slate-400 mt-2">Cero errores en calculo de festivos por localidad</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item reveal" style="--reveal-delay: 0.3s">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <div class="flex items-center gap-4">
+                <div class="icon-tile"><i data-lucide="rocket" class="w-5 h-5"></i></div>
+                <div>
+                  <h3 class="font-semibold text-white">Startup en crecimiento (50 a 500 empleados)</h3>
+                  <p class="text-sm text-slate-400">Onboarding caotico, documentos dispersos, perdida de informacion</p>
+                </div>
+              </div>
+              <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 class="text-rose-400 font-semibold mb-3">Problema</h4>
+                    <p class="text-sm text-slate-400 mb-4">Onboarding que tarda 2 semanas por empleado. Documentos dispersos en drive compartido. Perdida de informacion critica durante la incorporacion.</p>
+                    <h4 class="text-cyan-300 font-semibold mb-3">Solucion</h4>
+                    <p class="text-sm text-slate-300">Plantillas de onboarding con tareas asignadas por rol. Documental centralizada con categorias. Notificaciones automaticas. Nomina distribuida automaticamente.</p>
+                  </div>
+                  <div class="result-card">
+                    <div class="text-sm text-cyan-300 mb-2">Resultado</div>
+                    <div class="result-number">3 dias</div>
+                    <div class="text-white font-semibold">Tiempo de incorporacion</div>
+                    <div class="text-xs text-slate-400 mt-2">De 2 semanas a 3 dias, cero documentos perdidos</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item reveal" style="--reveal-delay: 0.4s">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+              <div class="flex items-center gap-4">
+                <div class="icon-tile"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+                <div>
+                  <h3 class="font-semibold text-white">Empresa con compliance estricto</h3>
+                  <p class="text-sm text-slate-400">Sin canal de denuncias, datos sin cifrar, sin auditoria</p>
+                </div>
+              </div>
+              <i data-lucide="chevron-down" class="w-5 h-5 text-slate-400 accordion-icon"></i>
+            </div>
+            <div class="accordion-content">
+              <div class="p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 class="text-rose-400 font-semibold mb-3">Problema</h4>
+                    <p class="text-sm text-slate-400 mb-4">Canal de denuncias inexistente. DNI, IBAN y SSN sin cifrar. Sin registro de auditoria para inspecciones de trabajo.</p>
+                    <h4 class="text-cyan-300 font-semibold mb-3">Solucion</h4>
+                    <p class="text-sm text-slate-300">Canal de denuncias anonimo con hilo de mensajes. Datos cifrados con pgcrypto. RBAC con permisos granulares. Audit log completo.</p>
+                  </div>
+                  <div class="result-card">
+                    <div class="text-sm text-cyan-300 mb-2">Resultado</div>
+                    <div class="result-number">100%</div>
+                    <div class="text-white font-semibold">Cumplimiento RGPD</div>
+                    <div class="text-xs text-slate-400 mt-2">Listo para inspeccion, evitando sanciones del 4% de facturacion</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         RESUMEN POR AUDIENCIA
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">Para cada decisior</p>
+        <h2 class="title-2 mt-3 mb-4 reveal" style="--reveal-delay: 0.1s">
+          Beneficios adaptados<br />
+          <span class="gradient-text">a su perfil</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="glass-card p-6 audience-card reveal" style="--reveal-delay: 0.2s">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-cyan-900/50 flex items-center justify-center">
+                <i data-lucide="piggy-bank" class="w-6 h-6 text-cyan-400"></i>
+              </div>
+              <div>
+                <div class="text-white font-semibold">CFO</div>
+                <div class="text-xs text-slate-400">Director Financiero</div>
+              </div>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Ahorro financiero directo</h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Hasta 20 horas/mes de ahorro en departamentos RRHH</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Reduccion de 70% en costes de incorporacion</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Evita sanciones RGPD (hasta 4% facturacion)</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>ROI medible en 3 meses</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="glass-card p-6 audience-card reveal" style="--reveal-delay: 0.3s">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-cyan-900/50 flex items-center justify-center">
+                <i data-lucide="settings" class="w-6 h-6 text-cyan-400"></i>
+              </div>
+              <div>
+                <div class="text-white font-semibold">Director de Operaciones</div>
+                <div class="text-xs text-slate-400">COO</div>
+              </div>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Eficiencia operativa total</h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Aprobaciones 85% mas rapidas</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Fichaje con 95% menos errores</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Reportes automaticos sin intervencion manual</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Visibilidad total en tiempo real</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="glass-card p-6 audience-card reveal" style="--reveal-delay: 0.4s">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-cyan-900/50 flex items-center justify-center">
+                <i data-lucide="trending-up" class="w-6 h-6 text-cyan-400"></i>
+              </div>
+              <div>
+                <div class="text-white font-semibold">CEO</div>
+                <div class="text-xs text-slate-400">Director General</div>
+              </div>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Escalabilidad y ventaja</h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Escalable de 10 a 5,000+ empleados</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Plataforma unica sin integraciones multiples</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Cumplimiento legal automatico</span>
+              </li>
+              <li class="flex gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>
+                <span>Empleado auto-gestionado, menos carga RRHH</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-connector"></div>
+
+    <!-- ============================================================
+         CTA FINAL
+         ============================================================ -->
+    <section class="slide items-center" id="contacto">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content text-center">
+        <div class="brand-chip mb-6 reveal float">
+          <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+          <span>Siguiente paso</span>
+        </div>
+        <h2 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+          Transforme la gestion de RRHH<br />
+          <span class="gradient-text">en una ventaja competitiva</span>
+        </h2>
+        <div class="w-20 h-1 gradient-bar rounded-full mx-auto mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+        <p
+          class="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto mb-10 reveal"
+          style="--reveal-delay: 0.3s"
+        >
+          En 5 dias su equipo puede estar operativo. Sin infraestructura adicional. Sin compromiso a largo plazo. Solicite una demo sin compromiso.
+        </p>
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center items-center reveal"
+          style="--reveal-delay: 0.45s"
+        >
+          <a
+            href="mailto:info@mindden.com"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition"
+          >
+            <i data-lucide="mail" class="w-5 h-5"></i>
+            Solicitar demo
+          </a>
+          <a
+            href="tel:+34965349770"
+            class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition"
+          >
+            <i data-lucide="phone" class="w-5 h-5"></i>
+            +34 965 349 770
+          </a>
+        </div>
+        <p class="mt-12 text-xs text-slate-600 reveal" style="--reveal-delay: 0.6s">
+          MINDDEN PEOPLE by <b>Mindden Soft Tech</b>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Runtime
+         ============================================================ -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script>
+      if (window.lucide) lucide.createIcons();
+
+      /* === ACORDEON PREMIUM CON BLUR === */
+      function toggleAccordion(header) {
+        const item = header.parentElement;
+        const wasOpen = item.classList.contains('open');
+        const container = item.closest('.space-y-4') || item.parentElement;
+
+        container.querySelectorAll('.accordion-item').forEach(i => {
+          i.classList.remove('open');
+          i.classList.add('blurred');
+        });
+
+        if (!wasOpen) {
+          item.classList.add('open');
+          item.classList.remove('blurred');
+          const content = item.querySelector('.accordion-content');
+          if (content) {
+            content.style.maxHeight = content.scrollHeight + 'px';
+          }
+        } else {
+          const content = item.querySelector('.accordion-content');
+          if (content) content.style.maxHeight = '0';
+        }
+      }
+
+      /* Init: open first accordion and set max-height */
+      document.addEventListener('DOMContentLoaded', function() {
+        const firstOpen = document.querySelector('.accordion-item.open');
+        if (firstOpen) {
+          firstOpen.classList.remove('blurred');
+          const content = firstOpen.querySelector('.accordion-content');
+          if (content) content.style.maxHeight = content.scrollHeight + 'px';
+        }
+        document.querySelectorAll('.accordion-item:not(.open)').forEach(item => {
+          item.classList.add('blurred');
+        });
+      });
+
+      /* === CALCULADORA ROI CON SLIDERS === */
+      function calcularROI() {
+        const empleados = parseInt(document.getElementById('empleados').value) || 0;
+        const horasGestion = parseInt(document.getElementById('horasGestion').value) || 0;
+        const costeHora = parseInt(document.getElementById('costeHora').value) || 0;
+        const nuevosEmpleados = parseInt(document.getElementById('nuevosEmpleados').value) || 0;
+
+        /* Update displayed values */
+        document.getElementById('valEmpleados').textContent = empleados;
+        document.getElementById('valHoras').textContent = horasGestion;
+        document.getElementById('valCoste').textContent = costeHora;
+        document.getElementById('valNuevos').textContent = nuevosEmpleados;
+
+        /* Calculations */
+        const ahorroGestion = horasGestion * 52 * costeHora * 0.8;
+        const ahorroOnboarding = nuevosEmpleados * 12 * 15 * costeHora;
+        const ahorroCompliance = empleados * costeHora * 2 * 0.3;
+        const ahorroTotal = ahorroGestion + ahorroOnboarding + ahorroCompliance;
+        const roiTiempo = ahorroTotal > 0 ? Math.max(1, Math.round(50000 / (ahorroTotal / 12))) : 12;
+
+        /* Update DOM */
+        document.getElementById('ahorroGestion').textContent = 'EUR ' + Math.round(ahorroGestion).toLocaleString();
+        document.getElementById('ahorroOnboarding').textContent = 'EUR ' + Math.round(ahorroOnboarding).toLocaleString();
+        document.getElementById('ahorroCompliance').textContent = 'EUR ' + Math.round(ahorroCompliance).toLocaleString();
+        document.getElementById('ahorroTotal').textContent = 'EUR ' + Math.round(ahorroTotal).toLocaleString();
+        document.getElementById('roiTiempo').textContent = roiTiempo + ' mes' + (roiTiempo !== 1 ? 'es' : '');
+
+        /* Pulse animation on result card */
+        const resultMain = document.getElementById('resultMain');
+        resultMain.classList.add('pulse');
+        setTimeout(() => resultMain.classList.remove('pulse'), 350);
+      }
+
+      calcularROI();
+    </script>
+
+    <script src="js/presentation.js"></script>
+  </body>
+</html>
