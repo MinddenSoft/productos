@@ -4,13 +4,13 @@ Actúa como un desarrollador Frontend experto con ojos de Director de Arte y red
 
 Tu objetivo absoluto es crear una experiencia visualmente imponente, cinematográfica y fluida ("Efecto WOW") que cautive a perfiles ejecutivos C-Level.
 
-Tu tarea es crear/rediseñar la landing page de CATALOGO que esta en la ruta /home/franciscoalanzavesromero/WEBS_MINDDEN_PRESENTACIONES/CATALOGO.
+Tu tarea es crear/rediseñar la landing page de SENTINEL que esta en la ruta /home/franciscoalanzavesromero/WEBS_MINDDEN_PRESENTACIONES/SENTINEL.
 
 ---
 
 ### 1. INVESTIGACIÓN PREVIA
 
-1. El objetivo del catalogo es poner todas las aplicaciones que tenemos en la carpeta /home/franciscoalanzavesromero/WEBS_MINDDEN_PRESENTACIONES en una pagina que es un catalogo de todas las aplicaciones que disponemos. Cuando pulsemos en el catalogo se ira a la url de la pagina web y podra ver mas detalles. Debe de ser visualmente atractiva para los clientes dando una explicacion de cada uno de los productos que tenemos. 
+1. Lee el documento del producto en `/home/franciscoalanzavesromero/SENTINEL/docs/presentacion_sentinel.md` para extraer métricas, ROI, cifras clave y funcionalidades.
 2. Lee el CSS base en `css/style.css` de CUALQUIER landing existente para conocer todos los componentes disponibles (NO copies el HTML, solo usa los estilos CSS ya definidos).
 3. Revisa AL MENOS 2 landing pages existentes para asegurar que la nueva sea **estructuralmente distinta** a todas ellas.
 

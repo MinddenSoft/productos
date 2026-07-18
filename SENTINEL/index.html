@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SENTINEL · QA & Gestión de Defectos Empresarial</title>
+    <meta
+      name="description"
+      content="SENTINEL centraliza requisitos, casos de prueba, defectos y tableros Kanban en una plataforma. Trazabilidad 100%, auditoría de alcance y KPIs en tiempo real."
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .calc-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 6px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal));
+        outline: none;
+        cursor: pointer;
+      }
+      .calc-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--cyan-light);
+        border: 3px solid var(--bg-deep);
+        box-shadow: 0 0 16px rgba(34, 211, 238, 0.5);
+        cursor: grab;
+        transition: box-shadow 0.2s;
+      }
+      .calc-slider::-webkit-slider-thumb:hover {
+        box-shadow: 0 0 24px rgba(34, 211, 238, 0.7);
+      }
+      .calc-slider::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: var(--cyan-light);
+        border: 3px solid var(--bg-deep);
+        box-shadow: 0 0 16px rgba(34, 211, 238, 0.5);
+        cursor: grab;
+      }
+
+      .faq-item { border-bottom: 1px solid var(--line); }
+      .faq-question {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 0;
+        font-weight: 600;
+        color: var(--text);
+        transition: color 0.25s;
+      }
+      .faq-question:hover { color: var(--cyan-light); }
+      .faq-icon {
+        transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), color 0.25s;
+        color: var(--text-muted);
+        flex-shrink: 0;
+      }
+      .faq-item.open .faq-icon { transform: rotate(180deg); color: var(--cyan-light); }
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.45s cubic-bezier(0.16,1,0.3,1), opacity 0.3s;
+        opacity: 0;
+      }
+      .faq-item.open .faq-answer { max-height: 500px; opacity: 1; padding-bottom: 1.25rem; }
+      .faq-answer p { color: var(--text-soft); font-size: 0.95rem; line-height: 1.65; }
+      .faq-item:not(.open) { opacity: 0.55; transition: opacity 0.3s; }
+      .faq-item.open { opacity: 1; }
+      [data-theme="light"] .faq-answer p { color: #334155; }
+
+      .icon-tile, .brand-chip, .roi-chip {
+        transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s, border-color 0.3s;
+      }
+      .icon-tile:hover, .brand-chip:hover, .roi-chip:hover {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 8px 24px rgba(34, 211, 238, 0.15);
+      }
+
+      .glow-card {
+        box-shadow: 0 0 25px -5px rgba(34, 211, 238, 0.15);
+      }
+      .glow-card:hover {
+        box-shadow: 0 0 40px -5px rgba(34, 211, 238, 0.25), 0 18px 40px -20px rgba(6, 182, 212, 0.25);
+      }
+
+      .result-card {
+        transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s;
+      }
+      .result-card.pulse {
+        transform: scale(1.03);
+        box-shadow: 0 0 32px rgba(34, 211, 238, 0.25);
+      }
+
+      .section-connector {
+        width: 60%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.3), transparent);
+        margin: 0 auto;
+      }
+
+      .audience-card {
+        position: relative;
+        overflow: hidden;
+      }
+      .audience-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--cyan), var(--teal));
+      }
+
+      .mock-kanban {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.75rem;
+        flex-wrap: wrap;
+      }
+      .mock-lane {
+        flex: 1;
+        min-width: 100px;
+        background: rgba(15, 31, 55, 0.6);
+        border-radius: 8px;
+        padding: 0.5rem;
+        border: 1px solid var(--line);
+      }
+      .mock-lane-title {
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        text-align: center;
+        padding: 0.25rem 0;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 0.4rem;
+      }
+      .mock-card {
+        background: linear-gradient(135deg, rgba(34, 211, 238, 0.08), rgba(14, 165, 233, 0.04));
+        border: 1px solid rgba(34, 211, 238, 0.15);
+        border-radius: 6px;
+        padding: 0.4rem 0.5rem;
+        margin-bottom: 0.35rem;
+        font-size: 0.55rem;
+        color: var(--text-soft);
+      }
+      .mock-card .tag {
+        display: inline-block;
+        font-size: 0.5rem;
+        padding: 0.05rem 0.3rem;
+        border-radius: 4px;
+        margin-bottom: 0.15rem;
+      }
+      .mock-card .tag.bug { background: rgba(244, 63, 94, 0.2); color: #fb7185; }
+      .mock-card .tag.task { background: rgba(34, 211, 238, 0.15); color: var(--cyan-light); }
+      .mock-card .tag.req { background: rgba(245, 158, 11, 0.2); color: var(--amber); }
+
+      .mock-metric {
+        text-align: center;
+        padding: 0.5rem;
+      }
+      .mock-metric-num {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--cyan-light);
+      }
+      .mock-metric-label {
+        font-size: 0.5rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      [data-theme="light"] .mock-lane { background: rgba(248, 250, 252, 0.8); }
+      [data-theme="light"] .mock-card { background: linear-gradient(135deg, rgba(103, 151, 205, 0.06), rgba(248, 250, 252, 0.9)); border-color: rgba(103, 151, 205, 0.15); }
+      [data-theme="light"] .calc-slider { background: linear-gradient(90deg, #6797CD, #7BA9D9); }
+      [data-theme="light"] .calc-slider::-webkit-slider-thumb { background: #6797CD; border-color: var(--bg-deep); box-shadow: 0 0 12px rgba(103,151,205,0.4); }
+      [data-theme="light"] .calc-slider::-moz-range-thumb { background: #6797CD; border-color: var(--bg-deep); box-shadow: 0 0 12px rgba(103,151,205,0.4); }
+      [data-theme="light"] .glow-card { box-shadow: 0 0 20px -5px rgba(103,151,205,0.12); }
+      [data-theme="light"] .glow-card:hover { box-shadow: 0 0 32px -5px rgba(103,151,205,0.2), 0 18px 40px -20px rgba(103,151,205,0.15); }
+      [data-theme="light"] .section-connector { background: linear-gradient(90deg, transparent, rgba(103,151,205,0.25), transparent); }
+      [data-theme="light"] .icon-tile:hover, [data-theme="light"] .brand-chip:hover, [data-theme="light"] .roi-chip:hover { box-shadow: 0 8px 24px rgba(103,151,205,0.12); }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================================
+         SLIDE 1 · HERO — H3 Split asimétrico: texto + mockup dashboard
+         ============================================================ -->
+    <section class="slide items-center">
+      <div class="mesh-bg"><div class="mesh-extra"></div></div>
+      <div class="slide-content">
+        <div class="grid lg:grid-cols-5 gap-10 items-center">
+          <div class="lg:col-span-3">
+            <div class="hero-logo reveal" style="--reveal-delay: 0s">
+              <img src="img/mindden.png" alt="Mindden" />
+            </div>
+            <div class="brand-chip mb-6 reveal float">
+              <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+              <span>Aseguramiento de Calidad Empresarial</span>
+            </div>
+            <h1 class="title-1 mb-6 reveal" style="--reveal-delay: 0.1s">
+              Centralice todo su ciclo de QA<br />
+              <span class="gradient-text">en una sola plataforma</span>
+            </h1>
+            <div class="w-20 h-1 gradient-bar rounded-full mb-8 reveal" style="--reveal-delay: 0.2s"></div>
+            <p
+              class="text-lg md:text-xl text-slate-300 leading-relaxed mb-8 reveal"
+              style="--reveal-delay: 0.3s"
+            >
+              Requisitos, casos de prueba, defectos y tableros Kanban integrados con trazabilidad 100% y KPIs en tiempo real.
+              <span class="text-cyan-300 font-semibold">Adiós a la fragmentación de herramientas.</span>
+            </p>
+            <div
+              class="flex flex-col sm:flex-row gap-4 reveal"
+              style="--reveal-delay: 0.45s"
+            >
+              <a
+                href="mailto:info@mindden.com"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+              >
+                <i data-lucide="mail" class="w-4 h-4"></i>
+                info@mindden.com
+              </a>
+              <a
+                href="tel:+34965349770"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+              >
+                <i data-lucide="phone" class="w-4 h-4"></i>
+                +34 965 349 770
+              </a>
+              <a
+                href="#calculadora"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition"
+              >
+                <i data-lucide="calculator" class="w-4 h-4"></i>
+                Calcular ROI
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-2 reveal" style="--reveal-delay: 0.5s">
+            <div class="mock-window float">
+              <div class="mock-window-header">
+                <span class="mock-dot r"></span>
+                <span class="mock-dot y"></span>
+                <span class="mock-dot g"></span>
+                <span class="ml-2">SENTINEL — Dashboard KPIs</span>
+              </div>
+              <div class="p-3">
+                <div class="grid grid-cols-3 gap-2 mb-3">
+                  <div class="mock-metric">
+                    <div class="mock-metric-num">87%</div>
+                    <div class="mock-metric-label">Cobertura</div>
+                  </div>
+                  <div class="mock-metric">
+                    <div class="mock-metric-num">142</div>
+                    <div class="mock-metric-label">Ejecuciones</div>
+                  </div>
+                  <div class="mock-metric">
+                    <div class="mock-metric-num">12</div>
+                    <div class="mock-metric-label">Defectos</div>
+                  </div>
+                </div>
+                <div class="mock-kanban">
+                  <div class="mock-lane">
+                    <div class="mock-lane-title">To Do</div>
+                    <div class="mock-card"><span class="tag req">Req</span>Login SSO</div>
+                    <div class="mock-card"><span class="tag task">Task</span>API docs</div>
+                  </div>
+                  <div class="mock-lane">
+                    <div class="mock-lane-title">In Progress</div>
+                    <div class="mock-card"><span class="tag bug">Bug</span>#284 Null ref</div>
+                    <div class="mock-card"><span class="tag task">Task</span>Test suite</div>
+                  </div>
+                  <div class="mock-lane">
+                    <div class="mock-lane-title">Review</div>
+                    <div class="mock-card"><span class="tag req">Req</span>Audit trail</div>
+                  </div>
+                  <div class="mock-lane">
+                    <div class="mock-lane-title">Done</div>
+                    <div class="mock-card"><span class="tag bug">Bug</span>#271 Fixed</div>
+                    <div class="mock-card"><span class="tag task">Task</span>Deploy v1</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-hint">
+        <span>Descubra más ↓</span>
+        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 2 · IMPACTO FINANCIERO — gauge + roi-chip + big-stat
+         ============================================================ -->
+    <section class="slide" id="roi">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">01 · El impacto financiero</p>
+        <h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay: 0.1s">
+          El coste oculto de la fragmentación<br />
+          <span class="gradient-text">supera los 6 dígitos</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid lg:grid-cols-2 gap-8 items-center mb-12">
+          <div class="glass-card glow-card p-8 reveal" style="--reveal-delay: 0.2s">
+            <svg width="0" height="0"><defs><linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#38bdf8"/></linearGradient></defs></svg>
+            <div class="gauge mx-auto" style="max-width: 260px">
+              <svg viewBox="0 0 120 70" width="100%" height="100%">
+                <path class="gauge-track" d="M15 65 A45 45 0 0 1 105 65"/>
+                <path class="gauge-fill" d="M15 65 A45 45 0 0 1 105 65"/>
+              </svg>
+              <div class="gauge-center">
+                <div class="gauge-pct">80%</div>
+                <div class="gauge-label">Menos reportes manuales</div>
+              </div>
+            </div>
+            <p class="text-center text-sm text-slate-400 mt-4">El dashboard de SENTINEL genera métricas automáticamente. Sin hojas de cálculo, sin reuniones de status manuales.</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 reveal" style="--reveal-delay: 0.3s">
+            <div class="roi-chip glow-card">
+              <div class="roi-chip-num">−70%</div>
+              <div class="roi-chip-label">Reuniones status</div>
+              <p class="roi-chip-sub">De horas a miradas al dashboard</p>
+            </div>
+            <div class="roi-chip glow-card">
+              <div class="roi-chip-num">−80%</div>
+              <div class="roi-chip-label">Reportes manuales</div>
+              <p class="roi-chip-sub">Se generan solos en tiempo real</p>
+            </div>
+            <div class="roi-chip glow-card">
+              <div class="roi-chip-num">35%</div>
+              <div class="roi-chip-label">Resolución bugs</div>
+              <p class="roi-chip-sub">Reducción en tiempo de fix</p>
+            </div>
+            <div class="roi-chip glow-card">
+              <div class="roi-chip-num">100%</div>
+              <div class="roi-chip-label">Trazabilidad</div>
+              <p class="roi-chip-sub">Requisito → Prueba → Evidencia</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-connector mb-12 reveal" style="--reveal-delay: 0.4s"></div>
+
+        <div class="grid lg:grid-cols-2 gap-6 reveal" style="--reveal-delay: 0.45s">
+          <div class="glass-card p-5 flex items-start gap-4">
+            <div class="icon-tile shrink-0"><i data-lucide="dollar-sign" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="font-semibold text-white mb-1">Eliminación de licencias duplicadas</h3>
+              <p class="text-sm text-slate-400">Una sola plataforma reemplaza Jira + TestRail + Zephyr + hojas de cálculo. Ahorro directo en licencias y mantenimiento.</p>
+            </div>
+          </div>
+          <div class="glass-card p-5 flex items-start gap-4">
+            <div class="icon-tile shrink-0"><i data-lucide="clock" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="font-semibold text-white mb-1">Horas hombre recuperadas</h3>
+              <p class="text-sm text-slate-400">Lo que su equipo gasta sincronizando herramientas, ahora lo dedica a probar y mejorar la calidad del software.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 3 · CALCULADORA ROI INTERACTIVA — S4 Premium con sliders
+         ============================================================ -->
+    <section class="slide" id="calculadora">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">02 · Simule su ahorro</p>
+        <h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay: 0.1s">
+          ¿Cuánto le cuesta<br />
+          <span class="gradient-text">la fragmentación?</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid lg:grid-cols-2 gap-8 items-start">
+          <div class="glass-card glow-card p-8 reveal" style="--reveal-delay: 0.2s">
+            <h3 class="text-lg font-bold text-white mb-6">Ajuste los parámetros de su operación</h3>
+
+            <div class="space-y-6">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-sm text-slate-300 font-medium">Ingenieros en su equipo de QA</label>
+                  <span class="text-cyan-300 font-mono font-bold text-lg" id="calc-ingenieros-val">8</span>
+                </div>
+                <input type="range" min="2" max="50" value="8" class="calc-slider" id="calc-ingenieros" />
+                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                  <span>2</span><span>50</span>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-sm text-slate-300 font-medium">Horas/semana en reportes manuales</label>
+                  <span class="text-cyan-300 font-mono font-bold text-lg" id="calc-horas-val">12</span>
+                </div>
+                <input type="range" min="2" max="40" value="12" class="calc-slider" id="calc-horas" />
+                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                  <span>2h</span><span>40h</span>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-sm text-slate-300 font-medium">Coste medio hora ingeniero (€)</label>
+                  <span class="text-cyan-300 font-mono font-bold text-lg" id="calc-coste-val">€45</span>
+                </div>
+                <input type="range" min="20" max="100" step="5" value="45" class="calc-slider" id="calc-coste" />
+                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                  <span>€20</span><span>€100</span>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-sm text-slate-300 font-medium">Herramientas de QA que mantiene hoy</label>
+                  <span class="text-cyan-300 font-mono font-bold text-lg" id="calc-herramientas-val">4</span>
+                </div>
+                <input type="range" min="1" max="10" value="4" class="calc-slider" id="calc-herramientas" />
+                <div class="flex justify-between text-xs text-slate-500 mt-1">
+                  <span>1</span><span>10</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="result-card glass-card glow-card p-6 reveal" style="--reveal-delay: 0.3s" id="result-slider">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="icon-tile"><i data-lucide="piggy-bank" class="w-5 h-5"></i></div>
+                <span class="text-sm text-slate-400 uppercase tracking-wider font-semibold">Ahorro anual estimado</span>
+              </div>
+              <div class="text-4xl font-extrabold gradient-text" id="result-ahorro-num">€89.856</div>
+              <p class="text-sm text-slate-400 mt-2">En horas de reportes manuales + licencias eliminadas</p>
+            </div>
+
+            <div class="result-card glass-card glow-card p-6 reveal" style="--reveal-delay: 0.38s" id="result-tiempo">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="icon-tile"><i data-lucide="timer" class="w-5 h-5"></i></div>
+                <span class="text-sm text-slate-400 uppercase tracking-wider font-semibold">Horas recuperadas al año</span>
+              </div>
+              <div class="text-4xl font-extrabold gradient-text" id="result-horas-num">4.992h</div>
+              <p class="text-sm text-slate-400 mt-2">Que su equipo reinvierte en calidad</p>
+            </div>
+
+            <div class="result-card glass-card glow-card p-6 reveal" style="--reveal-delay: 0.46s" id="result-licencias">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="icon-tile"><i data-lucide="trending-up" class="w-5 h-5"></i></div>
+                <span class="text-sm text-slate-400 uppercase tracking-wider font-semibold">Ahorro en licencias</span>
+              </div>
+              <div class="text-4xl font-extrabold gradient-text" id="result-licencias-num">€48.000</div>
+              <p class="text-sm text-slate-400 mt-2">Plataforma única reemplaza herramientas duplicadas</p>
+            </div>
+
+            <div class="glass-card p-4 reveal" style="--reveal-delay: 0.54s; border-color: rgba(34,211,238,0.15);">
+              <p class="text-xs text-slate-500 leading-relaxed">
+                <i data-lucide="info" class="w-3.5 h-3.5 inline mr-1 text-cyan-400"></i>
+                Cálculo basado en reducción del 80% en reportes manuales y ahorro de ~€12.000/año por herramienta eliminada. Resultados reales pueden variar.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 4 · SEGURIDAD Y CUMPLIMIENTO — S9 (4 glass-card con escudos)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">03 · Cumplimiento y control</p>
+        <h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay: 0.1s">
+          Seguridad de nivel empresarial.<br />
+          <span class="gradient-text">Sin compromisos.</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div class="glass-card glow-card p-6 text-center reveal" style="--reveal-delay: 0.2s">
+            <div class="w-14 h-14 rounded-xl bg-cyan-900/20 flex items-center justify-center mx-auto mb-4 border border-cyan-700/30">
+              <i data-lucide="shield" class="w-7 h-7 text-cyan-300"></i>
+            </div>
+            <h3 class="font-bold text-white text-lg mb-2">RBAC Completo</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">5 roles de sistema: ADMIN, QA_LEAD, TESTER, DEVELOPER, VIEWER. Permisos granulares por proyecto.</p>
+          </div>
+
+          <div class="glass-card glow-card p-6 text-center reveal" style="--reveal-delay: 0.28s">
+            <div class="w-14 h-14 rounded-xl bg-cyan-900/20 flex items-center justify-center mx-auto mb-4 border border-cyan-700/30">
+              <i data-lucide="file-check" class="w-7 h-7 text-cyan-300"></i>
+            </div>
+            <h3 class="font-bold text-white text-lg mb-2">Auditoría Completa</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">Cada acción queda registrada con timestamp y responsable. Trazabilidad para ISO 9001, CMMI y regulaciones sectoriales.</p>
+          </div>
+
+          <div class="glass-card glow-card p-6 text-center reveal" style="--reveal-delay: 0.36s">
+            <div class="w-14 h-14 rounded-xl bg-cyan-900/20 flex items-center justify-center mx-auto mb-4 border border-cyan-700/30">
+              <i data-lucide="lock" class="w-7 h-7 text-cyan-300"></i>
+            </div>
+            <h3 class="font-bold text-white text-lg mb-2">Autenticación JWT</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">Tokens de acceso y refresco con expiración automática. Middleware RBAC en cada endpoint de la API.</p>
+          </div>
+
+          <div class="glass-card glow-card p-6 text-center reveal" style="--reveal-delay: 0.44s">
+            <div class="w-14 h-14 rounded-xl bg-cyan-900/20 flex items-center justify-center mx-auto mb-4 border border-cyan-700/30">
+              <i data-lucide="database" class="w-7 h-7 text-cyan-300"></i>
+            </div>
+            <h3 class="font-bold text-white text-lg mb-2">Backup Automático</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">pg_dump antes de cada despliegue. Recuperación inmediata ante cualquier incidencia en producción.</p>
+          </div>
+        </div>
+
+        <div class="section-connector mt-12 reveal" style="--reveal-delay: 0.5s"></div>
+
+        <div class="mt-10 grid lg:grid-cols-2 gap-5 reveal" style="--reveal-delay: 0.5s">
+          <div class="glass-card p-5 flex items-start gap-4">
+            <div class="icon-tile shrink-0"><i data-lucide="scroll-text" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="font-semibold text-white mb-1">Scope Guardian</h3>
+              <p class="text-sm text-slate-400">Clasifica requisitos como BASE o SCOPE-CREEP automáticamente. Cada cambio de alcance queda auditado con responsable y justificación.</p>
+            </div>
+          </div>
+          <div class="glass-card p-5 flex items-start gap-4">
+            <div class="icon-tile shrink-0"><i data-lucide="container" class="w-5 h-5"></i></div>
+            <div>
+              <h3 class="font-semibold text-white mb-1">MinIO Object Storage</h3>
+              <p class="text-sm text-slate-400">Evidencia de pruebas almacenada en almacenamiento compatible S3. Drag-and-drop, vista previa y cadena de custodia completa.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 5 · FUNCIONALIDADES → BENEFICIOS — agent-card grid
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">04 · Capacidades que transforman</p>
+        <h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay: 0.1s">
+          Cada funcionalidad, un<br />
+          <span class="gradient-text">beneficio de negocio</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="agent-card reveal" style="--reveal-delay: 0.15s">
+            <div class="agent-badge">Dashboard</div>
+            <div class="agent-title">KPIs en tiempo real</div>
+            <div class="agent-desc">Gráficos interactivos, barras de progreso y alertas WIP. Visibilidad 360° del proyecto sin reuniones de status.</div>
+            <div class="agent-demo">"Antes: reportes manuales semanales. Ahora: métricas al instante."</div>
+          </div>
+
+          <div class="agent-card reveal" style="--reveal-delay: 0.2s">
+            <div class="agent-badge">Kanban</div>
+            <div class="agent-title">Tableros estilo Trello</div>
+            <div class="agent-desc">Drag-and-drop nativo, límites WIP, columnas configurables. Tarjetas con tipo, prioridad, etiquetas y checklists.</div>
+            <div class="agent-demo">"Mover una tarjeta de 'En Progreso' a 'Review' es un gesto."</div>
+          </div>
+
+          <div class="agent-card reveal" style="--reveal-delay: 0.25s">
+            <div class="agent-badge">Requisitos</div>
+            <div class="agent-title">Editor WYSIWYG + Scope Guardian</div>
+            <div class="agent-desc">Cree requisitos con formato rico. Clasificación BASE vs SCOPE-CREEP automática. Importación masiva desde Excel.</div>
+            <div class="agent-demo">"Cada cambio de alcance queda auditado con responsable."</div>
+          </div>
+
+          <div class="agent-card reveal" style="--reveal-delay: 0.3s">
+            <div class="agent-badge">Casos de Prueba</div>
+            <div class="agent-title">Jerarquías y trazabilidad</div>
+            <div class="agent-desc">Organización padre/hijos en suites. Vinculación directa a requisitos. Creación masiva en lote.</div>
+            <div class="agent-demo">"100% trazabilidad requisito → prueba → evidencia."</div>
+          </div>
+
+          <div class="agent-card reveal" style="--reveal-delay: 0.35s">
+            <div class="agent-badge">Test Runs</div>
+            <div class="agent-title">Campañas con métricas</div>
+            <div class="agent-desc">Agrupe ejecuciones en campañas. Tasa de éxito automática. Historial de últimas 5 campañas.</div>
+            <div class="agent-demo">"Sepa exactamente quién ejecutó qué y con qué resultado."</div>
+          </div>
+
+          <div class="agent-card reveal" style="--reveal-delay: 0.4s">
+            <div class="agent-badge">Defectos</div>
+            <div class="agent-title">Ciclo de vida completo</div>
+            <div class="agent-desc">Desde OPEN hasta CLOSED con 7 estados. Severidad, prioridad y asignación a cualquier usuario activo.</div>
+            <div class="agent-demo">"Los bugs se gestionan en el mismo Kanban que las tareas."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 6 · COMPARATIVA DIRECTA — tco-table (rompe patrón grid)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">05 · Ventaja competitiva</p>
+        <h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay: 0.1s">
+          SENTINEL vs.<br />
+          <span class="gradient-text">soluciones fragmentadas</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="overflow-x-auto reveal" style="--reveal-delay: 0.2s">
+          <table class="tco-table">
+            <thead>
+              <tr>
+                <th>Dimensión</th>
+                <th>Múltiples herramientas</th>
+                <th class="col-after">SENTINEL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="col-dim">Licencias</td>
+                <td class="col-before">Jira + TestRail + Zephyr + Confluence = <span class="tco-num">€48.000+</span>/año</td>
+                <td class="col-after">Una sola plataforma. <span class="tco-num">Ahorro del 100%</span> en licencias duplicadas</td>
+              </tr>
+              <tr>
+                <td class="col-dim">Trazabilidad</td>
+                <td class="col-before">Fragmentada: requisitos en Confluence, bugs en Jira, pruebas en TestRail</td>
+                <td class="col-after"><span class="tco-num">100%</span> trazabilidad requisito → caso → ejecución → evidencia</td>
+              </tr>
+              <tr>
+                <td class="col-dim">Reportes</td>
+                <td class="col-before">Horas manuales extrayendo datos de 3+ sistemas y consolidando en Excel</td>
+                <td class="col-after">Dashboard en tiempo real. <span class="tco-num">−80%</span> tiempo en reportes manuales</td>
+              </tr>
+              <tr>
+                <td class="col-dim">Control de alcance</td>
+                <td class="col-before">No existe. Scope creep se detecta semanas/meses después</td>
+                <td class="col-after">Scope Guardian: <span class="tco-num">detección en tiempo real</span> con auditoría completa</td>
+              </tr>
+              <tr>
+                <td class="col-dim">Resolución defectos</td>
+                <td class="col-before">Herramientas separadas, equipos desconectados</td>
+                <td class="col-after"><span class="tco-num">−35%</span> tiempo de resolución. Kanban + bugs integrados</td>
+              </tr>
+              <tr>
+                <td class="col-dim">Despliegue</td>
+                <td class="col-before">Cada herramienta con su propio ciclo de mantenimiento y actualización</td>
+                <td class="col-after">Un solo comando despliega todo. <span class="tco-num">CI/CD automatizado</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tco-foot reveal" style="--reveal-delay: 0.3s">* Costes estimados basados en licencias estándar del mercado. Su ahorro real dependerá del número de usuarios y herramientas consolidadas.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 7 · MÉTRICAS DE RENDIMIENTO — big-stat grid 4 cols
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">06 · Rendimiento técnico</p>
+        <h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay: 0.1s">
+          Construido para escalar<br />
+          <span class="gradient-text">como su negocio</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-12">
+          <div class="glass-card big-stat reveal glow-card" style="--reveal-delay: 0.2s">
+            <div class="big-stat-num gradient">15+</div>
+            <div class="big-stat-unit">modelos de datos</div>
+            <p class="big-stat-label">Interconectados representando el ciclo completo del QA</p>
+          </div>
+          <div class="glass-card big-stat reveal glow-card" style="--reveal-delay: 0.28s">
+            <div class="big-stat-num gradient">5</div>
+            <div class="big-stat-unit">roles RBAC</div>
+            <p class="big-stat-label">De ADMIN a VIEWER con permisos por proyecto</p>
+          </div>
+          <div class="glass-card big-stat reveal glow-card" style="--reveal-delay: 0.36s">
+            <div class="big-stat-num gradient">1</div>
+            <div class="big-stat-unit">comando</div>
+            <p class="big-stat-label">docker compose up — 18 servicios, plataforma completa</p>
+          </div>
+          <div class="glass-card big-stat reveal glow-card" style="--reveal-delay: 0.44s">
+            <div class="big-stat-num gradient">24/7</div>
+            <div class="big-stat-unit">disponibilidad</div>
+            <p class="big-stat-label">Health checks post-despliegue y backups automáticos</p>
+          </div>
+        </div>
+
+        <div class="section-connector mb-10 reveal" style="--reveal-delay: 0.48s"></div>
+
+        <div class="grid lg:grid-cols-3 gap-5 reveal" style="--reveal-delay: 0.5s">
+          <div class="glass-card p-6">
+            <div class="icon-tile mb-4"><i data-lucide="layers" class="w-5 h-5"></i></div>
+            <h3 class="font-semibold text-white mb-2">Stack Empresarial</h3>
+            <ul class="text-sm text-slate-400 space-y-2">
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>FastAPI + Next.js 14</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>PostgreSQL 16 + Prisma ORM</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Chart.js + @hello-pangea/dnd</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>react-quill-new WYSIWYG</li>
+            </ul>
+          </div>
+          <div class="glass-card p-6">
+            <div class="icon-tile mb-4"><i data-lucide="container" class="w-5 h-5"></i></div>
+            <h3 class="font-semibold text-white mb-2">Infraestructura</h3>
+            <ul class="text-sm text-slate-400 space-y-2">
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Docker + Docker Compose</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>GitHub Actions CI/CD</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>MinIO Object Storage (S3)</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Backup automático pre-deploy</li>
+            </ul>
+          </div>
+          <div class="glass-card p-6">
+            <div class="icon-tile mb-4"><i data-lucide="arrow-left-right" class="w-5 h-5"></i></div>
+            <h3 class="font-semibold text-white mb-2">Importación/Exportación</h3>
+            <ul class="text-sm text-slate-400 space-y-2">
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Requisitos desde Excel</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Creación masiva de casos de prueba</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Evidencia drag-and-drop</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Exportación a PDF (próximamente)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 8 · PROCESO DE INTEGRACIÓN — arch-flow (rompe grid)
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">07 · Implementación en 3 fases</p>
+        <h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay: 0.1s">
+          De la decisión a producción<br />
+          <span class="gradient-text">en 2 semanas</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="arch-flow">
+          <div class="arch-node reveal" style="--reveal-delay: 0.2s">
+            <div class="arch-tag">Fase 1 · Semana 1</div>
+            <div class="arch-name">Diagnóstico y setup</div>
+            <ul class="arch-list">
+              <li>Despliegue de la plataforma en su infraestructura</li>
+              <li>Configuración de usuarios y roles RBAC</li>
+              <li>Importación de requisitos existentes desde Excel</li>
+              <li>Creación de proyectos y tableros Kanban</li>
+            </ul>
+          </div>
+          <div class="arch-arrow reveal" style="--reveal-delay: 0.3s">
+            <i data-lucide="arrow-right" class="w-7 h-7"></i>
+          </div>
+          <div class="arch-node accent reveal glow-card" style="--reveal-delay: 0.3s">
+            <div class="arch-tag">Fase 2 · Semana 1-2</div>
+            <div class="arch-name">Piloto con equipo QA</div>
+            <ul class="arch-list">
+              <li>Equipo piloto de 5-10 usuarios comienza a operar</li>
+              <li>Creación de casos de prueba y ejecución de campañas</li>
+              <li>Registro de defectos en el tablero Kanban integrado</li>
+              <li>Dashboard en vivo con métricas del proyecto piloto</li>
+            </ul>
+          </div>
+          <div class="arch-arrow reveal" style="--reveal-delay: 0.4s">
+            <i data-lucide="arrow-right" class="w-7 h-7"></i>
+          </div>
+          <div class="arch-node reveal" style="--reveal-delay: 0.4s">
+            <div class="arch-tag">Fase 3 · Semana 2</div>
+            <div class="arch-name">Rollout y formación</div>
+            <ul class="arch-list">
+              <li>Formación al equipo completo (1 hora por rol)</li>
+              <li>Migración de datos históricos desde herramientas previas</li>
+              <li>Configuración de CI/CD para despliegues automatizados</li>
+              <li>Handover a su equipo con documentación operativa</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-10 glass-card glow-card p-6 text-center reveal" style="--reveal-delay: 0.5s">
+          <p class="text-lg text-white leading-relaxed">
+            <span class="font-semibold">Sin riesgo.</span>
+            <span class="text-cyan-300">Piloto con su equipo real y datos reales.</span>
+            <span class="text-slate-400"> Si le convence, escalamos al resto de la organización.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 9 · FAQ PREMIUM — Acordeón interactivo con difuminado
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">08 · Preguntas frecuentes</p>
+        <h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay: 0.1s">
+          Todo lo que necesita saber,<br />
+          <span class="gradient-text">sin rodeos</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="glass-card glow-card p-8 max-w-4xl mx-auto reveal" style="--reveal-delay: 0.2s">
+          <div class="faq-item open" data-faq>
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <span>¿Qué herramientas reemplaza SENTINEL exactamente?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>SENTINEL reemplaza la combinación típica de <strong class="text-cyan-300">Jira + TestRail + Zephyr + Confluence + Excel</strong>. Una sola plataforma para requisitos, casos de prueba, ejecuciones, defectos y tableros Kanban. No necesita mantener múltiples licencias ni sincronizar datos entre herramientas.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-faq>
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <span>¿Cuánto tarda la implementación completa?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>La plataforma se despliega en <strong class="text-cyan-300">menos de 1 hora</strong> con un solo comando. La fase piloto con un equipo de 5-10 usuarios y datos reales se completa en la primera semana. El rollout completo a toda la organización se realiza en la segunda semana.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-faq>
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <span>¿Podemos importar datos de nuestras herramientas actuales?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p><strong class="text-cyan-300">Sí.</strong> SENTINEL incluye importación masiva de requisitos desde Excel con mapeo de columnas. Para otras herramientas, nuestro equipo realiza la migración durante la fase de setup. No pierde ningún dato histórico.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-faq>
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <span>¿Qué nivel de seguridad ofrece la plataforma?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>SENTINEL implementa <strong class="text-cyan-300">5 roles RBAC</strong> con permisos por proyecto, autenticación JWT con tokens de acceso y refresco, y middleware que valida permisos en cada endpoint de la API. Todas las acciones quedan registradas con timestamp y responsable para auditoría. Ideal para certificaciones ISO 9001 y CMMI.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-faq>
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <span>¿Funciona para equipos distribuidos y remotos?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p><strong class="text-cyan-300">Absolutamente.</strong> SENTINEL es una aplicación web accesible desde cualquier navegador. El dashboard en tiempo real, los tableros Kanban y las notificaciones mantienen a todo el equipo sincronizado sin importar dónde estén. Cada miembro tiene visibilidad inmediata del trabajo del equipo.</p>
+            </div>
+          </div>
+          <div class="faq-item" data-faq>
+            <div class="faq-question" onclick="toggleFaq(this)">
+              <span>¿Qué soporte recibimos durante y después de la implantación?</span>
+              <i data-lucide="chevron-down" class="w-5 h-5 faq-icon"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Soporte técnico directo con el equipo de Mindden durante todo el proceso. Formación de 1 hora por rol. Documentación operativa completa. Actualizaciones y mantenimiento incluidos. La plataforma se despliega con un solo comando y el CI/CD automatizado garantiza actualizaciones sin riesgos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SLIDE 10 · RESUMEN POR AUDIENCIA → CIERRE
+         ============================================================ -->
+    <section class="slide">
+      <div class="dot-grid"></div>
+      <div class="slide-content">
+        <p class="eyebrow reveal">09 · Para cada decisor</p>
+        <h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay: 0.1s">
+          Beneficios adaptados<br />
+          <span class="gradient-text">a su perfil</span>
+        </h2>
+        <div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay: 0.15s"></div>
+
+        <div class="grid lg:grid-cols-3 gap-5 mb-10">
+          <div class="glass-card p-6 audience-card reveal glow-card" style="--reveal-delay: 0.2s">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-cyan-900/50 flex items-center justify-center">
+                <i data-lucide="dollar-sign" class="w-6 h-6 text-cyan-400"></i>
+              </div>
+              <div>
+                <div class="text-white font-semibold">CFO</div>
+                <div class="text-xs text-slate-400">Director Financiero</div>
+              </div>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Ahorro directo</h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Eliminación de licencias de 3+ herramientas</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>80% menos horas en reportes manuales</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>ROI medible en semanas, no en años</li>
+            </ul>
+            <div class="border-t border-slate-700/50 pt-3 mt-3">
+              <p class="text-xs text-cyan-300/80 leading-snug">
+                <span class="font-semibold">Antes:</span> €48K+/año en licencias.<br />
+                <span class="font-semibold">Ahora:</span> Una plataforma, coste predecible.
+              </p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 audience-card reveal glow-card" style="--reveal-delay: 0.3s">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-cyan-900/50 flex items-center justify-center">
+                <i data-lucide="settings" class="w-6 h-6 text-cyan-400"></i>
+              </div>
+              <div>
+                <div class="text-white font-semibold">Director de Operaciones</div>
+                <div class="text-xs text-slate-400">COO</div>
+              </div>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Eficiencia operativa</h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Visibilidad 360° del estado del proyecto</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>70% menos reuniones de status</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Alertas WIP y detección de cuellos de botella</li>
+            </ul>
+            <div class="border-t border-slate-700/50 pt-3 mt-3">
+              <p class="text-xs text-cyan-300/80 leading-snug">
+                <span class="font-semibold">Antes:</span> Datos fragmentados, reportes manuales.<br />
+                <span class="font-semibold">Ahora:</span> KPIs en tiempo real, decisiones en datos.
+              </p>
+            </div>
+          </div>
+
+          <div class="glass-card p-6 audience-card reveal glow-card" style="--reveal-delay: 0.4s">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-full bg-cyan-900/50 flex items-center justify-center">
+                <i data-lucide="shield" class="w-6 h-6 text-cyan-400"></i>
+              </div>
+              <div>
+                <div class="text-white font-semibold">CEO / Director de Calidad</div>
+                <div class="text-xs text-slate-400">Quality Assurance</div>
+              </div>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Calidad y control</h3>
+            <ul class="space-y-2 text-sm text-slate-400">
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>100% trazabilidad requisito → evidencia</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Scope Guardian contra sobrecostes</li>
+              <li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Auditoría completa para certificaciones</li>
+            </ul>
+            <div class="border-t border-slate-700/50 pt-3 mt-3">
+              <p class="text-xs text-cyan-300/80 leading-snug">
+                <span class="font-semibold">Antes:</span> Sin trazabilidad, sobrecostes ocultos.<br />
+                <span class="font-semibold">Ahora:</span> Control total, calidad medible.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-connector mb-10 reveal" style="--reveal-delay: 0.45s"></div>
+
+        <!-- CTA dentro del mismo slide -->
+        <div class="text-center reveal" style="--reveal-delay: 0.5s">
+          <p class="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto mb-8">
+            En <span class="text-cyan-300 font-semibold">2 semanas</span> su equipo QA opera con SENTINEL. Piloto con datos reales, sin compromiso.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <a
+              href="mailto:info@mindden.com"
+              class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+            >
+              <i data-lucide="mail" class="w-4 h-4"></i>
+              info@mindden.com
+            </a>
+            <a
+              href="tel:+34965349770"
+              class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"
+            >
+              <i data-lucide="phone" class="w-4 h-4"></i>
+              +34 965 349 770
+            </a>
+          </div>
+          <p class="mt-12 text-xs text-slate-600">
+            SENTINEL · Plataforma de Aseguramiento de Calidad Empresarial by <b>Mindden Soft Tech</b>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Runtime
+         ============================================================ -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script>
+      if (window.lucide) lucide.createIcons();
+
+      function toggleFaq(el) {
+        var item = el.closest('.faq-item');
+        var allItems = document.querySelectorAll('.faq-item');
+        var isOpen = item.classList.contains('open');
+
+        allItems.forEach(function(other) {
+          if (other !== item && other.classList.contains('open')) {
+            other.classList.remove('open');
+          }
+        });
+
+        if (isOpen) {
+          item.classList.remove('open');
+        } else {
+          item.classList.add('open');
+        }
+      }
+
+      (function() {
+        var ingenieros = document.getElementById('calc-ingenieros');
+        var horas = document.getElementById('calc-horas');
+        var coste = document.getElementById('calc-coste');
+        var herramientas = document.getElementById('calc-herramientas');
+        if (!ingenieros) return;
+
+        var resultAhorro = document.getElementById('result-ahorro-num');
+        var resultHoras = document.getElementById('result-horas-num');
+        var resultLicencias = document.getElementById('result-licencias-num');
+        var cardAhorro = document.getElementById('result-slider');
+        var cardTiempo = document.getElementById('result-tiempo');
+        var cardLicencias = document.getElementById('result-licencias');
+
+        function formatEuro(n) {
+          return '€' + Math.round(n).toLocaleString('es-ES');
+        }
+        function formatHoras(n) {
+          return Math.round(n).toLocaleString('es-ES') + 'h';
+        }
+        function pulseCard(card) {
+          card.classList.add('pulse');
+          setTimeout(function() { card.classList.remove('pulse'); }, 300);
+        }
+
+        function recalc() {
+          var i = parseInt(ingenieros.value, 10);
+          var h = parseInt(horas.value, 10);
+          var c = parseInt(coste.value, 10);
+          var t = parseInt(herramientas.value, 10);
+
+          document.getElementById('calc-ingenieros-val').textContent = i;
+          document.getElementById('calc-horas-val').textContent = h;
+          document.getElementById('calc-coste-val').textContent = '€' + c;
+          document.getElementById('calc-herramientas-val').textContent = t;
+
+          var ahorroReportes = i * h * 52 * c * 0.8;
+          var ahorroLicencias = t * 12000;
+          var totalAhorro = ahorroReportes + ahorroLicencias;
+          var horasRecuperadas = i * h * 52 * 0.8;
+
+          resultAhorro.textContent = formatEuro(totalAhorro);
+          resultHoras.textContent = formatHoras(horasRecuperadas);
+          resultLicencias.textContent = formatEuro(ahorroLicencias);
+
+          pulseCard(cardAhorro);
+          pulseCard(cardTiempo);
+          pulseCard(cardLicencias);
+        }
+
+        ingenieros.addEventListener('input', recalc);
+        horas.addEventListener('input', recalc);
+        coste.addEventListener('input', recalc);
+        herramientas.addEventListener('input', recalc);
+
+        recalc();
+      })();
+    </script>
+    <script src="js/presentation.js"></script>
+  </body>
+</html>
