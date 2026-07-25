@@ -45,6 +45,28 @@
         gap: 1rem;
       }
 
+      @media (max-width: 640px) {
+        .hero-stats {
+          gap: 0.75rem;
+        }
+        .hero-stat-card {
+          padding: 1rem;
+        }
+        .hero-stat-num {
+          font-size: 1.4rem;
+        }
+        #hero .slide-content > .grid {
+          gap: 2rem;
+        }
+        #hero .scroll-hint {
+          position: relative;
+          bottom: auto;
+          left: auto;
+          transform: none;
+          margin-top: 2rem;
+        }
+      }
+
       .hero-stat-card {
         background: linear-gradient(180deg, rgba(15, 31, 55, 0.85) 0%, rgba(10, 22, 40, 0.85) 100%);
         border: 1px solid var(--line);
@@ -196,7 +218,7 @@
         <div class="hero-logo reveal" style="--reveal-delay: 0s">
           <img src="img/mindden.png" alt="Mindden" />
         </div>
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="grid sm:grid-cols-2 gap-12 items-center">
           <div>
             <div class="brand-chip mb-6 reveal float">
               <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
