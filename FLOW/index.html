@@ -187,14 +187,15 @@
   <body data-slide-labels="Inicio,Impacto financiero,Problema,Casos de uso,Calculadora ROI,Agentes IA,Rendimiento,Implementación,Ventaja competitiva,Decisor,Contacto">
     <header class="site-header">
       <nav class="site-nav">
-        <a href="#calculadora" class="nav-link">Calculadora ROI</a>
+        <a href="../catalogo/index.html" class="nav-link inline-flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Catálogo</a>
+        <a href="#hero" class="nav-link">Inicio</a>
         <a href="#contacto" class="nav-link">Contacto</a>
       </nav>
     </header>
     <!-- ============================================================
          HERO — Inteligencia Operativa Universal
          ============================================================ -->
-    <section class="slide items-center">
+    <section class="slide items-center" id="hero">
       <div class="mesh-bg"><div class="mesh-extra"></div></div>
       <div class="slide-content">
         <div class="grid sm:grid-cols-2 gap-12 items-center">
@@ -1012,10 +1013,6 @@
     <script>
       (function(){var h=document.querySelector('.site-header'),l=document.querySelectorAll('.nav-link'),s=document.querySelectorAll('.slide[id]');function u(){var y=window.scrollY||window.pageYOffset;h.classList.toggle('scrolled',y>50);var c='';s.forEach(function(t){if(y>=t.offsetTop-120)c=t.getAttribute('id')});l.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+c)})}window.addEventListener('scroll',u,{passive:true});u()})();
     </script>
-    <a href="../catalogo/index.html"
-       class="fixed top-4 left-4 z-50 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 bg-slate-900/80 border border-slate-700/50 backdrop-blur-sm hover:text-cyan-300 hover:border-cyan-700/50 transition-all duration-300">
-      <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
-      Volver al catálogo
-    </a>
+
   </body>
 </html>
