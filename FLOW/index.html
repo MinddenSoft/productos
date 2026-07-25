@@ -126,6 +126,7 @@
         grid-template-columns: 1fr 1fr 1fr;
         gap: 1px;
         background: var(--line);
+        min-width: 600px;
       }
       .comparison-cell {
         background: var(--bg-base);
@@ -762,7 +763,7 @@
         </h2>
         <div class="w-16 h-1 gradient-bar rounded-full mb-12 reveal" style="--reveal-delay: 0.15s"></div>
 
-        <div class="glass-card overflow-hidden reveal" style="--reveal-delay: 0.2s">
+        <div class="glass-card overflow-x-auto reveal" style="--reveal-delay: 0.2s">
           <div class="comparison-row" style="background: var(--line-strong);">
             <div class="comparison-cell" style="background: var(--bg-elev); font-weight: 700;">Caracteristica</div>
             <div class="comparison-cell" style="background: var(--bg-elev); color: var(--rose);">Soluciones Tradicionales</div>
