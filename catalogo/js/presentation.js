@@ -30,14 +30,20 @@
 
   /* === Navigation dots === */
   var slides = document.querySelectorAll('.slide');
+  var slideLabels = (document.body.dataset.slideLabels || '')
+    .split(',')
+    .map(function (s) { return s.trim(); });
   var navContainer = document.createElement('div');
   navContainer.className = 'nav-dots';
+  navContainer.setAttribute('aria-label', 'Navegación de diapositivas');
   document.body.appendChild(navContainer);
 
   slides.forEach(function (_, i) {
+    var label = slideLabels[i] || 'Diapositiva ' + (i + 1);
     var dot = document.createElement('button');
     dot.className = 'nav-dot';
-    dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+    dot.setAttribute('aria-label', label);
+    dot.setAttribute('title', label);
     dot.addEventListener('click', function () {
       slides[i].scrollIntoView({ behavior: 'smooth' });
     });

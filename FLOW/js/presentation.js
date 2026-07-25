@@ -10,14 +10,19 @@
   if (slides.length === 0) return;
 
   /* ----- Build side dot navigation ----- */
+  const slideLabels = (document.body.dataset.slideLabels || "")
+    .split(",")
+    .map((s) => s.trim());
   const navDots = document.createElement("nav");
   navDots.className = "nav-dots";
   navDots.setAttribute("aria-label", "Navegación de diapositivas");
   slides.forEach((slide, i) => {
+    const label = slideLabels[i] || `Diapositiva ${i + 1}`;
     const btn = document.createElement("button");
     btn.className = "nav-dot";
     btn.type = "button";
-    btn.setAttribute("aria-label", `Ir a la diapositiva ${i + 1}`);
+    btn.setAttribute("aria-label", label);
+    btn.setAttribute("title", label);
     btn.addEventListener("click", () => goTo(i));
     navDots.appendChild(btn);
   });

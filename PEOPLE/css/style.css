@@ -725,6 +725,38 @@ html {
   box-shadow: 0 0 12px var(--cyan-glow);
 }
 
+.nav-dot {
+  position: relative;
+}
+.nav-dot::after {
+  content: attr(title);
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-size: 0.7rem;
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--text);
+  background: rgba(10, 22, 40, 0.92);
+  border: 1px solid var(--line);
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  backdrop-filter: blur(8px);
+  z-index: 60;
+}
+.nav-dot:hover::after {
+  opacity: 1;
+}
+[data-theme="light"] .nav-dot::after {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(148, 163, 184, 0.25);
+  color: #0f172a;
+}
+
 .nav-counter {
   position: fixed;
   bottom: 1.5rem;
