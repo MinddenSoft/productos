@@ -57,11 +57,13 @@
   navCounter.innerHTML = '<strong>1</strong> / ' + slides.length;
   document.body.appendChild(navCounter);
 
-  var navHint = document.createElement('div');
-  navHint.className = 'nav-hint';
-  navHint.innerHTML =
-    '<kbd>\u2191</kbd><kbd>\u2193</kbd> navegar &nbsp;|&nbsp; <kbd>Home</kbd> inicio';
-  document.body.appendChild(navHint);
+  if (window.matchMedia('(hover: hover)').matches) {
+    var navHint = document.createElement('div');
+    navHint.className = 'nav-hint';
+    navHint.innerHTML =
+      '<kbd>\u2191</kbd><kbd>\u2193</kbd> navegar &nbsp;|&nbsp; <kbd>Home</kbd> inicio';
+    document.body.appendChild(navHint);
+  }
 
   function updateNav() {
     var scrollY = window.scrollY || window.pageYOffset;

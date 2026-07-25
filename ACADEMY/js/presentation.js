@@ -35,16 +35,18 @@
   document.body.appendChild(counter);
   const currentEl = counter.querySelector("#nav-current");
 
-  /* ----- Keyboard hint (auto-hides after 6s) ----- */
-  const hint = document.createElement("div");
-  hint.className = "nav-hint";
-  hint.innerHTML = `<kbd>↑</kbd><kbd>↓</kbd> o <kbd>espacio</kbd> para navegar`;
-  document.body.appendChild(hint);
-  setTimeout(() => {
-    hint.style.transition = "opacity 0.6s ease";
-    hint.style.opacity = "0";
-    setTimeout(() => hint.remove(), 700);
-  }, 6000);
+  /* ----- Keyboard hint (auto-hides after 6s, desktop only) ----- */
+  if (window.matchMedia("(hover: hover)").matches) {
+    const hint = document.createElement("div");
+    hint.className = "nav-hint";
+    hint.innerHTML = `<kbd>↑</kbd><kbd>↓</kbd> o <kbd>espacio</kbd> para navegar`;
+    document.body.appendChild(hint);
+    setTimeout(() => {
+      hint.style.transition = "opacity 0.6s ease";
+      hint.style.opacity = "0";
+      setTimeout(() => hint.remove(), 700);
+    }, 6000);
+  }
 
   /* ----- Active-slide tracking + dot sync ----- */
   let activeIdx = 0;
