@@ -875,7 +875,7 @@ html {
   --line-strong: rgba(51, 65, 85, 0.18);
   --text: #0f172a;
   --text-soft: #475569;
-  --text-muted: #94a3b8;
+  --text-muted: #64748b;
   --cyan: #6797CD;
   --cyan-light: #6797CD;
   --cyan-glow: rgba(103, 151, 205, 0.4);
@@ -889,7 +889,7 @@ html {
 
 [data-theme="light"] .text-slate-300 { color: #334155; }
 [data-theme="light"] .text-slate-400 { color: #64748b; }
-[data-theme="light"] .text-slate-500 { color: #94a3b8; }
+[data-theme="light"] .text-slate-500 { color: #64748b; }
 [data-theme="light"] .text-slate-600 { color: #94a3b8; }
 [data-theme="light"] .text-white { color: #0f172a; }
 [data-theme="light"] .text-cyan-100 { color: #6797CD; }
