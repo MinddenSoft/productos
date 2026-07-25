@@ -34,14 +34,12 @@ body {
   scroll-behavior: smooth;
 }
 
-/* Scroll snap entre slides */
+/* Scroll continuo */
 html {
-  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
 }
 
 .slide {
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -778,9 +776,6 @@ html {
    ============================================================ */
 
 @media print {
-  html {
-    scroll-snap-type: none;
-  }
   .slide {
     min-height: auto;
     page-break-after: always;
