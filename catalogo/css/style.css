@@ -592,38 +592,46 @@ html {
 .card-footer {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding-top: 1rem;
-  border-top: 1px solid var(--line);
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  margin-top: 0.75rem;
+  border-radius: 10px;
+  background: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+  min-height: 44px;
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
 }
 
 .card-link-text {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text-muted);
-  transition: color 0.3s;
-}
-
-.catalog-card:hover .card-link-text {
   color: var(--cyan-light);
+  letter-spacing: 0.01em;
 }
 
 .card-arrow {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(34, 211, 238, 0.1);
-  border: 1px solid rgba(34, 211, 238, 0.2);
-  color: var(--text-muted);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s, background 0.3s, box-shadow 0.3s;
+  background: rgba(34, 211, 238, 0.15);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  color: var(--cyan-light);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, box-shadow 0.3s;
+}
+
+.catalog-card:hover .card-footer {
+  background: rgba(34, 211, 238, 0.18);
+  border-color: rgba(34, 211, 238, 0.45);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.15);
 }
 
 .catalog-card:hover .card-arrow {
-  background: rgba(34, 211, 238, 0.2);
-  box-shadow: 0 0 16px rgba(34, 211, 238, 0.25);
+  background: rgba(34, 211, 238, 0.25);
+  box-shadow: 0 0 16px rgba(34, 211, 238, 0.3);
 }
 
 /* Featured card variant */
@@ -810,6 +818,23 @@ html {
 [data-theme="light"] .catalog-card.featured {
   border-color: rgba(103, 151, 205, 0.35);
   box-shadow: 0 0 20px -5px rgba(103, 151, 205, 0.12);
+}
+
+[data-theme="light"] .card-footer {
+  background: rgba(103, 151, 205, 0.08);
+  border-color: rgba(103, 151, 205, 0.25);
+}
+[data-theme="light"] .catalog-card:hover .card-footer {
+  background: rgba(103, 151, 205, 0.14);
+  border-color: rgba(103, 151, 205, 0.4);
+}
+[data-theme="light"] .card-link-text {
+  color: #6797CD;
+}
+[data-theme="light"] .card-arrow {
+  background: rgba(103, 151, 205, 0.12);
+  border-color: rgba(103, 151, 205, 0.3);
+  color: #6797CD;
 }
 
 [data-theme="light"] .nav-counter,
