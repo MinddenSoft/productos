@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>INDUSTRIAL_MIND · Cada hora de parada le cuesta hasta 50.000 €. Nosotros la evitamos.</title>
+<meta name="description" content="INDUSTRIAL_MIND avisa 120h antes de cada fallo crítico. Hasta 70% menos paradas, instalado en 30 días sin parar producción. Piloto en 1 máquina con objetivo medible a 60 días." />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<style>
+.glow-card{box-shadow:0 0 25px -5px rgba(34,211,238,.15)}
+.icon-tile,.brand-chip{transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.icon-tile:hover,.brand-chip:hover{transform:translateY(-4px) scale(1.02)}
+input[type=range]{-webkit-appearance:none;width:100%;height:6px;border-radius:4px;background:rgba(148,163,184,.2);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#22d3ee,#0ea5e9);cursor:pointer;box-shadow:0 0 12px rgba(34,211,238,.5)}
+.accordion-content{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.16,1,.3,1)}
+.accordion-item.open .accordion-content{max-height:600px}
+.accordion-item.open .accordion-icon{transform:rotate(180deg)}
+.accordion-icon{transition:transform .3s}
+.timeline-dot{width:16px;height:16px;border-radius:50%;background:#22d3ee;border:3px solid var(--bg-deep);box-shadow:0 0 0 3px rgba(34,211,238,.3);flex-shrink:0}
+.result-pulse{transition:transform .2s}
+.result-pulse.tick{transform:scale(1.04)}
+.semaphore{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.site-header{position:fixed;top:0;left:0;right:0;z-index:100;padding:.75rem 1.5rem;background:rgba(5,10,22,.8);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:background .3s,box-shadow .3s}
+.site-header.scrolled{background:rgba(5,10,22,.95);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+[data-theme="light"] .site-header{background:rgba(248,250,252,.85);border-bottom-color:rgba(148,163,184,.15)}
+[data-theme="light"] .site-header.scrolled{background:rgba(248,250,252,.95);box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.site-nav{display:flex;justify-content:center;gap:.25rem;max-width:1200px;margin:0 auto}
+.nav-link{padding:.4rem .9rem;font-size:.8rem;font-weight:500;color:var(--text-soft);text-decoration:none;border-radius:8px;transition:color .2s,background .2s;letter-spacing:.02em}
+.nav-link:hover,.nav-link.active{color:var(--cyan-light);background:rgba(34,211,238,.08)}
+[data-theme="light"] .nav-link:hover,[data-theme="light"] .nav-link.active{color:#6797CD;background:rgba(103,151,205,.08)}
+@media(max-width:640px){.site-header{padding:.5rem .75rem}.nav-link{font-size:.7rem;padding:.35rem .6rem}}
+</style>
+</head>
+<body data-slide-labels="Hero,Dolor vs solución,Rendimiento,Funcionalidades,Impacto financiero,Calculadora,Flujo de datos,Arquitectura,Integración,Comparativa,FAQ,Audiencias,Cierre">
+<header class="site-header">
+<nav class="site-nav">
+<a href="../catalogo/index.html" class="nav-link inline-flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Catálogo</a>
+<a href="#hero" class="nav-link">Inicio</a>
+<a href="#contacto" class="nav-link">Contacto</a>
+</nav>
+</header>
+
+<!-- HERO H3: split asimétrico texto + dashboard mock -->
+<section class="slide" id="hero">
+<div class="mesh-bg"><div class="mesh-extra"></div></div>
+<div class="slide-content">
+<div class="grid lg:grid-cols-5 gap-12 items-center">
+<div class="lg:col-span-3">
+<div class="hero-logo reveal" style="--reveal-delay:0s;justify-content:flex-start"><img alt="Mindden" src="img/mindden.png" /></div>
+<div class="brand-chip mb-6 reveal float"><i class="w-3.5 h-3.5" data-lucide="factory"></i><span>INDUSTRIAL MIND · Mantenimiento predictivo</span></div>
+<h1 class="title-1 mb-6 reveal" style="--reveal-delay:.1s">INDUSTRIAL MIND ve su próxima parada<br /><span class="gradient-text">120 horas antes de que ocurra.</span></h1>
+<div class="w-20 h-1 gradient-bar rounded-full mb-8 reveal" style="--reveal-delay:.2s"></div>
+<p class="text-lg text-slate-300 leading-relaxed mb-8 reveal max-w-xl" style="--reveal-delay:.3s">Mientras usted lee esto, sus máquinas críticas están degradándose en silencio. 4 sensores, 30 días, cero paradas de instalación. <span class="text-cyan-300 font-semibold">Cada semana sin IndustrialMind es una ruleta de 50.000 € por hora.</span></p>
+<div class="flex flex-col sm:flex-row gap-4 reveal" style="--reveal-delay:.45s">
+<a class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn" href="mailto:info@mindden.com"><i class="w-5 h-5" data-lucide="mail"></i>info@mindden.com</a>
+<a class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn" href="tel:+34965349770"><i class="w-5 h-5" data-lucide="phone"></i>+34 965 349 770</a>
+</div>
+</div>
+<div class="lg:col-span-2 reveal" style="--reveal-delay:.5s">
+<div class="mock-window float">
+<div class="mock-window-header"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span><span class="ml-2">fleet · planta_almansa — en vivo</span></div>
+<div class="p-4 space-y-3">
+<div class="flex items-center justify-between px-3 py-2 rounded-lg border border-slate-700/50">
+<div class="flex items-center gap-3"><span class="semaphore" style="background:#10b981;box-shadow:0 0 8px #10b981"></span><div><div class="text-sm font-semibold text-white">Compresor tornillo C-01</div><div class="text-xs text-slate-500">Salud 92 · vibración estable</div></div></div><span class="text-emerald-300 font-mono font-bold">92</span>
+</div>
+<div class="flex items-center justify-between px-3 py-2 rounded-lg border border-amber-700/40 glow-card">
+<div class="flex items-center gap-3"><span class="semaphore" style="background:#f59e0b;box-shadow:0 0 8px #f59e0b"></span><div><div class="text-sm font-semibold text-white">Bomba centrífuga B-02</div><div class="text-xs text-slate-500">Rodamiento lado acople · actuar en 5–8 sem.</div></div></div><span class="text-amber-300 font-mono font-bold">64</span>
+</div>
+<div class="flex items-center justify-between px-3 py-2 rounded-lg border border-rose-700/40">
+<div class="flex items-center gap-3"><span class="semaphore" style="background:#f43f5e;box-shadow:0 0 8px #f43f5e"></span><div><div class="text-sm font-semibold text-white">Motor eléctrico M-04</div><div class="text-xs text-slate-500">Prob. fallo 72h: 61% · ventana crítica</div></div></div><span class="text-rose-300 font-mono font-bold">38</span>
+</div>
+<div class="whatif-row"><span class="whatif-q">Próxima ventana sugerida</span><span class="whatif-result"><span class="whatif-delta pos">+21 días</span><span class="whatif-unit">margen</span></span></div>
+</div>
+</div>
+<p class="text-xs text-slate-500 mt-3 text-center">Semáforo real: verde &gt;80 · amarillo 50–80 · rojo &lt;50</p>
+</div>
+</div>
+</div>
+<div class="scroll-hint"><span>Descubra más</span><i class="w-4 h-4" data-lucide="chevron-down"></i></div>
+</section>
+
+<!-- S2: problema vs solución -->
+<section class="slide" id="dolor">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow mb-4 reveal">01 · La hemorragia que usted no ve en el P&L</p>
+<h2 class="title-2 mb-4 reveal" style="--reveal-delay:.1s">No es una avería. Es <span class="gradient-text">dinero quemándose cada hora.</span></h2>
+<p class="text-slate-400 max-w-2xl mb-10 reveal" style="--reveal-delay:.2s">Usted no tiene un problema técnico. Tiene un agujero de caja: sabe que fallará, lo que no sabe es cuándo. Y cuando falla, ya ha pagado.</p>
+<div class="vs-grid">
+<div class="vs-card before reveal"><span class="vs-pill"><i class="w-3.5 h-3.5" data-lucide="x-circle"></i>Seguir como hoy le cuesta</span>
+<h3>Producir a ciegas sale carísimo</h3>
+<ul class="vs-list"><li>Hasta 50.000 € evaporados por cada hora de parada</li><li>Hasta el 8% de su coste operativo anual, devorado en silencio</li><li>Un SCADA que grita 5 falsas alarmas al día… que ya nadie escucha</li><li>Recambios de 10.000 € que no puede justificar ante Dirección</li><li>Consultores a 500 €/h que se van sin dejarle ningún sistema</li></ul></div>
+<div class="vs-arrow reveal"><i class="w-8 h-8" data-lucide="arrow-right"></i></div>
+<div class="vs-card after reveal glow-card" style="--reveal-delay:.15s"><span class="vs-pill"><i class="w-3.5 h-3.5" data-lucide="check-circle-2"></i>Con IndustrialMind usted manda</span>
+<h3>Usted decide cuándo parar. Nunca el fallo.</h3>
+<ul class="vs-list"><li>Le avisamos 72–120 h antes: programe el paro cuando le convenga</li><li>“Tiene 5–8 semanas para este rodamiento”: paz, no pitidos</li><li>Instalado en 30 minutos por máquina, con la línea en marcha</li><li>Cada recambio llega con su prueba espectral: nadie le discute el gasto</li><li>Si aun así rompe, el informe post-mortem le recupera la garantía</li></ul></div>
+</div>
+</div>
+</section>
+
+<!-- S6: métricas técnicas -->
+<section class="slide" id="rendimiento">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow mb-4 reveal">02 · La prueba, en números que duelen</p>
+<h2 class="title-2 mb-10 reveal" style="--reveal-delay:.1s">Lo que hoy pierde. <span class="gradient-text">Lo que mañana recupera.</span></h2>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="big-stat reveal"><div class="big-stat-num gradient">120h</div><div class="big-stat-label">de ventaja sobre el fallo. Usted actúa, la competencia reza.</div></div>
+<div class="big-stat reveal" style="--reveal-delay:.1s"><div class="big-stat-num gradient">70%</div><div class="big-stat-label">menos paradas no planificadas. Directo a su margen.</div></div>
+<div class="big-stat reveal" style="--reveal-delay:.2s"><div class="big-stat-num gradient">5s</div><div class="big-stat-label">de la detección a su móvil. Ni un minuto a ciegas.</div></div>
+<div class="big-stat reveal" style="--reveal-delay:.3s"><div class="big-stat-num gradient">99.9%</div><div class="big-stat-label">vigilancia garantizada, incluso sin internet 72 h.</div></div>
+</div>
+<div class="grid md:grid-cols-2 gap-6">
+<div class="glass-card p-6 reveal"><div class="flex items-center gap-3 mb-4"><div class="icon-tile"><i class="w-5 h-5" data-lucide="activity"></i></div><h3 class="font-semibold text-white">4 ojos que nunca parpadean, en cada máquina</h3></div>
+<ul class="text-sm text-slate-400 space-y-2 leading-relaxed"><li>· Vibración triaxial 0–10 kHz: escucha lo que su mejor técnico ya no puede oír 24/7</li><li>· Temperatura ±0.5 °C: detecta el calentamiento semanas antes del gripaje</li><li>· Corriente + ultrasonidos: cazan cavitación, fugas y desgaste incipiente</li><li>· Inalámbrico IP67, sin cables ni paradas: instalado antes de que se enfríe el café</li></ul></div>
+<div class="glass-card p-6 reveal" style="--reveal-delay:.1s"><div class="flex items-center gap-3 mb-4"><div class="icon-tile"><i class="w-5 h-5" data-lucide="cpu"></i></div><h3 class="font-semibold text-white">Habla con sus PLCs sin pedirles permiso a nadie</h3></div>
+<ul class="text-sm text-slate-400 space-y-2 leading-relaxed"><li>· Siemens S7, Allen-Bradley, Modbus, OPC UA: solo lee, jamás toca su control</li><li>· Inteligencia en el borde + 4G a la nube: ni un dato se pierde</li><li>· ¿Su IT prohíbe la nube? Modo Edge local: los datos no salen de su planta</li><li>· Un modelo experto por activo: su compresor no es una bomba, y lo tratamos como tal</li></ul></div>
+</div>
+</div>
+</section>
+
+<!-- S5: funcionalidades → beneficios -->
+<section class="slide" id="funcionalidades">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow mb-4 reveal">03 · No compra sensores. Compra tranquilidad.</p>
+<h2 class="title-2 mb-10 reveal" style="--reveal-delay:.1s">Cada función le <span class="gradient-text">devuelve el control de su planta</span></h2>
+<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+<div class="agent-card reveal"><span class="agent-badge">01 · CERO PARADAS</span><div class="agent-title">Instalado con la línea en marcha</div><p class="agent-desc">30 minutos por máquina, sin abrir cuadros, sin bajar su OEE ni un punto. Si para, perdemos nosotros.</p><p class="agent-demo">“Usted sigue produciendo mientras lo instalamos.”</p></div>
+<div class="agent-card reveal" style="--reveal-delay:.08s"><span class="agent-badge">02 · TAN FÁCIL COMO MIRAR EL COCHE</span><div class="agent-title">Un número. Tres colores. Cero dudas.</div><p class="agent-desc">Verde produzca, amarillo planifique, rojo actúe. Su equipo no necesita ningún máster en datos.</p><p class="agent-demo">“Si baja de 70, lo miramos. El resto del tiempo, a facturar.”</p></div>
+<div class="agent-card reveal" style="--reveal-delay:.16s"><span class="agent-badge">03 · SABRÁ QUÉ, CUÁNDO Y QUÉ HACER</span><div class="agent-title">Predicción a 24 h, 72 h y 7 días</div><p class="agent-desc">Modo de fallo, severidad, pieza necesaria y horas restantes. No un pitido: un plan.</p><p class="agent-demo">“Rodamiento lado compresor: le quedan 168 h. Pida ya el recambio.”</p></div>
+<div class="agent-card reveal" style="--reveal-delay:.24s"><span class="agent-badge">04 · PAZ, NO PITIDOS</span><div class="agent-title">Solo le molestamos cuando importa</div><p class="agent-desc">4 niveles silenciosos por email, SMS, push y Teams. La crítica solo salta al 95% de certeza.</p><p class="agent-demo">“Sus operarios volverán a hacer caso a las alertas.”</p></div>
+<div class="agent-card reveal" style="--reveal-delay:.32s"><span class="agent-badge">05 · SU TÉCNICO, ARMADO</span><div class="agent-title">Convierte a su veterano en intocable</div><p class="agent-desc">QR, checklist, fotos y modo offline. Cuando pida ese recambio de 10.000 €, llevará la prueba en la mano.</p><p class="agent-demo">“Ya no es ‘me suena mal’: es ‘aquí tiene la firma espectral’.”</p></div>
+<div class="agent-card reveal glow-card" style="--reveal-delay:.4s"><span class="agent-badge">06 · PILOTO AUTOMÁTICO ADMIN.</span><div class="agent-title">La alerta crea sola la orden de trabajo</div><p class="agent-desc">SAP PM, Maximo, UpKeep, Fiix + API abierta. Del aviso al parte, sin teclear nada.</p><p class="agent-demo">“Usted duerme. El sistema ya ha abierto la work order.”</p></div>
+</div>
+</div>
+</section>
+
+<!-- S1: impacto financiero -->
+<section class="slide" id="impacto">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow mb-4 reveal">04 · Haga cuentas: no hacerlo es lo caro</p>
+<h2 class="title-2 mb-4 reveal" style="--reveal-delay:.1s">50.000 €/año quemados… o <span class="gradient-text">margen protegido</span></h2>
+<p class="text-slate-400 max-w-2xl mb-10 reveal" style="--reveal-delay:.2s">Una sola parada evitada cambia la cuenta de resultados del año. Todo lo demás es margen puro, turno tras turno.</p>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<div class="roi-chip reveal"><div class="roi-chip-num">50K€</div><div class="roi-chip-label">Lo que hoy regala a las averías</div><div class="roi-chip-sub">cada año, por planta. Como mínimo.</div></div>
+<div class="roi-chip reveal" style="--reveal-delay:.1s"><div class="roi-chip-num">−40%</div><div class="roi-chip-label">Paradas que desaparecen</div><div class="roi-chip-sub">hasta −70% en sus activos críticos</div></div>
+<div class="roi-chip reveal" style="--reveal-delay:.2s"><div class="roi-chip-num">−30%</div><div class="roi-chip-label">Correctivo que se evapora</div><div class="roi-chip-sub">rodamientos que duran +30% más</div></div>
+<div class="roi-chip reveal glow-card" style="--reveal-delay:.3s"><div class="roi-chip-num">&lt;12m</div><div class="roi-chip-label">Para recuperarlo</div><div class="roi-chip-sub">una parada evitada lo paga</div></div>
+</div>
+<div class="connector-row font-semibold"><span>Una hora real en su planta</span><span>Hoy, sin nosotros</span><span>Mañana, con nosotros</span><span>Usted gana</span></div>
+<div class="connector-row"><span>1 h parada (10 t/h × 750 €/t)</span><span class="text-rose-300 font-mono">7.500 € a la basura</span><span class="text-cyan-300 font-mono">paro planificado de 3 semanas</span><span><span class="health-pill ok"><span class="health-dot"></span>evitada</span></span></div>
+<div class="connector-row"><span>Cambiar piezas buenas “por si acaso”</span><span class="text-rose-300 font-mono">15.000 € tirados al año</span><span class="text-cyan-300 font-mono">cambio justo a tiempo</span><span><span class="health-pill ok"><span class="health-dot"></span>−30%</span></span></div>
+</div>
+</section>
+
+<!-- S4: calculadora -->
+<section class="slide" id="calculadora">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow mb-4 reveal">05 · Mírelo con sus propios números</p>
+<h2 class="title-2 mb-10 reveal" style="--reveal-delay:.1s">Mueva los deslizadores. <span class="gradient-text">Duele. Y por eso funciona.</span></h2>
+<div class="grid lg:grid-cols-2 gap-8">
+<div class="glass-card p-8 space-y-7 reveal">
+<div><div class="flex justify-between text-sm mb-3"><span class="text-slate-300">Coste por hora de parada</span><span id="vCoste" class="font-mono text-cyan-300 font-bold">15.000 €</span></div><input id="inCoste" type="range" min="5000" max="50000" step="1000" value="15000" /></div>
+<div><div class="flex justify-between text-sm mb-3"><span class="text-slate-300">Paradas no planificadas / año</span><span id="vParadas" class="font-mono text-cyan-300 font-bold">6</span></div><input id="inParadas" type="range" min="1" max="24" step="1" value="6" /></div>
+<div><div class="flex justify-between text-sm mb-3"><span class="text-slate-300">Duración media (horas)</span><span id="vHoras" class="font-mono text-cyan-300 font-bold">4 h</span></div><input id="inHoras" type="range" min="1" max="24" step="1" value="4" /></div>
+<div><div class="flex justify-between text-sm mb-3"><span class="text-slate-300">Máquinas críticas</span><span id="vMaq" class="font-mono text-cyan-300 font-bold">4</span></div><input id="inMaq" type="range" min="1" max="20" step="1" value="4" /></div>
+</div>
+<div class="glass-card p-8 reveal glow-card result-pulse" id="calcCard" style="--reveal-delay:.15s">
+<p class="text-xs uppercase tracking-widest text-slate-500 mb-2">Pérdida anual actual</p>
+<p id="rPerdida" class="text-3xl font-extrabold text-rose-300 font-mono mb-6">360.000 €</p>
+<div class="w-full h-px bg-slate-700/50 mb-6"></div>
+<p class="text-xs uppercase tracking-widest text-slate-500 mb-2">Ahorro estimado (−40% paradas)</p>
+<p id="rAhorro" class="text-5xl font-extrabold gradient-text mb-2">144.000 €</p>
+<p class="text-sm text-slate-400 mb-6">Paradas evitadas al año: <span id="rCoste" class="font-mono text-white font-semibold">2,4</span> · Horas de producción recuperadas: <span id="rROI" class="font-mono text-emerald-300 font-bold">9,6 h</span></p>
+<div class="flex flex-col sm:flex-row gap-3"><a href="mailto:info@mindden.com" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-cyan-500/15 border border-cyan-500/40 text-cyan-200 text-sm font-semibold hover:bg-cyan-500/25 transition magnetic-btn"><i class="w-4 h-4" data-lucide="mail"></i>Solicitar piloto en mi planta</a></div>
+<p class="text-xs text-slate-500 mt-4">Piloto con objetivo medible: primera degradación detectada en 60 días, con revisión conjunta de resultados.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- S16: pipeline -->
+<section class="slide" id="flujo">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow mb-4 reveal">06 · Flujo de datos en vivo</p>
+<h2 class="title-2 mb-4 reveal" style="--reveal-delay:.1s">Del sensor a la <span class="gradient-text">ventana de mantenimiento</span></h2>
+<p class="text-slate-400 max-w-2xl mb-10 reveal" style="--reveal-delay:.2s">Sensor → Gateway → Cloud → Dashboard / Alertas. Sin escritura al PLC, solo lectura pasiva.</p>
+<div class="mock-window reveal"><div class="mock-window-header"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span><span class="ml-2">pipeline · compresor_01 — 5 s ciclo</span></div>
+<div class="pipeline-mock">
+<div class="pipeline-step"><div class="pipeline-bubble ok"><i class="w-5 h-5" data-lucide="radio"></i></div><div class="pipeline-step-label">Sensores ×4</div><div class="pipeline-step-value">2,34 m/s²</div><div class="pipeline-step-sub">vibración + 68,4 °C</div></div>
+<div class="pipeline-arrow">→</div>
+<div class="pipeline-step"><div class="pipeline-bubble ok"><i class="w-5 h-5" data-lucide="server"></i></div><div class="pipeline-step-label">Gateway</div><div class="pipeline-step-value">RMS + FFT</div><div class="pipeline-step-sub">buffer 72 h · 4G</div></div>
+<div class="pipeline-arrow">→</div>
+<div class="pipeline-step"><div class="pipeline-bubble warn"><i class="w-5 h-5" data-lucide="brain"></i></div><div class="pipeline-step-label">Modelo XGBoost</div><div class="pipeline-step-value">Salud 64</div><div class="pipeline-step-sub">fallo 72 h: 15%</div></div>
+</div>
+<div class="whatif-row"><span class="whatif-q">¿Ventana de actuación recomendada?</span><span class="whatif-result"><span class="whatif-delta pos">5–8 semanas</span><span class="whatif-unit">rodamiento lado compresor</span></span></div>
+<div class="whatif-row"><span class="whatif-q">¿Probabilidad de fallo en 7 días?</span><span class="whatif-result"><span class="whatif-delta neu">45%</span><span class="whatif-unit">severidad: alto</span></span></div>
+</div>
+<div class="gradient-bar h-1 w-full rounded-full mt-10 reveal"></div>
+</div>
+</section>
+
+<!-- S10: arquitectura -->
+<section class="slide" id="arquitectura">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow mb-4 reveal">07 · Arquitectura edge-to-cloud</p>
+<h2 class="title-2 mb-10 reveal" style="--reveal-delay:.1s">Tres capas, <span class="gradient-text">cero fricción con su IT</span></h2>
+<div class="arch-flow">
+<div class="arch-node reveal"><span class="arch-tag">Capa 1 · Planta</span><div class="arch-name">Edge</div><ul class="arch-list"><li>4 sensores IoT + gateway</li><li>Modbus, Profibus, OPC UA</li><li>Buffer 72 h sin conexión</li></ul></div>
+<div class="arch-arrow"><i class="w-6 h-6" data-lucide="arrow-right"></i></div>
+<div class="arch-node accent reveal" style="--reveal-delay:.1s"><span class="arch-tag">Capa 2 · Nube</span><div class="arch-name">Backend Cloud</div><ul class="arch-list"><li>API + colas + TimescaleDB</li><li>Feature engineering y ML</li><li>TLS 1.3 · AES-256 · GDPR</li></ul></div>
+<div class="arch-arrow"><i class="w-6 h-6" data-lucide="arrow-right"></i></div>
+<div class="arch-node reveal" style="--reveal-delay:.2s"><span class="arch-tag">Capa 3 · Usuario</span><div class="arch-name">Web + Móvil</div><ul class="arch-list"><li>Semáforo + tendencias + FFT</li><li>Work orders y PDF mensual</li><li>Roles: admin, planta, técnico</li></ul></div>
+<div class="arch-arrow"><i class="w-6 h-6" data-lucide="arrow-right"></i></div>
+<div class="arch-node reveal" style="--reveal-delay:.3s"><span class="arch-tag">Opcional</span><div class="arch-name">On-Premise</div><ul class="arch-list"><li>Modelo local en su sala IT</li><li>Datos sin salir del perímetro</li><li>+2.000 € setup edge</li></ul></div>
+</div>
+</div>
+</section>
+
+<!-- S8: integración timeline -->
+<section class="slide" id="integracion">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow mb-4 reveal">08 · Integración en 30 días</p>
+<h2 class="title-2 mb-10 reveal" style="--reveal-delay:.1s">De la firma a la <span class="gradient-text">primera alerta en 4 semanas</span></h2>
+<div class="max-w-3xl mx-auto space-y-8">
+<div class="flex gap-5 reveal"><div class="timeline-dot mt-1"></div><div class="glass-card p-6 flex-1"><div class="flex items-center gap-3 mb-2"><span class="font-mono text-cyan-300 text-sm font-bold">SEMANA 1</span><h3 class="font-semibold text-white">Instalación pasiva</h3></div><p class="text-sm text-slate-400">Sensores clamp-on con la línea en marcha + gateway 4G. Estudio del activo y onboarding del equipo incluidos en el setup de 5.000 €/máquina.</p></div></div>
+<div class="flex gap-5 reveal" style="--reveal-delay:.1s"><div class="timeline-dot mt-1"></div><div class="glass-card p-6 flex-1"><div class="flex items-center gap-3 mb-2"><span class="font-mono text-cyan-300 text-sm font-bold">SEMANAS 2–3</span><h3 class="font-semibold text-white">Baseline de 48 h + calibración</h3></div><p class="text-sm text-slate-400">Perfil “saludable” del activo, umbrales dinámicos ±3σ e integración pasiva al PLC si aplica. Sin escribir jamás en su control.</p></div></div>
+<div class="flex gap-5 reveal glow-card" style="--reveal-delay:.2s"><div class="timeline-dot mt-1"></div><div class="glass-card p-6 flex-1"><div class="flex items-center gap-3 mb-2"><span class="font-mono text-cyan-300 text-sm font-bold">SEMANA 4+</span><h3 class="font-semibold text-white">Piloto con objetivo medible</h3></div><p class="text-sm text-slate-400">4 semanas de monitorización en 1 máquina crítica, con meta de primera detección a 60 días y revisión conjunta de resultados con su equipo.</p></div></div>
+</div>
+</div>
+</section>
+
+<!-- S7: comparativa -->
+<section class="slide" id="comparativa">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow mb-4 reveal">09 · Ventaja competitiva</p>
+<h2 class="title-2 mb-10 reveal" style="--reveal-delay:.1s">10× más barato que el <span class="gradient-text">enterprise</span>, 30× más rápido</h2>
+<div class="overflow-x-auto reveal">
+<table class="tco-table">
+<thead><tr><th>Dimensión</th><th>Siemens / ABB</th><th class="col-after">IndustrialMind</th></tr></thead>
+<tbody>
+<tr><td class="col-dim">Target</td><td class="col-before">Fortune 500 con ingeniero de datos</td><td class="col-after">PyME 50–500 empleados, <span class="tco-num">uso intuitivo</span></td></tr>
+<tr><td class="col-dim">Coste</td><td class="col-before"><span class="tco-num">100.000 €+</span> + ecosistema propietario</td><td class="col-after"><span class="tco-num">5.000 €</span> setup + 200–400 €/mes por máquina</td></tr>
+<tr><td class="col-dim">Implantación</td><td class="col-before"><span class="tco-num">6–12 meses</span></td><td class="col-after"><span class="tco-num">30 días</span>, sin parar producción</td></tr>
+<tr><td class="col-dim">Infraestructura</td><td class="col-before">Sensores propietarios + MindSphere</td><td class="col-after"><span class="tco-num">4 sensores</span> estándar + cloud o edge</td></tr>
+<tr><td class="col-dim">Lock-in</td><td class="col-before">Flota cautiva</td><td class="col-after">Datos en <span class="tco-num">CSV abierto</span>, precio fijo 3 años</td></tr>
+</tbody>
+</table>
+</div>
+<p class="tco-foot reveal">ABB Ability parte de 20.000–160.000 USD. Consultoras cobran 300–500 €/h sin dejar sistema. Nosotros dejamos el sistema funcionando.</p>
+</div>
+</section>
+
+<!-- S14: FAQ -->
+<section class="slide" id="faq">
+<div class="dot-grid"></div>
+<div class="slide-content max-w-3xl mx-auto">
+<p class="eyebrow mb-4 reveal">10 · Preguntas frecuentes</p>
+<h2 class="title-2 mb-10 reveal" style="--reveal-delay:.1s">Preguntas de planta, <span class="gradient-text">respondidas sin rodeos</span></h2>
+<div class="space-y-4">
+<div class="accordion-item glass-card reveal"><div class="accordion-header p-5 flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)"><span class="font-semibold text-white text-sm">“¿Tengo que parar la línea para instalar?”</span><i class="w-5 h-5 accordion-icon text-cyan-300" data-lucide="chevron-down"></i></div><div class="accordion-content"><p class="p-5 pt-0 text-sm text-slate-400">No. Clamp-on inalámbrico en 30 minutos con la máquina en marcha. Fase 1 sin tocar el PLC: solo vibración y temperatura superficial.</p></div></div>
+<div class="accordion-item glass-card reveal" style="--reveal-delay:.08s"><div class="accordion-header p-5 flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)"><span class="font-semibold text-white text-sm">“Mi jefe de mantenimiento ya escucha las bombas. ¿Para qué IA?”</span><i class="w-5 h-5 accordion-icon text-cyan-300" data-lucide="chevron-down"></i></div><div class="accordion-content"><p class="p-5 pt-0 text-sm text-slate-400">No sustituimos a su mejor técnico: le damos el gráfico espectral para ganar discusiones con Dirección y justificar recambios de 10.000 € sin que nadie le cuestione.</p></div></div>
+<div class="accordion-item glass-card reveal" style="--reveal-delay:.16s"><div class="accordion-header p-5 flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)"><span class="font-semibold text-white text-sm">“En mi nave no hay WiFi. ¿Cómo mandan datos?”</span><i class="w-5 h-5 accordion-icon text-cyan-300" data-lucide="chevron-down"></i></div><div class="accordion-content"><p class="p-5 pt-0 text-sm text-slate-400">Gateway LoRaWAN/4G con buffer de 72 horas. Si cae la red, almacena y sincroniza después. Ni un dato perdido, sin cableado.</p></div></div>
+<div class="accordion-item glass-card reveal" style="--reveal-delay:.24s"><div class="accordion-header p-5 flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)"><span class="font-semibold text-white text-sm">“¿Otra avalancha de alarmas falsas?”</span><i class="w-5 h-5 accordion-icon text-cyan-300" data-lucide="chevron-down"></i></div><div class="accordion-content"><p class="p-5 pt-0 text-sm text-slate-400">No damos alarmas, damos ventanas: “tiene 5–8 semanas”. Solo escalamos a crítica por SMS/llamada al 95% de confianza en las últimas 48 h.</p></div></div>
+<div class="accordion-item glass-card reveal" style="--reveal-delay:.32s"><div class="accordion-header p-5 flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)"><span class="font-semibold text-white text-sm">“¿IT permite sacar datos a la nube? ¿Y si no tenemos presupuesto?”</span><i class="w-5 h-5 accordion-icon text-cyan-300" data-lucide="chevron-down"></i></div><div class="accordion-content"><p class="p-5 pt-0 text-sm text-slate-400">Modo Edge local si IT lo exige, con la inversión acordada por escrito antes de instalar. Y entra en la partida de mantenimiento preventivo que ya tiene abierta, no en la de IT.</p></div></div>
+<div class="accordion-item glass-card reveal" style="--reveal-delay:.4s"><div class="accordion-header p-5 flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)"><span class="font-semibold text-white text-sm">“¿Y si aun así se rompe? El fallo catastrófico siempre llega.”</span><i class="w-5 h-5 accordion-icon text-cyan-300" data-lucide="chevron-down"></i></div><div class="accordion-content"><p class="p-5 pt-0 text-sm text-slate-400">Entonces lo afronta con el informe post-mortem en la mano: vibración y temperatura de las horas previas para reclamar la garantía al fabricante y justificar el gasto ante su comité. Convertimos el caos en un proceso manejable.</p></div></div>
+<div class="accordion-item glass-card reveal" style="--reveal-delay:.48s"><div class="accordion-header p-5 flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)"><span class="font-semibold text-white text-sm">“Llevamos 2 años sin una parada. Nuestras máquinas son buenas.”</span><i class="w-5 h-5 accordion-icon text-cyan-300" data-lucide="chevron-down"></i></div><div class="accordion-content"><p class="p-5 pt-0 text-sm text-slate-400">Enhorabuena: entonces hablemos de optimizar, no de apagar fuegos. Si nunca para, probablemente cambia piezas buenas demasiado pronto. Le decimos cuándo cambiarlas justo a tiempo y alarga la vida de sus rodamientos hasta un 30%.</p></div></div>
+<div class="accordion-item glass-card reveal" style="--reveal-delay:.56s"><div class="accordion-header p-5 flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)"><span class="font-semibold text-white text-sm">“No tenemos ingeniero de datos. ¿Quién va a leer eso?”</span><i class="w-5 h-5 accordion-icon text-cyan-300" data-lucide="chevron-down"></i></div><div class="accordion-content"><p class="p-5 pt-0 text-sm text-slate-400">Nadie tiene que leer espectros: el dashboard es un semáforo con el índice de salud de 0 a 100. Verde a producir, amarillo a planificar, rojo a actuar. Las gráficas avanzadas están ahí solo para quien las quiera.</p></div></div>
+<div class="accordion-item glass-card reveal" style="--reveal-delay:.64s"><div class="accordion-header p-5 flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)"><span class="font-semibold text-white text-sm">“¿Cuánto tarda en estar funcionando de verdad?”</span><i class="w-5 h-5 accordion-icon text-cyan-300" data-lucide="chevron-down"></i></div><div class="accordion-content"><p class="p-5 pt-0 text-sm text-slate-400">30 días: semana 1 instalamos con la línea en marcha, semanas 2–3 calibramos el perfil saludable de cada activo y en la semana 4 ya vigila. La primera detección visible llega en 60 días, con revisión conjunta con su equipo.</p></div></div>
+<div class="accordion-item glass-card reveal" style="--reveal-delay:.72s"><div class="accordion-header p-5 flex justify-between items-center cursor-pointer" onclick="toggleAccordion(this)"><span class="font-semibold text-white text-sm">“¿Y si os va mal y me quedo con sensores inútiles?”</span><i class="w-5 h-5 accordion-icon text-cyan-300" data-lucide="chevron-down"></i></div><div class="accordion-content"><p class="p-5 pt-0 text-sm text-slate-400">Los sensores son estándar y los datos siempre suyos, exportables en CSV. Sin cautividad: condiciones pactadas por escrito y sus datos abiertos desde el primer día.</p></div></div>
+</div>
+</div>
+</section>
+
+<!-- S11: audiencias -->
+<section class="slide" id="audiencias">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow mb-4 reveal">11 · Por rol</p>
+<h2 class="title-2 mb-10 reveal" style="--reveal-delay:.1s">Cada decisor ve <span class="gradient-text">su propio retorno</span></h2>
+<div class="grid md:grid-cols-3 gap-6">
+<div class="glass-card p-7 reveal"><div class="icon-tile mb-4"><i class="w-5 h-5" data-lucide="wallet"></i></div><h3 class="font-bold text-white text-lg mb-2">CFO</h3><p class="text-sm text-slate-400 leading-relaxed mb-4">Cada parada evitada es margen que vuelve a la cuenta. Menos correctivo, menos piezas tiradas, menos noches sin dormir.</p><p class="font-mono text-cyan-300 font-bold">Una parada evitada lo paga</p></div>
+<div class="glass-card p-7 reveal glow-card" style="--reveal-delay:.1s"><div class="icon-tile mb-4"><i class="w-5 h-5" data-lucide="settings"></i></div><h3 class="font-bold text-white text-lg mb-2">COO / Planta</h3><p class="text-sm text-slate-400 leading-relaxed mb-4">−40% paradas (hasta −70%). Ventanas de 5–8 semanas para planificar. OEE protegido, cero paradas de instalación.</p><p class="font-mono text-cyan-300 font-bold">120 h antelación</p></div>
+<div class="glass-card p-7 reveal" style="--reveal-delay:.2s"><div class="icon-tile mb-4"><i class="w-5 h-5" data-lucide="shield-check"></i></div><h3 class="font-bold text-white text-lg mb-2">CEO / IT</h3><p class="text-sm text-slate-400 leading-relaxed mb-4">Barrera defensible: PLCs legacy + modelos por activo. Edge on-premise, GDPR y datos abiertos en CSV.</p><p class="font-mono text-cyan-300 font-bold">Meta visible · 60 días</p></div>
+</div>
+</div>
+</section>
+
+<!-- Cierre -->
+<section class="slide items-center text-center" id="contacto">
+<div class="mesh-bg"><div class="mesh-extra"></div></div>
+<div class="slide-content">
+<div class="hero-logo reveal"><img alt="Mindden" src="img/mindden.png" /></div>
+<div class="brand-chip mb-8 reveal float"><i class="w-3.5 h-3.5" data-lucide="rocket"></i><span>Piloto en 1 máquina · resultado en 90 días</span></div>
+<h2 class="title-1 mb-6 reveal" style="--reveal-delay:.1s">La próxima parada ya está <span class="gradient-text">en camino</span></h2>
+<div class="w-20 h-1 gradient-bar rounded-full mx-auto mb-8 reveal" style="--reveal-delay:.2s"></div>
+<p class="text-lg text-slate-300 max-w-2xl mx-auto mb-10 reveal" style="--reveal-delay:.3s">Instalamos 4 sensores en una semana. En 30 días su dashboard predice, <span class="text-cyan-300 font-semibold">con primera detección visible en 60 días.</span></p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center reveal" style="--reveal-delay:.45s">
+<a href="mailto:info@mindden.com" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"><i class="w-5 h-5" data-lucide="mail"></i>info@mindden.com</a>
+<a href="tel:+34965349770" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"><i class="w-5 h-5" data-lucide="phone"></i>+34 965 349 770</a>
+</div>
+<p class="mt-12 text-xs text-slate-600 reveal" style="--reveal-delay:.6s">INDUSTRIAL_MIND by <b>Mindden Soft Tech</b></p>
+</div>
+</section>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+if (window.lucide) lucide.createIcons();
+function toggleAccordion(header){
+var item=header.parentElement;var was=item.classList.contains('open');
+document.querySelectorAll('.accordion-item').forEach(function(i){i.classList.remove('open');i.querySelector('.accordion-content').style.maxHeight=null;});
+if(!was){item.classList.add('open');var c=item.querySelector('.accordion-content');c.style.maxHeight=c.scrollHeight+'px';}
+}
+var f={c:15000,n:6,h:4,m:4};
+function fmt(v){return Math.round(v).toLocaleString('es-ES')+' €';}
+function calc(){
+var perdida=f.c*f.n*f.h;var ahorro=perdida*0.40;
+var evitadas=f.n*0.40;var horas=evitadas*f.h;
+document.getElementById('vCoste').textContent=fmt(f.c).replace(',00','');
+document.getElementById('vParadas').textContent=f.n;
+document.getElementById('vHoras').textContent=f.h+' h';
+document.getElementById('vMaq').textContent=f.m;
+document.getElementById('rPerdida').textContent=fmt(perdida);
+document.getElementById('rAhorro').textContent=fmt(ahorro);
+document.getElementById('rCoste').textContent=evitadas.toFixed(1).replace('.',',');
+document.getElementById('rROI').textContent=horas.toFixed(1).replace('.',',')+' h';
+var card=document.getElementById('calcCard');card.classList.add('tick');setTimeout(function(){card.classList.remove('tick');},200);
+}
+[['inCoste','c'],['inParadas','n'],['inHoras','h'],['inMaq','m']].forEach(function(p){
+document.getElementById(p[0]).addEventListener('input',function(e){f[p[1]]=parseFloat(e.target.value);calc();});
+});
+calc();
+</script>
+<script src="js/presentation.js"></script>
+<script>
+(function(){var h=document.querySelector('.site-header'),l=document.querySelectorAll('.nav-link'),s=document.querySelectorAll('.slide[id]');function u(){var y=window.scrollY||window.pageYOffset;h.classList.toggle('scrolled',y>50);var c='';s.forEach(function(t){if(y>=t.offsetTop-120)c=t.getAttribute('id')});l.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+c)})}window.addEventListener('scroll',u,{passive:true});u()})();
+</script>
+</body>
+</html>
