@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MINDDEN OCEAN · Del flete al cobro en un solo expediente</title>
+<meta name="description" content="MINDDEN OCEAN es la plataforma NVOCC que gestiona todo el ciclo del transporte marítimo: tarifas, cotizaciones, bookings, consols LCL, BLs, aduanas, tracking y exportación financiera." />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<style>
+.site-header{position:fixed;top:0;left:0;right:0;z-index:100;padding:.75rem 1.5rem;background:rgba(5,10,22,.8);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:background .3s,box-shadow .3s}.site-header.scrolled{background:rgba(5,10,22,.95);box-shadow:0 4px 20px rgba(0,0,0,.3)}[data-theme="light"] .site-header{background:rgba(248,250,252,.85);border-bottom-color:rgba(148,163,184,.15)}[data-theme="light"] .site-header.scrolled{background:rgba(248,250,252,.95);box-shadow:0 4px 20px rgba(0,0,0,.06)}.site-nav{display:flex;justify-content:center;gap:.25rem;max-width:1200px;margin:0 auto}.nav-link{padding:.4rem .9rem;font-size:.8rem;font-weight:500;color:var(--text-soft);text-decoration:none;border-radius:8px;transition:color .2s,background .2s;letter-spacing:.02em}.nav-link:hover,.nav-link.active{color:var(--cyan-light);background:rgba(34,211,238,.08)}[data-theme="light"] .nav-link:hover,[data-theme="light"] .nav-link.active{color:#6797CD;background:rgba(103,151,205,.08)}@media(max-width:640px){.site-header{padding:.5rem .75rem}.nav-link{font-size:.7rem;padding:.35rem .6rem}}
+.calc-slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--teal));outline:none;cursor:pointer}
+.calc-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--cyan-light);border:3px solid var(--bg-deep);box-shadow:0 0 16px rgba(34,211,238,.5);cursor:grab}
+.calc-slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--cyan-light);border:3px solid var(--bg-deep);box-shadow:0 0 16px rgba(34,211,238,.5);cursor:grab}
+.icon-tile,.brand-chip,.roi-chip{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s}
+.vs-card,.vs-card h3,.vs-card .vs-list,.vs-card .vs-list li{text-align:left}.icon-tile:hover,.brand-chip:hover,.roi-chip:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 8px 24px rgba(34,211,238,.15)}
+.glow-card{box-shadow:0 0 25px -5px rgba(34,211,238,.15)}
+.result-card{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s}
+.result-card.pulse{transform:scale(1.03);box-shadow:0 0 32px rgba(34,211,238,.25)}
+.section-connector{width:60%;height:2px;background:linear-gradient(90deg,transparent,rgba(34,211,238,.3),transparent);margin:0 auto}
+.audience-card{position:relative;overflow:hidden}
+.audience-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--cyan),var(--teal))}
+.step-num{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.35rem;font-weight:800;color:var(--cyan-light);background:rgba(34,211,238,.08);border:2px solid rgba(34,211,238,.35);box-shadow:0 0 20px rgba(34,211,238,.15);flex-shrink:0}
+.calc-value{font-family:ui-monospace,monospace;font-size:1.1rem;font-weight:700;color:var(--cyan-light);min-width:70px;text-align:right}
+.result-number{font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#22d3ee 0%,#14b8a6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+</style>
+</head>
+<body data-slide-labels="Inicio,Flujo operativo,El problema,Capacidades,Impacto,Calculadora,Ventaja competitiva,Implantación,Seguridad,Audiencias y contacto">
+<header class="site-header">
+<nav class="site-nav">
+<a href="../catalogo/index.html" class="nav-link inline-flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Catálogo</a>
+<a href="#hero" class="nav-link">Inicio</a>
+<a href="#contacto" class="nav-link">Contacto</a>
+</nav>
+</header>
+
+<!-- HERO H2 · texto + 4 roi-chips -->
+<section class="slide items-center" id="hero">
+<div class="mesh-bg"><div class="mesh-extra"></div></div>
+<div class="slide-content">
+<div class="hero-logo reveal"><img src="img/mindden.png" alt="Mindden" /></div>
+<div class="grid lg:grid-cols-5 gap-10 items-center">
+<div class="lg:col-span-3">
+<div class="brand-chip mb-6 reveal float"><i data-lucide="ship" class="w-3.5 h-3.5"></i><span>Plataforma NVOCC · Operativa marítima consolidada</span></div>
+<h1 class="title-1 mb-6 reveal" style="--reveal-delay:.1s">Del flete al cobro<br /><span class="gradient-text">en un solo expediente</span></h1>
+<div class="w-20 h-1 gradient-bar rounded-full mb-8 reveal" style="--reveal-delay:.2s"></div>
+<p class="text-lg md:text-xl text-slate-300 leading-relaxed mb-8 reveal" style="--reveal-delay:.3s">Tarifas, cotizaciones, bookings, consols LCL, BLs, aduanas y tracking: todo el ciclo del transporte marítimo <span class="text-cyan-300 font-semibold">sin hojas de cálculo cosidas a mano.</span></p>
+<div class="flex flex-col sm:flex-row gap-4 reveal" style="--reveal-delay:.45s">
+<a href="mailto:info@mindden.com" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"><i data-lucide="mail" class="w-4 h-4"></i>info@mindden.com</a>
+<a href="tel:+34965349770" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"><i data-lucide="phone" class="w-4 h-4"></i>+34 965 349 770</a>
+</div>
+</div>
+<div class="lg:col-span-2 grid grid-cols-2 gap-4">
+<div class="roi-chip reveal" style="--reveal-delay:.2s"><div class="roi-chip-num">1</div><div class="roi-chip-label">Expediente</div><div class="roi-chip-sub">El shipment es la verdad operativa</div></div>
+<div class="roi-chip reveal" style="--reveal-delay:.3s"><div class="roi-chip-num">70+</div><div class="roi-chip-label">Pantallas</div><div class="roi-chip-sub">Listas y detalle por dominio</div></div>
+<div class="roi-chip reveal" style="--reveal-delay:.4s"><div class="roi-chip-num">11</div><div class="roi-chip-label">Pasos</div><div class="roi-chip-sub">De la tarifa a la exportación</div></div>
+<div class="roi-chip reveal" style="--reveal-delay:.5s"><div class="roi-chip-num">LCL</div><div class="roi-chip-label">Nativo</div><div class="roi-chip-sub">N bookings y BLs por consol</div></div>
+</div>
+</div>
+</div>
+<div class="scroll-hint"><span>Descubra más ↓</span><i data-lucide="chevron-down" class="w-4 h-4"></i></div>
+</section>
+
+<!-- 01 · FLUJO OPERATIVO -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">01 · El ciclo completo, sin fisuras</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">Cotiza, reserva, consolida, <span class="gradient-text">documenta y liquida</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="mock-window reveal" style="--reveal-delay:.2s">
+<div class="mock-window-header"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span><span class="ml-2">Expediente OCEAN · VLC → KHI · LCL · Voyage 214S</span></div>
+<div class="pipeline-mock">
+<div class="pipeline-step"><div class="pipeline-bubble ok"><i data-lucide="calculator" class="w-5 h-5"></i></div><div class="pipeline-step-label">Tarifa → Cotiza</div><div class="pipeline-step-value">W/M + mínimos</div><div class="pipeline-step-sub">Coste / venta / margen</div></div>
+<div class="pipeline-arrow">→</div>
+<div class="pipeline-step"><div class="pipeline-bubble ok"><i data-lucide="bookmark-check" class="w-5 h-5"></i></div><div class="pipeline-step-label">Acepta → Reserva</div><div class="pipeline-step-value">Booking</div><div class="pipeline-step-sub">Conserva lo vendido</div></div>
+<div class="pipeline-arrow">→</div>
+<div class="pipeline-step"><div class="pipeline-bubble ok"><i data-lucide="container" class="w-5 h-5"></i></div><div class="pipeline-step-label">Consolida</div><div class="pipeline-step-value">Shipment</div><div class="pipeline-step-sub">Buque · contenedor · precinto</div></div>
+</div>
+<div class="whatif-row"><span class="whatif-q">Flete marítimo · 12,4 W/M × 85 $</span><span class="whatif-result"><span class="whatif-delta pos">1.054 $</span></span></div>
+<div class="whatif-row"><span class="whatif-q">THC origen + recogida + emisión BL</span><span class="whatif-result"><span class="whatif-delta neu">386 $</span></span></div>
+<div class="whatif-row"><span class="whatif-q">Margen de la operación (venta − coste)</span><span class="whatif-result"><span class="whatif-delta pos">+18,2 %</span><span class="whatif-unit">trazable a tarifa v3</span></span></div>
+</div>
+<div class="flex flex-wrap gap-2 mt-6 reveal" style="--reveal-delay:.3s">
+<span class="brand-chip"><i data-lucide="file-text" class="w-3.5 h-3.5"></i>HBL · MBL · Sea Waybill · SI · DGD</span>
+<span class="brand-chip"><i data-lucide="radar" class="w-3.5 h-3.5"></i>Hitos: closing · ETD · ETA · entrega</span>
+<span class="brand-chip"><i data-lucide="arrow-right-left" class="w-3.5 h-3.5"></i>Exportación financiera limpia</span>
+</div>
+</div>
+</section>
+
+<!-- 02 · PROBLEMA vs SOLUCIÓN -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">02 · El coste de operar a ciegas</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">Su carga viaja en barco. <span class="gradient-text">Sus datos no deberían ir a la deriva</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="vs-grid">
+<div class="vs-card before reveal" style="--reveal-delay:.2s">
+<span class="vs-pill"><i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>Sin OCEAN</span>
+<h3>Excel, email y memoria del operador</h3>
+<ul class="vs-list">
+<li><span>Cotizaciones sin rastro de qué tarifa ni qué versión las calculó</span></li>
+<li><span>Bookings sueltos: nadie sabe qué carga va en qué consol ni en qué contenedor</span></li>
+<li><span>BLs como adjuntos anónimos, sin estado de release ni linaje</span></li>
+<li><span>Mercancía peligrosa y aduana como casilla: el bloqueo estalla en puerto</span></li>
+</ul>
+</div>
+<div class="vs-arrow reveal" style="--reveal-delay:.3s"><i data-lucide="arrow-right" class="w-8 h-8"></i></div>
+<div class="vs-card after reveal glow-card" style="--reveal-delay:.35s">
+<span class="vs-pill"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i>Con OCEAN</span>
+<h3>Un expediente, una verdad, una próxima acción</h3>
+<ul class="vs-list">
+<li><span>Cada cotización conserva <b>tarifa, W/M, mínimos y margen</b> de origen</span></li>
+<li><span>El shipment agrega bookings, carga, contenedores e hitos <b>en una sola vista</b></span></li>
+<li><span>Cada documento tiene <b>tipo, versión y estado de release</b> con consecuencias</span></li>
+<li><span>DG y aduana estructurados: <b>bloqueos visibles antes</b> de la salida</span></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 03 · CAPACIDADES -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">03 · De funcionalidad a beneficio</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">Lenguaje naviero, <span class="gradient-text">no ERP genérico</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="agent-card reveal"><span class="agent-badge">pricing first-class</span><div class="flex items-center gap-2 mb-1"><div class="icon-tile"><i data-lucide="table-properties" class="w-5 h-5"></i></div><div class="agent-title">Tarifas por lane, versionadas</div></div><p class="agent-desc">Matrices por ruta con W/M, mínimos, coste/venta y margen. Cálculo determinista y auditable.</p><p class="agent-demo">Beneficio: el pricing deja de ser el principal riesgo del negocio.</p></div>
+<div class="agent-card reveal" style="--reveal-delay:.1s"><span class="agent-badge">cotización → booking</span><div class="flex items-center gap-2 mb-1"><div class="icon-tile"><i data-lucide="file-signature" class="w-5 h-5"></i></div><div class="agent-title">La venta se convierte en trabajo</div></div><p class="agent-desc">La cotización aceptada genera el booking conservando cliente, ruta, carga y snapshot de precio.</p><p class="agent-demo">Beneficio: cero re-tecleo entre comercial y operaciones.</p></div>
+<div class="agent-card reveal" style="--reveal-delay:.2s"><span class="agent-badge">LCL nativo</span><div class="flex items-center gap-2 mb-1"><div class="icon-tile"><i data-lucide="boxes" class="w-5 h-5"></i></div><div class="agent-title">Muchos bookings, un consol</div></div><p class="agent-desc">Múltiples bookings, BLs y líneas de carga en un shipment, con totales y plan de carga.</p><p class="agent-demo">Beneficio: la consolidación es el caso normal, no la excepción.</p></div>
+<div class="agent-card reveal" style="--reveal-delay:.25s"><span class="agent-badge">documentos con sentido</span><div class="flex items-center gap-2 mb-1"><div class="icon-tile"><i data-lucide="stamp" class="w-5 h-5"></i></div><div class="agent-title">BL, SI y releases con estado</div></div><p class="agent-desc">HBL, MBL, Sea Waybill y OBL con ciclo de vida: surrender, telex release, versiones y paquetes al agente.</p><p class="agent-demo">Beneficio: siempre sabe qué falta para liberar cada embarque.</p></div>
+<div class="agent-card reveal" style="--reveal-delay:.3s"><span class="agent-badge">IMO + aduana</span><div class="flex items-center gap-2 mb-1"><div class="icon-tile"><i data-lucide="triangle-alert" class="w-5 h-5"></i></div><div class="agent-title">Compliance que bloquea a tiempo</div></div><p class="agent-desc">Nº ONU, clase IMO, grupo de embalaje, EmS y documentos DGD/MSDS como datos estructurados.</p><p class="agent-demo">Beneficio: el aviso llega en oficina, no en el puerto.</p></div>
+<div class="agent-card reveal glow-card" style="--reveal-delay:.35s"><span class="agent-badge">torre de control</span><div class="flex items-center gap-2 mb-1"><div class="icon-tile"><i data-lucide="radar" class="w-5 h-5"></i></div><div class="agent-title">Tracking y colas de trabajo</div></div><p class="agent-desc">Hitos planificados frente a eventos reales, con dashboards de pendientes, bloqueos y retrasos.</p><p class="agent-demo">Beneficio: dirección ve el negocio sin coser excels.</p></div>
+</div>
+</div>
+</section>
+
+<!-- 04 · IMPACTO -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">04 · Impacto operativo</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">Menos fricción, <span class="gradient-text">más embarques bajo control</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+<div class="big-stat glass-card reveal glow-card"><div class="big-stat-num gradient">1</div><div class="big-stat-unit">expediente por embarque</div><div class="big-stat-label">Bookings, carga, contenedores, documentos y tracking en la misma vista</div></div>
+<div class="big-stat glass-card reveal" style="--reveal-delay:.15s"><div class="big-stat-num gradient">70+</div><div class="big-stat-unit">pantallas operativas</div><div class="big-stat-label">Listas de colas de trabajo y fichas de detalle con próxima acción</div></div>
+<div class="big-stat glass-card reveal" style="--reveal-delay:.25s"><div class="big-stat-num gradient">9</div><div class="big-stat-unit">documentos con estado</div><div class="big-stat-label">HBL, MBL, Waybill, OBL, SI, CR, DGD, MSDS y prealert tipados</div></div>
+<div class="big-stat glass-card reveal" style="--reveal-delay:.35s"><div class="big-stat-num gradient">11</div><div class="big-stat-unit">pasos del flujo</div><div class="big-stat-label">De maestros y tarifas a la exportación financiera, sin atajos</div></div>
+</div>
+</div>
+</section>
+
+<!-- 05 · CALCULADORA -->
+<section class="slide" id="calculadora">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">05 · Simule un flete LCL en 10 segundos</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">Peso o medida: <span class="gradient-text">paga lo que más ocupe</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="grid lg:grid-cols-2 gap-6">
+<div class="glass-card p-6 reveal" style="--reveal-delay:.2s">
+<div class="mb-5"><div class="flex justify-between text-sm mb-2"><span class="text-slate-300 font-semibold">Volumen de la carga (m³)</span><span class="calc-value" id="calc-vol-val">8,0 m³</span></div><input type="range" id="calc-vol" class="calc-slider" min="1" max="60" step="0.5" value="8" /></div>
+<div class="mb-5"><div class="flex justify-between text-sm mb-2"><span class="text-slate-300 font-semibold">Peso bruto (t)</span><span class="calc-value" id="calc-peso-val">4,5 t</span></div><input type="range" id="calc-peso" class="calc-slider" min="0.5" max="30" step="0.5" value="4.5" /></div>
+<div class="mb-5"><div class="flex justify-between text-sm mb-2"><span class="text-slate-300 font-semibold">Tarifa (USD / unidad W/M)</span><span class="calc-value" id="calc-tarifa-val">85 $</span></div><input type="range" id="calc-tarifa" class="calc-slider" min="20" max="200" step="5" value="85" /></div>
+<div class="mb-2"><div class="flex justify-between text-sm mb-2"><span class="text-slate-300 font-semibold">Mínimo aplicable (USD)</span><span class="calc-value" id="calc-min-val">150 $</span></div><input type="range" id="calc-min" class="calc-slider" min="50" max="1000" step="10" value="150" /></div>
+<p class="text-xs text-slate-500 mt-4">Lógica W/M real: la unidad facturable es el mayor entre peso y volumen; el mínimo manda si el cálculo queda por debajo.</p>
+</div>
+<div class="grid gap-4">
+<div class="result-card glass-card p-6 text-center reveal" id="result-total" style="--reveal-delay:.25s"><div class="text-xs uppercase tracking-widest text-slate-400 mb-1">Flete total estimado</div><div class="result-number" id="result-total-num">680 $</div><div class="text-xs text-slate-400 mt-1" id="result-total-sub">8,0 unidades W/M × 85 $</div></div>
+<div class="grid grid-cols-2 gap-4">
+<div class="result-card glass-card p-5 text-center reveal" id="result-wm-card" style="--reveal-delay:.3s"><div class="text-xs uppercase tracking-widest text-slate-400 mb-1">W/M facturable</div><div class="text-2xl font-extrabold gradient-text" id="result-wm-num">8,0</div><div class="text-xs text-slate-400">manda el volumen</div></div>
+<div class="result-card glass-card p-5 text-center reveal" style="--reveal-delay:.35s"><div class="text-xs uppercase tracking-widest text-slate-400 mb-1">Mínimo aplicado</div><div class="text-2xl font-extrabold gradient-text" id="result-min-num">No</div><div class="text-xs text-slate-400">cálculo por encima del mínimo</div></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 06 · COMPARATIVA -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">06 · Ventaja competitiva</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">El Excel cotiza. El ERP factura. <span class="gradient-text">OCEAN embarca.</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="overflow-x-auto reveal" style="--reveal-delay:.2s">
+<table class="tco-table">
+<thead><tr><th>Dimensión</th><th>Excel + email</th><th class="col-after">MINDDEN OCEAN</th></tr></thead>
+<tbody>
+<tr><td class="col-dim">Expediente operativo</td><td class="col-before">Cotización, booking y BL en ficheros sueltos. <span class="tco-num">Sin vínculo</span></td><td class="col-after">Quotation → Booking → Shipment → Documentos encadenados. <span class="tco-num">Trazabilidad total</span></td></tr>
+<tr><td class="col-dim">Pricing</td><td class="col-before">Tarifas en la cabeza del comercial. <span class="tco-num">Sin versión ni W/M</span></td><td class="col-after">Tarifas versionadas por lane con W/M y mínimos. <span class="tco-num">Margen siempre visible</span></td></tr>
+<tr><td class="col-dim">Documentos</td><td class="col-before">BLs como PDF adjuntos. <span class="tco-num">Sin estado de release</span></td><td class="col-after">HBL/MBL/Waybill/SI con ciclo de vida y linaje. <span class="tco-num">Release bajo control</span></td></tr>
+<tr><td class="col-dim">Compliance</td><td class="col-before">IMO y aduana como casilla de texto. <span class="tco-num">Bloqueo en puerto</span></td><td class="col-after">DG estructurado (ONU, IMO, EmS) que genera avisos. <span class="tco-num">Bloqueo anticipado</span></td></tr>
+<tr><td class="col-dim">Cierre</td><td class="col-before">Costes y ventas a mano para contabilidad</td><td class="col-after">Líneas comerciales exportables con referencia. <span class="tco-num">Finanzas aguas abajo</span></td></tr>
+</tbody>
+</table>
+<p class="tco-foot reveal" style="--reveal-delay:.25s">No sustituye su contabilidad: la alimenta con líneas limpias y referenciadas.</p>
+</div>
+</div>
+</section>
+
+<!-- 07 · IMPLANTACIÓN -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">07 · Puesta en marcha con un lane real</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">De cero al primer embarque <span class="gradient-text">en 3 pasos</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="grid md:grid-cols-3 gap-5">
+<div class="glass-card p-6 reveal"><div class="flex items-center gap-4 mb-4"><div class="step-num">1</div><div class="font-bold text-white">Cargue maestros y tarifas</div></div><p class="text-sm text-slate-400">Puertos, navieras, agentes, almacenes y conceptos de coste. Matriz de tarifas del lane piloto, por ejemplo Valencia → Karachi.</p></div>
+<div class="glass-card p-6 reveal" style="--reveal-delay:.15s"><div class="flex items-center gap-4 mb-4"><div class="step-num">2</div><div class="font-bold text-white">Cotice y reserve en real</div></div><p class="text-sm text-slate-400">Cotización con W/M y margen, aceptación del cliente y conversión a booking con todo el contexto conservado.</p></div>
+<div class="glass-card p-6 reveal glow-card" style="--reveal-delay:.3s"><div class="flex items-center gap-4 mb-4"><div class="step-num">3</div><div class="font-bold text-white">Embarque, documente y exporte</div></div><p class="text-sm text-slate-400">Shipment con contenedor y precinto, BL/SI con release, hitos de tracking y líneas comerciales para su financiera.</p></div>
+</div>
+<div class="section-connector mt-10 reveal" style="--reveal-delay:.35s"></div>
+<p class="text-center text-sm text-slate-400 mt-6 reveal" style="--reveal-delay:.4s">Django + React sobre PostgreSQL, desplegado con Docker en su infraestructura. Sus datos, sus reglas, su perímetro.</p>
+</div>
+</section>
+
+<!-- 08 · SEGURIDAD -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">08 · Seguridad y gobierno</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">Cada perfil ve lo suyo. <span class="gradient-text">Cada cambio deja rastro.</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="glass-card p-5 reveal"><div class="icon-tile mb-3"><i data-lucide="key-round" class="w-5 h-5"></i></div><div class="font-bold text-white text-sm mb-1">Identidad empresarial</div><p class="text-xs text-slate-400">JWT con Keycloak opcional. Sesiones y accesos bajo su control.</p></div>
+<div class="glass-card p-5 reveal" style="--reveal-delay:.1s"><div class="icon-tile mb-3"><i data-lucide="users" class="w-5 h-5"></i></div><div class="font-bold text-white text-sm mb-1">Roles por función</div><p class="text-xs text-slate-400">Pricing, operaciones, documentación y solo lectura: cada rol opera en su contexto.</p></div>
+<div class="glass-card p-5 reveal" style="--reveal-delay:.2s"><div class="icon-tile mb-3"><i data-lucide="history" class="w-5 h-5"></i></div><div class="font-bold text-white text-sm mb-1">Trazabilidad total</div><p class="text-xs text-slate-400">Eventos, transiciones de estado y auditoría: ningún cambio económico se pierde.</p></div>
+<div class="glass-card p-5 reveal glow-card" style="--reveal-delay:.3s"><div class="icon-tile mb-3"><i data-lucide="server" class="w-5 h-5"></i></div><div class="font-bold text-white text-sm mb-1">Despliegue propio</div><p class="text-xs text-slate-400">Docker Compose con PostgreSQL y Redis. Copias y restauración integradas.</p></div>
+</div>
+</div>
+</section>
+
+<!-- 09 · AUDIENCIAS + CIERRE -->
+<section class="slide" id="contacto">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">09 · Para cada decisor</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">El embarque, visto <span class="gradient-text">desde su silla</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="grid lg:grid-cols-3 gap-5 mb-10">
+<div class="glass-card p-6 audience-card reveal" style="--reveal-delay:.2s"><div class="text-white font-semibold">CEO / Dirección</div><div class="text-xs text-slate-400 mb-3">Propietario del NVOCC</div><h3 class="text-lg font-bold text-white mb-3">Margen y riesgo a la vista</h3><ul class="space-y-2 text-sm text-slate-400"><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Margen por operación con procedencia de tarifa</li><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Bloqueos y retrasos antes de que escalen al cliente</li><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Un NVOCC operando con disciplina desde el día uno</li></ul></div>
+<div class="glass-card p-6 audience-card reveal" style="--reveal-delay:.3s"><div class="text-white font-semibold">Comercial / Pricing</div><div class="text-xs text-slate-400 mb-3">Ventas y tarifas</div><h3 class="text-lg font-bold text-white mb-3">Cotizar sin miedo al margen</h3><ul class="space-y-2 text-sm text-slate-400"><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Ofertas con W/M, mínimos y coste/venta calculados</li><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>PDF de cotización y aceptación que alimenta el booking</li><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Historial de revisiones por cliente y lane</li></ul></div>
+<div class="glass-card p-6 audience-card reveal" style="--reveal-delay:.4s"><div class="text-white font-semibold">Operaciones / Documentación</div><div class="text-xs text-slate-400 mb-3">Ejecución y BLs</div><h3 class="text-lg font-bold text-white mb-3">El expediente que trabaja solo</h3><ul class="space-y-2 text-sm text-slate-400"><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Shipment con próxima acción siempre visible</li><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>BL/SI con release y paquetes al agente sin rehacer datos</li><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Colas de pendientes, bloqueos y llegadas por cerrar</li></ul></div>
+</div>
+<div class="text-center reveal" style="--reveal-delay:.45s">
+<p class="text-lg text-slate-300 max-w-2xl mx-auto mb-8">En <span class="text-cyan-300 font-semibold">una sesión</span> le mostramos su lane cotizando, embarcando y documentándose en OCEAN.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+<a href="mailto:info@mindden.com" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"><i data-lucide="mail" class="w-4 h-4"></i>info@mindden.com</a>
+<a href="tel:+34965349770" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"><i data-lucide="phone" class="w-4 h-4"></i>+34 965 349 770</a>
+</div>
+<p class="mt-12 text-xs text-slate-600">MINDDEN OCEAN · Plataforma NVOCC de operaciones marítimas by <b>Mindden Soft Tech</b></p>
+</div>
+</div>
+</section>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+if (window.lucide) lucide.createIcons();
+(function(){
+  var vol = document.getElementById('calc-vol');
+  var peso = document.getElementById('calc-peso');
+  var tarifa = document.getElementById('calc-tarifa');
+  var min = document.getElementById('calc-min');
+  if (!vol) return;
+  var volVal = document.getElementById('calc-vol-val');
+  var pesoVal = document.getElementById('calc-peso-val');
+  var tarifaVal = document.getElementById('calc-tarifa-val');
+  var minVal = document.getElementById('calc-min-val');
+  var totalNum = document.getElementById('result-total-num');
+  var totalSub = document.getElementById('result-total-sub');
+  var wmNum = document.getElementById('result-wm-num');
+  var minNum = document.getElementById('result-min-num');
+  var cardTotal = document.getElementById('result-total');
+  var cardWm = document.getElementById('result-wm-card');
+  function fmt(n, d){ return n.toLocaleString('es-ES', {minimumFractionDigits: d, maximumFractionDigits: d}); }
+  function pulse(c){ c.classList.add('pulse'); setTimeout(function(){ c.classList.remove('pulse'); }, 300); }
+  function recalc(){
+    var v = parseFloat(vol.value), p = parseFloat(peso.value);
+    var t = parseFloat(tarifa.value), m = parseFloat(min.value);
+    volVal.textContent = fmt(v, 1) + ' m³'; pesoVal.textContent = fmt(p, 1) + ' t';
+    tarifaVal.textContent = fmt(t, 0) + ' $'; minVal.textContent = fmt(m, 0) + ' $';
+    var wm = Math.max(v, p);
+    var total = Math.max(wm * t, m);
+    var usaMinimo = (wm * t) < m;
+    totalNum.textContent = fmt(total, 0) + ' $';
+    totalSub.textContent = fmt(wm, 1) + ' unidades W/M × ' + fmt(t, 0) + ' $' + (usaMinimo ? ' → aplica mínimo' : '');
+    wmNum.textContent = fmt(wm, 1);
+    wmNum.nextElementSibling.textContent = v >= p ? 'manda el volumen' : 'manda el peso';
+    minNum.textContent = usaMinimo ? 'Sí' : 'No';
+    minNum.nextElementSibling.textContent = usaMinimo ? 'el cálculo quedó bajo el mínimo' : 'cálculo por encima del mínimo';
+    pulse(cardTotal); pulse(cardWm);
+  }
+  [vol, peso, tarifa, min].forEach(function(i){ i.addEventListener('input', recalc); });
+  recalc();
+})();
+</script>
+<script src="js/presentation.js"></script>
+<script>
+(function(){var h=document.querySelector('.site-header'),l=document.querySelectorAll('.nav-link'),s=document.querySelectorAll('.slide[id]');function u(){var y=window.scrollY||window.pageYOffset;h.classList.toggle('scrolled',y>50);var c='';s.forEach(function(t){if(y>=t.offsetTop-120)c=t.getAttribute('id')});l.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+c)})}window.addEventListener('scroll',u,{passive:true});u()})();
+</script>
+</body>
+</html>

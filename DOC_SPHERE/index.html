@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DOC SPHERE · Pregunte. Verifique. Decida.</title>
+<meta name="description" content="Doc Sphere convierte todos los documentos de su empresa en un asistente experto que responde en segundos, con fuente citada. Hasta 80% menos tiempo buscando. Despliegue privado." />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<style>
+.site-header{position:fixed;top:0;left:0;right:0;z-index:100;padding:.75rem 1.5rem;background:rgba(5,10,22,.8);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:background .3s,box-shadow .3s}.site-header.scrolled{background:rgba(5,10,22,.95);box-shadow:0 4px 20px rgba(0,0,0,.3)}[data-theme="light"] .site-header{background:rgba(248,250,252,.85);border-bottom-color:rgba(148,163,184,.15)}[data-theme="light"] .site-header.scrolled{background:rgba(248,250,252,.95);box-shadow:0 4px 20px rgba(0,0,0,.06)}.site-nav{display:flex;justify-content:center;gap:.25rem;max-width:1200px;margin:0 auto}.nav-link{padding:.4rem .9rem;font-size:.8rem;font-weight:500;color:var(--text-soft);text-decoration:none;border-radius:8px;transition:color .2s,background .2s;letter-spacing:.02em}.nav-link:hover,.nav-link.active{color:var(--cyan-light);background:rgba(34,211,238,.08)}[data-theme="light"] .nav-link:hover,[data-theme="light"] .nav-link.active{color:#6797CD;background:rgba(103,151,205,.08)}@media(max-width:640px){.site-header{padding:.5rem .75rem}.nav-link{font-size:.7rem;padding:.35rem .6rem}}
+.calc-slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--teal));outline:none;cursor:pointer}
+.calc-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--cyan-light);border:3px solid var(--bg-deep);box-shadow:0 0 16px rgba(34,211,238,.5);cursor:grab}
+.calc-slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--cyan-light);border:3px solid var(--bg-deep);box-shadow:0 0 16px rgba(34,211,238,.5);cursor:grab}
+.icon-tile,.brand-chip,.roi-chip{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s}
+.vs-card,.vs-card h3,.vs-card .vs-list,.vs-card .vs-list li{text-align:left}.icon-tile:hover,.brand-chip:hover,.roi-chip:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 8px 24px rgba(34,211,238,.15)}
+.glow-card{box-shadow:0 0 25px -5px rgba(34,211,238,.15)}
+.result-card{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s}
+.result-card.pulse{transform:scale(1.03);box-shadow:0 0 32px rgba(34,211,238,.25)}
+.section-connector{width:60%;height:2px;background:linear-gradient(90deg,transparent,rgba(34,211,238,.3),transparent);margin:0 auto}
+.audience-card{position:relative;overflow:hidden}
+.audience-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--cyan),var(--teal))}
+.dept-item{border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:border-color .3s,opacity .3s}
+.dept-item:not(.open){opacity:.6}
+.dept-item.open{opacity:1;border-color:rgba(34,211,238,.35)}
+.dept-q{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 1.25rem;font-weight:700}
+.dept-a{max-height:0;overflow:hidden;opacity:0;transition:max-height .45s cubic-bezier(.16,1,.3,1),opacity .3s}
+.dept-item.open .dept-a{max-height:420px;opacity:1}
+.dept-item.open .dept-chev{transform:rotate(180deg);color:var(--cyan-light)}
+.dept-chev{transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.chat-nudge{transition:transform .25s,border-color .25s,background .25s}
+.chat-nudge:hover{transform:translateY(-2px);border-color:rgba(34,211,238,.5)}
+.chat-nudge.active{background:rgba(34,211,238,.12);border-color:rgba(34,211,238,.5)}
+.typing-dot{width:6px;height:6px;border-radius:50%;background:var(--cyan-light);display:inline-block;animation:tblink 1s infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes tblink{0%,100%{opacity:.25}50%{opacity:1}}
+</style>
+</head>
+<body data-slide-labels="Inicio,El problema,Arquitectura,Capacidades,Impacto,Conectividad,Ventaja competitiva,Implantación,Casos de uso,Seguridad y cierre">
+<header class="site-header">
+<nav class="site-nav">
+<a href="../catalogo/index.html" class="nav-link inline-flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Catálogo</a>
+<a href="#hero" class="nav-link">Inicio</a>
+<a href="#contacto" class="nav-link">Contacto</a>
+</nav>
+</header>
+
+<!-- HERO H6 · interactivo con demo de chat -->
+<section class="slide items-center" id="hero">
+<div class="mesh-bg"><div class="mesh-extra"></div></div>
+<div class="slide-content">
+<div class="hero-logo reveal"><img src="img/mindden.png" alt="Mindden" /></div>
+<div class="grid lg:grid-cols-2 gap-10 items-center">
+<div>
+<div class="brand-chip mb-6 reveal float"><i data-lucide="message-square-text" class="w-3.5 h-3.5"></i><span>Ecosistema inteligente de conocimiento empresarial</span></div>
+<h1 class="title-1 mb-6 reveal" style="--reveal-delay:.1s">Pregunte en lenguaje natural.<br /><span class="gradient-text">Obtenga la respuesta exacta y citada.</span></h1>
+<div class="w-20 h-1 gradient-bar rounded-full mb-8 reveal" style="--reveal-delay:.2s"></div>
+<p class="text-lg md:text-xl text-slate-300 leading-relaxed mb-6 reveal" style="--reveal-delay:.3s">Doc Sphere convierte millones de páginas dispersas en un <span class="text-cyan-300 font-semibold">asistente experto privado</span> que responde en segundos, con página y fragmento verificables. <span class="text-cyan-300 font-semibold">Cero alucinaciones.</span></p>
+<div class="flex flex-wrap gap-2 mb-8 reveal" style="--reveal-delay:.35s">
+<span class="brand-chip"><i data-lucide="lock" class="w-3.5 h-3.5"></i>100% privado · on-premises</span>
+<span class="brand-chip"><i data-lucide="file-check" class="w-3.5 h-3.5"></i>Citas verificables</span>
+<span class="brand-chip"><i data-lucide="zap" class="w-3.5 h-3.5"></i>Respuesta en milisegundos</span>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 reveal" style="--reveal-delay:.45s">
+<a href="mailto:info@mindden.com" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"><i data-lucide="mail" class="w-4 h-4"></i>info@mindden.com</a>
+<a href="tel:+34965349770" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"><i data-lucide="phone" class="w-4 h-4"></i>+34 965 349 770</a>
+</div>
+</div>
+<div class="reveal" style="--reveal-delay:.5s">
+<div class="mock-window float">
+<div class="mock-window-header"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span><span class="ml-2">Doc Sphere · Chat · pulse una pregunta</span></div>
+<div class="p-4">
+<div class="flex flex-wrap gap-2 mb-3">
+<button class="chat-nudge text-xs px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300" data-q="legal">¿Cláusulas de rescisión con el proveedor X?</button>
+<button class="chat-nudge text-xs px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300" data-q="rrhh">¿Cuántos días de teletrabajo me corresponden?</button>
+<button class="chat-nudge text-xs px-3 py-1.5 rounded-lg border border-slate-700/50 text-slate-300" data-q="ops">¿Procedimiento de parada de la línea 3?</button>
+</div>
+<div class="rounded-lg border border-slate-700/50 p-3 min-h-[150px]" style="background:rgba(34,211,238,.03)">
+<div id="demo-question" class="text-sm font-semibold text-white mb-2">“¿Cláusulas de rescisión con el proveedor X?”</div>
+<div id="demo-answer" class="ai-narrative !p-0 text-sm"><p>El contrato <span class="ai-strong">2024-1187</span> permite la rescisión con <span class="ai-strong">30 días de preaviso</span> por incumplimiento grave <span class="ai-cite">Contrato_X.pdf · p.12</span> y penalización del 5% <span class="ai-cite">Anexo II · §4.2</span>.</p></div>
+<div id="demo-thinking" class="hidden items-center gap-2 text-xs text-slate-400 mt-2"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span><span>buscando en 3 fuentes · verificando citas…</span></div>
+</div>
+<div class="flex items-center gap-2 mt-3 text-xs text-slate-500"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-cyan-400"></i><span id="demo-perm">Filtrado por sus permisos: solo documentos de Legal a los que usted accede.</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="scroll-hint"><span>Descubra más ↓</span><i data-lucide="chevron-down" class="w-4 h-4"></i></div>
+</section>
+
+<!-- 01 · PROBLEMA vs SOLUCIÓN -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">01 · El coste de la información atrapada</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">El <span class="gradient-text">80% de su conocimiento</span> está enterrado en carpetas</h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="vs-grid">
+<div class="vs-card before reveal" style="--reveal-delay:.2s">
+<span class="vs-pill"><i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>Sin Doc Sphere</span>
+<h3>Horas perdidas, respuestas distintas, riesgo legal</h3>
+<ul class="vs-list">
+<li>Contratos, manuales, actas y escaneados dispersos en Drive, SharePoint y carpetas locales</li>
+<li>Cada empleado obtiene una respuesta distinta según a quién pregunte</li>
+<li>Decisiones con versiones obsoletas: reclamaciones y paradas evitables</li>
+<li>El buscador por palabras no entiende “¿cuántos días me corresponden?”</li>
+</ul>
+</div>
+<div class="vs-arrow reveal" style="--reveal-delay:.3s"><i data-lucide="arrow-right" class="w-8 h-8"></i></div>
+<div class="vs-card after reveal glow-card" style="--reveal-delay:.35s">
+<span class="vs-pill"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i>Con Doc Sphere</span>
+<h3>Una puerta conversacional a toda la verdad</h3>
+<ul class="vs-list">
+<li><span>Pregunta en español y recibe la respuesta redactada con <b>cita a página y fragmento</b></span></li>
+<li><span>Verificación en un clic: vista de fragmentos con resaltado y paginación</span></li>
+<li><span>Cada usuario solo ve lo que sus <b>permisos</b> permiten: fin de las filtraciones</span></li>
+<li><span>Sincronización continua: siempre la <b>versión vigente</b>, nunca la obsoleta</span></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 02 · ARQUITECTURA -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">02 · Cómo funciona por dentro</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">RAG agéntico: <span class="gradient-text">ingiere, indexa, busca, cita</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="arch-flow">
+<div class="arch-node reveal" style="--reveal-delay:.2s"><span class="arch-tag">Paso 1</span><div class="arch-name">Ingiere</div><ul class="arch-list"><li>PDF, Word, Excel, PPT, imágenes y escaneados con OCR</li><li>Motor Docling: entiende tablas cruzadas y gráficos</li><li>Drag &amp; drop (10 ficheros) + conectores cloud</li></ul></div>
+<div class="arch-arrow"><i data-lucide="arrow-right" class="w-6 h-6"></i></div>
+<div class="arch-node accent reveal" style="--reveal-delay:.3s"><span class="arch-tag">Paso 2</span><div class="arch-name">Indexa</div><ul class="arch-list"><li>Índice híbrido: vectores + palabra exacta (BM25)</li><li>Re-ranking para máxima precisión</li><li>De 1.000 a 1.000.000 de documentos</li></ul></div>
+<div class="arch-arrow"><i data-lucide="arrow-right" class="w-6 h-6"></i></div>
+<div class="arch-node accent reveal glow-card" style="--reveal-delay:.4s"><span class="arch-tag">Paso 3</span><div class="arch-name">Responde</div><ul class="arch-list"><li>Orquestación multi-agente: planifica, busca, redacta</li><li>Streaming en directo + preguntas sugeridas</li><li>Tarjetas de cita: documento · página · fragmento</li></ul></div>
+<div class="arch-arrow"><i data-lucide="arrow-right" class="w-6 h-6"></i></div>
+<div class="arch-node reveal" style="--reveal-delay:.5s"><span class="arch-tag">Base</span><div class="arch-name">Gobierna</div><ul class="arch-list"><li>RBAC granular + respeto de ACL de origen</li><li>Despliegue privado: nada entrena modelos públicos</li><li>Backup y restauración en un comando</li></ul></div>
+</div>
+</div>
+</section>
+
+<!-- 03 · FUNCIONALIDADES -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">03 · De funcionalidad a beneficio</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">Todo lo que un empleado necesita, <span class="gradient-text">todo lo que IT exige</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="agent-card reveal"><span class="agent-badge">@ filtros</span><div class="flex items-center gap-2 mb-1"><div class="icon-tile"><i data-lucide="filter" class="w-5 h-5"></i></div><div class="agent-title">Acote por área en un carácter</div></div><p class="agent-desc">Escriba @ para limitar a carpeta, tipo o conector. “Solo normativa PRL 2025”.</p><p class="agent-demo">Beneficio: respuestas sin ruido, cero tiempo filtrando a mano.</p></div>
+<div class="agent-card reveal" style="--reveal-delay:.1s"><span class="agent-badge">citas 1-clic</span><div class="flex items-center gap-2 mb-1"><div class="icon-tile"><i data-lucide="file-check-2" class="w-5 h-5"></i></div><div class="agent-title">Cero alucinaciones por diseño</div></div><p class="agent-desc">Solo redacta con evidencia recuperada. Si no está en sus documentos, lo dice.</p><p class="agent-demo">Beneficio: auditoría y Legal siempre pueden demostrar el origen.</p></div>
+<div class="agent-card reveal" style="--reveal-delay:.2s"><span class="agent-badge">híbrida + rerank</span><div class="flex items-center gap-2 mb-1"><div class="icon-tile"><i data-lucide="search" class="w-5 h-5"></i></div><div class="agent-title">Entiende intención y códigos</div></div><p class="agent-desc">Vectores para “política de vacaciones” + BM25 para “contrato 2024-1187”.</p><p class="agent-demo">Beneficio: encuentra lo que el buscador clásico jamás encuentra.</p></div>
+<div class="agent-card reveal" style="--reveal-delay:.25s"><span class="agent-badge">RBAC + ACL</span><div class="flex items-center gap-2 mb-1"><div class="icon-tile"><i data-lucide="key-round" class="w-5 h-5"></i></div><div class="agent-title">Permisos que se respetan</div></div><p class="agent-desc">Hereda permisos de Drive y SharePoint. Ventas jamás ve documentos de Dirección.</p><p class="agent-demo">Beneficio: seguridad real, no promesas: compliance desde el día uno.</p></div>
+<div class="agent-card reveal" style="--reveal-delay:.3s"><span class="agent-badge">MCP + REST</span><div class="flex items-center gap-2 mb-1"><div class="icon-tile"><i data-lucide="plug" class="w-5 h-5"></i></div><div class="agent-title">Donde usted ya trabaja</div></div><p class="agent-desc">Protocolo MCP (/mcp), API REST, SDKs Python/TS y gateway compatible OpenAI.</p><p class="agent-demo">Beneficio: Slack, Teams, intranet o Cursor conectados en minutos.</p></div>
+<div class="agent-card reveal glow-card" style="--reveal-delay:.35s"><span class="agent-badge">modelo libre</span><div class="flex items-center gap-2 mb-1"><div class="icon-tile"><i data-lucide="cpu" class="w-5 h-5"></i></div><div class="agent-title">Sin vendor lock-in</div></div><p class="agent-desc">OpenAI, Anthropic, Ollama local, watsonx, OpenShift AI. Cambie sin reindexar.</p><p class="agent-demo">Beneficio: usted elige precio, soberanía y rendimiento en cada momento.</p></div>
+</div>
+</div>
+</section>
+
+<!-- 04 · IMPACTO -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">04 · Impacto financiero y técnico</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">Menos búsqueda, <span class="gradient-text">más decisión</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="grid lg:grid-cols-4 gap-6 items-stretch">
+<div class="glass-card p-6 text-center reveal glow-card"><svg class="gauge mx-auto" viewBox="0 0 200 110"><defs><linearGradient id="gaugeGradient" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#14b8a6"/></linearGradient></defs><path class="gauge-track" d="M 20 100 A 80 80 0 0 1 180 100"/><path class="gauge-fill" d="M 20 100 A 80 80 0 0 1 180 100"/></svg><div class="gauge-center" style="margin-top:-70px"><div class="gauge-pct">80%</div><div class="gauge-label">menos tiempo buscando</div></div><p class="text-xs text-slate-400 mt-8">Entre carpetas, versiones y duplicados. El ahorro aparece en semanas.</p></div>
+<div class="big-stat glass-card reveal" style="--reveal-delay:.15s"><div class="big-stat-num gradient">1M</div><div class="big-stat-unit">documentos</div><div class="big-stat-label">De 1.000 a 1.000.000 con respuesta en milisegundos</div></div>
+<div class="big-stat glass-card reveal" style="--reveal-delay:.25s"><div class="big-stat-num gradient">10</div><div class="big-stat-unit">ficheros por chat</div><div class="big-stat-label">Arrastrar y soltar + selector cloud unificado con deduplicación</div></div>
+<div class="big-stat glass-card reveal" style="--reveal-delay:.35s"><div class="big-stat-num gradient">24/7</div><div class="big-stat-unit">asistente RR.HH.</div><div class="big-stat-label">Normativa, beneficios y onboarding sin formar a nadie</div></div>
+</div>
+</div>
+</section>
+
+<!-- 05 · CONECTIVIDAD -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">05 · Donde usted ya trabaja</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">Conectores, API y <span class="gradient-text">modelos a su elección</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="mock-window reveal" style="--reveal-delay:.2s">
+<div class="mock-window-header"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span><span class="ml-2">Conectores · sincronización y permisos heredados</span></div>
+<div class="connector-row"><span>Fuente</span><span>Estado</span><span>Sincronización</span><span>Docs</span></div>
+<div class="connector-row"><span class="font-semibold text-white">Google Drive</span><span><span class="health-pill ok"><span class="health-dot"></span>Sincronizado</span></span><span class="text-slate-400">Duplicados detectados · ACL ON</span><span class="font-mono text-cyan-300">248.310</span></div>
+<div class="connector-row"><span class="font-semibold text-white">SharePoint / OneDrive</span><span><span class="health-pill ok"><span class="health-dot"></span>Sincronizado</span></span><span class="text-slate-400">Versiones + permisos heredados</span><span class="font-mono text-cyan-300">412.007</span></div>
+<div class="connector-row"><span class="font-semibold text-white">Amazon S3 · Azure Blob · IBM COS</span><span><span class="health-pill warn"><span class="health-dot"></span>Sincronizando</span></span><span class="text-slate-400">Fetch latest docs · 96%</span><span class="font-mono text-cyan-300">301.455</span></div>
+<div class="connector-row"><span class="font-semibold text-white">Subida chat (drag &amp; drop)</span><span><span class="health-pill ok"><span class="health-dot"></span>Activo</span></span><span class="text-slate-400">Hasta 10 ficheros / conversación</span><span class="font-mono text-cyan-300">OCR incl.</span></div>
+</div>
+<div class="flex flex-wrap gap-2 mt-6 reveal" style="--reveal-delay:.3s">
+<span class="brand-chip"><i data-lucide="plug" class="w-3.5 h-3.5"></i>MCP nativo /mcp → Slack · Teams · Cursor · Claude Desktop</span>
+<span class="brand-chip"><i data-lucide="code" class="w-3.5 h-3.5"></i>REST + SDK Python/TS + /v1/chat/completions</span>
+<span class="brand-chip"><i data-lucide="cpu" class="w-3.5 h-3.5"></i>OpenAI · Anthropic · Ollama local · watsonx · OpenShift AI</span>
+</div>
+</div>
+</section>
+
+<!-- 06 · COMPARATIVA -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">06 · Ventaja competitiva</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">Asistentes genéricos responden. <span class="gradient-text">Doc Sphere fundamenta.</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="overflow-x-auto reveal" style="--reveal-delay:.2s">
+<table class="tco-table">
+<thead><tr><th>Dimensión</th><th>ChatGPT / Claude / Copilot</th><th class="col-after">Doc Sphere</th></tr></thead>
+<tbody>
+<tr><td class="col-dim">Fuente de verdad</td><td class="col-before">Conocimiento público + lo que pegue a mano. <span class="tco-num">Sin índice propio</span></td><td class="col-after">Todo su archivo indexado y sincronizado. <span class="tco-num">1K → 1M docs</span></td></tr>
+<tr><td class="col-dim">Citas verificables</td><td class="col-before">No garantizadas. <span class="tco-num">Riesgo de alucinación</span></td><td class="col-after">Documento · página · fragmento en cada respuesta. <span class="tco-num">Cero alucinaciones</span></td></tr>
+<tr><td class="col-dim">Permisos</td><td class="col-before">Sin RBAC documental. <span class="tco-num">Riesgo de filtración</span></td><td class="col-after">RBAC + ACL de Drive/SharePoint. <span class="tco-num">Cada uno ve lo suyo</span></td></tr>
+<tr><td class="col-dim">NotebookLM / buscadores</td><td class="col-before">Cuaderno personal o búsqueda por nombre. <span class="tco-num">No escala</span></td><td class="col-after">Multifuente, multiusuario, multicloud. <span class="tco-num">Cerebro colectivo</span></td></tr>
+<tr><td class="col-dim">Privacidad</td><td class="col-before">Datos fuera de su perímetro</td><td class="col-after">On-premises o nube privada. <span class="tco-num">Nada entrena modelos públicos</span></td></tr>
+</tbody>
+</table>
+<p class="tco-foot reveal" style="--reveal-delay:.25s">Muchas empresas los combinan: Copilot para redactar, Doc Sphere para responder con fundamento.</p>
+</div>
+</div>
+</section>
+
+<!-- 07 · IMPLANTACIÓN -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">07 · Puesta en marcha en días, no meses</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">De la carpeta al chat <span class="gradient-text">en 3 pasos</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="mock-window reveal" style="--reveal-delay:.2s">
+<div class="mock-window-header"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span><span class="ml-2">Pipeline de implantación · Docker Compose CPU/GPU</span></div>
+<div class="pipeline-mock">
+<div class="pipeline-step"><div class="pipeline-bubble ok"><i data-lucide="server" class="w-5 h-5"></i></div><div class="pipeline-step-label">Paso 1 · Día 1</div><div class="pipeline-step-value">Instale en privado</div><div class="pipeline-step-sub">Su servidor o nube · backup 1 comando</div></div>
+<div class="pipeline-arrow">→</div>
+<div class="pipeline-step"><div class="pipeline-bubble ok"><i data-lucide="cloud-upload" class="w-5 h-5"></i></div><div class="pipeline-step-label">Paso 2 · Día 2-3</div><div class="pipeline-step-value">Conecte y suba</div><div class="pipeline-step-sub">Drive / SharePoint / S3 · 500–5.000 ficheros piloto</div></div>
+<div class="pipeline-arrow">→</div>
+<div class="pipeline-step"><div class="pipeline-bubble ok"><i data-lucide="messages-square" class="w-5 h-5"></i></div><div class="pipeline-step-label">Paso 3 · Día 4+</div><div class="pipeline-step-value">Pregunte desde el navegador</div><div class="pipeline-step-sub">Roles + modelo a su elección · sin formación</div></div>
+</div>
+</div>
+<div class="section-connector mt-10 reveal" style="--reveal-delay:.3s"></div>
+<p class="text-center text-sm text-slate-400 mt-6 reveal" style="--reveal-delay:.35s">Piloto mínimo: un servidor con Docker + una carpeta real + 2–3 áreas (p. ej. RR. HH. + Operaciones). En una sesión, respondiendo con sus propios documentos.</p>
+</div>
+</section>
+
+<!-- 08 · CASOS DE USO -->
+<section class="slide">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">08 · Casos de uso por departamento</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">Cada área pregunta. <span class="gradient-text">Doc Sphere cita.</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="grid lg:grid-cols-2 gap-4">
+<div class="flex flex-col gap-3">
+<div class="dept-item open glass-card reveal" style="--reveal-delay:.2s"><div class="dept-q" onclick="toggleDept(this)"><span class="flex items-center gap-3"><span class="icon-tile"><i data-lucide="scale" class="w-5 h-5"></i></span>Legal y Compliance</span><i data-lucide="chevron-down" class="w-5 h-5 dept-chev text-slate-400"></i></div><div class="dept-a"><p class="px-5 pb-5 text-sm text-slate-400">“¿Qué cláusulas de rescisión tenemos con el proveedor X?” → cláusula y página para auditoría. Trazabilidad total hasta el fragmento.</p></div></div>
+<div class="dept-item glass-card reveal" style="--reveal-delay:.25s"><div class="dept-q" onclick="toggleDept(this)"><span class="flex items-center gap-3"><span class="icon-tile"><i data-lucide="users" class="w-5 h-5"></i></span>Recursos Humanos</span><i data-lucide="chevron-down" class="w-5 h-5 dept-chev text-slate-400"></i></div><div class="dept-a"><p class="px-5 pb-5 text-sm text-slate-400">Asistente 24/7 de normativa y onboarding. “¿Cuántos días de teletrabajo me corresponden?” con la norma exacta citada, en cualquier idioma.</p></div></div>
+<div class="dept-item glass-card reveal" style="--reveal-delay:.3s"><div class="dept-q" onclick="toggleDept(this)"><span class="flex items-center gap-3"><span class="icon-tile"><i data-lucide="wrench" class="w-5 h-5"></i></span>Soporte y Operaciones</span><i data-lucide="chevron-down" class="w-5 h-5 dept-chev text-slate-400"></i></div><div class="dept-a"><p class="px-5 pb-5 text-sm text-slate-400">“¿Procedimiento de parada de la línea 3?” → acceso directo al manual vigente. Menos tiempo de parada, menos errores.</p></div></div>
+</div>
+<div class="flex flex-col gap-3">
+<div class="dept-item glass-card reveal" style="--reveal-delay:.3s"><div class="dept-q" onclick="toggleDept(this)"><span class="flex items-center gap-3"><span class="icon-tile"><i data-lucide="line-chart" class="w-5 h-5"></i></span>Finanzas y Estrategia</span><i data-lucide="chevron-down" class="w-5 h-5 dept-chev text-slate-400"></i></div><div class="dept-a"><p class="px-5 pb-5 text-sm text-slate-400">Consulta consolidada de informes trimestrales y presupuestos históricos. Una sola verdad, actualizada y citada.</p></div></div>
+<div class="dept-item glass-card reveal" style="--reveal-delay:.35s"><div class="dept-q" onclick="toggleDept(this)"><span class="flex items-center gap-3"><span class="icon-tile"><i data-lucide="crown" class="w-5 h-5"></i></span>Dirección</span><i data-lucide="chevron-down" class="w-5 h-5 dept-chev text-slate-400"></i></div><div class="dept-a"><p class="px-5 pb-5 text-sm text-slate-400">Visión unificada para decidir sin conjeturas. Pregunte en un idioma, recupere documentos en otro, con cita al original.</p></div></div>
+<div class="glass-card p-5 reveal glow-card" style="--reveal-delay:.4s"><div class="flex items-center gap-3"><div class="icon-tile"><i data-lucide="languages" class="w-5 h-5"></i></div><div><div class="font-bold text-white text-sm">Multilingüe nativo</div><div class="text-xs text-slate-400">Documentos y preguntas en múltiples idiomas · interfaz en español</div></div></div></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 09 · SEGURIDAD + AUDIENCIAS + CIERRE -->
+<section class="slide" id="contacto">
+<div class="dot-grid"></div>
+<div class="slide-content">
+<p class="eyebrow reveal">09 · Seguridad, decisores y contacto</p>
+<h2 class="title-2 mt-3 mb-2 reveal" style="--reveal-delay:.1s">Privado por diseño. <span class="gradient-text">Rentable por defecto.</span></h2>
+<div class="w-16 h-1 gradient-bar rounded-full mb-10 reveal" style="--reveal-delay:.15s"></div>
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+<div class="glass-card p-5 reveal"><div class="icon-tile mb-3"><i data-lucide="shield-check" class="w-5 h-5"></i></div><div class="font-bold text-white text-sm mb-1">Solo ve lo que debe ver</div><p class="text-xs text-slate-400">RBAC granular + ACL de origen. Login Google, OIDC, JWT y API keys revocables.</p></div>
+<div class="glass-card p-5 reveal" style="--reveal-delay:.1s"><div class="icon-tile mb-3"><i data-lucide="lock" class="w-5 h-5"></i></div><div class="font-bold text-white text-sm mb-1">Nada sale de su perímetro</div><p class="text-xs text-slate-400">On-premises o nube privada, datos cifrados. Incluso modo 100% local con Ollama.</p></div>
+<div class="glass-card p-5 reveal" style="--reveal-delay:.2s"><div class="icon-tile mb-3"><i data-lucide="clipboard-check" class="w-5 h-5"></i></div><div class="font-bold text-white text-sm mb-1">Auditable hasta el fragmento</div><p class="text-xs text-slate-400">Cada respuesta trazable a versión y página. Métricas, logs y salud del motor.</p></div>
+<div class="glass-card p-5 reveal glow-card" style="--reveal-delay:.3s"><div class="icon-tile mb-3"><i data-lucide="database-backup" class="w-5 h-5"></i></div><div class="font-bold text-white text-sm mb-1">Backup en un comando</div><p class="text-xs text-slate-400">Índice híbrido y base documental con copia y restauración integradas.</p></div>
+</div>
+<div class="grid lg:grid-cols-3 gap-5 mb-10">
+<div class="glass-card p-6 audience-card reveal" style="--reveal-delay:.2s"><div class="text-white font-semibold">CFO</div><div class="text-xs text-slate-400 mb-3">Director Financiero</div><h3 class="text-lg font-bold text-white mb-3">Ahorro medible en semanas</h3><ul class="space-y-2 text-sm text-slate-400"><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Hasta 80% menos tiempo buscando = horas reconvertidas en valor</li><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Menos errores por versiones obsoletas y reclamaciones</li><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Escala sin contratar más soporte documental</li></ul></div>
+<div class="glass-card p-6 audience-card reveal" style="--reveal-delay:.3s"><div class="text-white font-semibold">COO</div><div class="text-xs text-slate-400 mb-3">Director de Operaciones</div><h3 class="text-lg font-bold text-white mb-3">Operativa sin fricción</h3><ul class="space-y-2 text-sm text-slate-400"><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Manuales y procedimientos vigentes en segundos</li><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Filtros por área: Ventas, RR. HH., Dirección…</li><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Sin formación: si saben chatear, saben usarlo</li></ul></div>
+<div class="glass-card p-6 audience-card reveal" style="--reveal-delay:.4s"><div class="text-white font-semibold">CEO</div><div class="text-xs text-slate-400 mb-3">Dirección General</div><h3 class="text-lg font-bold text-white mb-3">Decidir sin conjeturas</h3><ul class="space-y-2 text-sm text-slate-400"><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Una sola verdad citada y actualizada</li><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Sin atadura a proveedor ni a nube única</li><li class="flex gap-2"><i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5"></i>Riesgo legal y de cumplimiento reducido</li></ul></div>
+</div>
+<div class="text-center reveal" style="--reveal-delay:.45s">
+<p class="text-lg text-slate-300 max-w-2xl mx-auto mb-8">En <span class="text-cyan-300 font-semibold">una sesión</span> dejamos el piloto respondiendo con sus propios documentos y citas verificables.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+<a href="mailto:info@mindden.com" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"><i data-lucide="mail" class="w-4 h-4"></i>info@mindden.com</a>
+<a href="tel:+34965349770" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-700 text-slate-300 hover:border-cyan-700 hover:text-cyan-300 transition magnetic-btn"><i data-lucide="phone" class="w-4 h-4"></i>+34 965 349 770</a>
+</div>
+<p class="mt-12 text-xs text-slate-600">DOC SPHERE · Ecosistema inteligente de conocimiento empresarial by <b>Mindden Soft Tech</b></p>
+</div>
+</div>
+</section>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+if (window.lucide) lucide.createIcons();
+function toggleDept(el){
+  var item = el.closest('.dept-item');
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.dept-item.open').forEach(function(o){ o.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
+}
+(function(){
+  var answers = {
+    legal: { q: '“¿Cláusulas de rescisión con el proveedor X?”', a: '<p>El contrato <span class="ai-strong">2024-1187</span> permite la rescisión con <span class="ai-strong">30 días de preaviso</span> por incumplimiento grave <span class="ai-cite">Contrato_X.pdf · p.12</span> y penalización del 5% <span class="ai-cite">Anexo II · §4.2</span>.</p>', perm: 'Filtrado por sus permisos: solo documentos de Legal a los que usted accede.' },
+    rrhh: { q: '“¿Cuántos días de teletrabajo me corresponden?”', a: '<p>Le corresponden <span class="ai-strong">3 días/semana</span> según la normativa vigente <span class="ai-cite">PRL_2025.pdf · p.8</span>, con registro previo en el portal <span class="ai-cite">Guía_Onboarding.pdf · §2.1</span>.</p>', perm: 'Filtrado por sus permisos: normativa de RR. HH. vigente, sin datos de Dirección.' },
+    ops: { q: '“¿Procedimiento de parada de la línea 3?”', a: '<p>Paso 1: parada controlada en <span class="ai-strong">secuencia S-3</span> <span class="ai-cite">Manual_L3.pdf · p.45</span>. Paso 2: bloqueo y verificación <span class="ai-cite">PRL_L3.pdf · §7</span>. Tiempo estimado: 12 min.</p>', perm: 'Filtrado por sus permisos: manual vigente de Operaciones, versión verificada hoy.' }
+  };
+  var btns = document.querySelectorAll('.chat-nudge');
+  var qEl = document.getElementById('demo-question');
+  var aEl = document.getElementById('demo-answer');
+  var tEl = document.getElementById('demo-thinking');
+  var pEl = document.getElementById('demo-perm');
+  if (!btns.length || !qEl) return;
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var d = answers[b.dataset.q]; if (!d) return;
+      btns.forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      qEl.textContent = d.q;
+      aEl.style.opacity = '0';
+      tEl.classList.remove('hidden'); tEl.classList.add('flex');
+      setTimeout(function(){
+        tEl.classList.add('hidden'); tEl.classList.remove('flex');
+        aEl.innerHTML = d.a; aEl.style.opacity = '1';
+        pEl.textContent = d.perm;
+      }, 650);
+    });
+  });
+  if (btns[0]) btns[0].classList.add('active');
+})();
+</script>
+<script src="js/presentation.js"></script>
+<script>
+(function(){var h=document.querySelector('.site-header'),l=document.querySelectorAll('.nav-link'),s=document.querySelectorAll('.slide[id]');function u(){var y=window.scrollY||window.pageYOffset;h.classList.toggle('scrolled',y>50);var c='';s.forEach(function(t){if(y>=t.offsetTop-120)c=t.getAttribute('id')});l.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+c)})}window.addEventListener('scroll',u,{passive:true});u()})();
+</script>
+</body>
+</html>
