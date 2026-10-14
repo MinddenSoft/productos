@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mindden — Dossier de Soluciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --ink:#0f172a; --muted:#475569; --soft:#94a3b8; --line:#e2e8f0; --paper:#ffffff;
+  --cyan:#2A4F86; --cyan-hi:#B8D0EA; --cyan-bg:#EDF1F6;
+  --midnight:#0F2547; --midnight2:#173767;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Inter",system-ui,sans-serif}
+body{background:#64748b;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;min-height:296mm;margin:8mm auto;background:var(--paper);position:relative;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.page-inner{padding:16mm 15mm 13mm;height:100%}
+.page-num{position:absolute;bottom:8mm;right:12mm;font-size:8pt;color:var(--soft)}
+.page-brand{position:absolute;bottom:8mm;left:12mm;font-size:8pt;color:var(--soft)}
+.dark{background:linear-gradient(150deg,#6796CD 0%,#2A4F86 62%,#173767 100%);color:#e2e8f0}
+.kicker{font-size:8.5pt;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan)}
+.dark .kicker{color:var(--cyan-hi)}
+h1{font-size:36pt;font-weight:800;letter-spacing:-.025em;line-height:1.04}
+h2{font-size:23pt;font-weight:800;letter-spacing:-.02em;line-height:1.12}
+.grad{background:linear-gradient(135deg,#2A4F86,#6796CD);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.dark .grad{background:linear-gradient(135deg,#B8D0EA,#FFFFFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lead{font-size:11pt;line-height:1.65;color:var(--muted)}
+.dark .lead{color:#94a3b8}
+.bar{width:16mm;height:1.2mm;border-radius:2mm;background:linear-gradient(90deg,#2A4F86,#6796CD);margin:5mm 0}
+/* cover */
+.cover-light{background:linear-gradient(150deg,#6796CD 0%,#2A4F86 62%,#173767 100%)}
+.cover{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-height:230mm}
+.cover .logo{height:42mm;width:auto;display:block;margin-bottom:14mm}
+.cover .kicker{margin-bottom:5mm;display:block;color:#D4DFE7}
+.cover h1{max-width:165mm;color:#fff;font-size:46pt}
+.cover h1 .grad{background:linear-gradient(135deg,#fff 30%,#B8D0EA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cover .tag{font-size:12.5pt;color:#D4DFE7;margin-top:7mm;max-width:135mm;line-height:1.6}
+.cover-foot{position:absolute;bottom:12mm;left:15mm;right:15mm;display:flex;justify-content:space-between;font-size:8.5pt;color:#B8D0EA;border-top:1px solid rgba(255,255,255,.3);padding-top:4mm}
+/* stat callouts */
+.callouts{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin-top:9mm}
+.callout{padding:2mm 0}
+.callout .n{font-size:44pt;font-weight:800;letter-spacing:-.04em;line-height:1;background:linear-gradient(135deg,#2A4F86,#6796CD);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.callout .l{font-size:9.5pt;color:var(--muted);margin-top:1.5mm}
+.mquote{margin-top:7mm;font-size:12pt;font-style:italic;color:var(--ink);border-left:1.2mm solid var(--cyan);padding-left:5mm;line-height:1.6}
+.mquote b{color:var(--cyan);font-style:normal}
+.areas{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin-top:6mm}
+.area{border:1px solid var(--line);border-radius:3mm;padding:3.5mm 4mm;background:#fbfdff}
+.area b{display:block;font-size:9.5pt}
+.area span{font-size:8.5pt;color:var(--muted);line-height:1.45}
+/* ecosistema índice claro */
+.eco-group{margin-top:5mm}
+.eco-group h3{font-size:8.5pt;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--cyan);margin-bottom:1mm}
+.eco-item{display:flex;gap:5mm;align-items:baseline;padding:2.6mm 0;border-top:1px solid var(--line)}
+.eco-item .n{font-size:15pt;font-weight:800;color:var(--cyan);min-width:11mm;letter-spacing:-.02em}
+.eco-item b{display:block;font-size:11pt;color:var(--ink);letter-spacing:.01em}
+.eco-item span{font-size:8.5pt;color:var(--muted)}
+.eco-hook{font-size:14pt;font-weight:800;letter-spacing:-.01em;color:var(--ink);margin:2mm 0 1mm}
+/* fichas asimétricas */
+.ficha{display:grid;grid-template-columns:1.55fr 1fr;gap:7mm;margin-top:6mm;align-items:start}
+.ficha-num{font-size:20pt;font-weight:800;color:var(--cyan);letter-spacing:-.01em}
+.ficha h2{margin:1mm 0 2mm}
+.ficha .tagline{font-size:11.5pt;font-weight:600;color:var(--ink)}
+.pain{margin-top:5mm;font-size:10pt;line-height:1.6;color:var(--muted);border-left:1.2mm solid #f59e0b;padding-left:4mm}
+.value{margin-top:5mm;list-style:none}
+.value li{display:flex;gap:3mm;font-size:9.5pt;line-height:1.55;color:var(--muted);padding:2.2mm 0;border-top:1px solid var(--line)}
+.value li::before{content:'';width:2mm;height:2mm;border-radius:50%;background:linear-gradient(135deg,#2A4F86,#6796CD);flex-shrink:0;margin-top:1.8mm}
+.value li b{color:var(--ink)}
+.ideal{margin-top:4mm;font-size:8.8pt;color:var(--muted);line-height:1.5}
+.ideal b{color:var(--cyan)}
+.mods{display:flex;flex-wrap:wrap;gap:1.5mm;margin-top:2mm}
+.mods span{font-size:7.8pt;font-weight:600;background:#f1f5f9;border:1px solid var(--line);border-radius:99px;padding:1mm 3mm;color:var(--ink)}
+.story{margin-top:3.5mm;font-size:9.5pt;line-height:1.6;color:var(--ink)}
+.story.cont{margin-top:2mm}
+.microflow{display:flex;align-items:stretch;gap:1.5mm;margin-top:3.5mm}
+.mf{flex:1;background:#f1f5f9;border:1px solid var(--line);border-radius:2mm;padding:2mm 1.5mm;font-size:7.6pt;font-weight:700;text-align:center;color:var(--ink);line-height:1.35;display:flex;align-items:center;justify-content:center}
+.mf-arrow{align-self:center;color:var(--cyan);font-weight:800;font-size:10pt}
+.verdict{margin-top:3mm;background:linear-gradient(150deg,#173767,#0F2547);border-radius:3mm;padding:5mm 5mm;color:#fff;display:flex;gap:4mm;align-items:center}
+.verdict .vn{font-size:25pt;font-weight:800;letter-spacing:-.02em;line-height:1;background:linear-gradient(135deg,#fff,#B8D0EA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap}
+.verdict p{font-size:8.5pt;color:#B8D0EA;line-height:1.5}
+.verdict b{color:#fff}
+.pract{margin-top:2.5mm;font-size:8.8pt;line-height:1.55;color:var(--muted);background:#f8fafc;border:1px solid var(--line);border-radius:2mm;padding:2.5mm 3mm}
+.pract b{color:var(--cyan)}
+.chart{margin-top:3mm;border:1px solid var(--line);border-radius:3mm;padding:3mm;background:#fff}
+.chart-title{font-size:7.5pt;font-weight:800;letter-spacing:.18em;color:var(--cyan)}
+.crow{margin-top:2mm}
+.crow span{font-size:7.5pt;color:var(--muted)}
+.crow b{color:var(--ink)}
+.track{height:2.6mm;background:#EDF1F6;border-radius:1.2mm;margin-top:1mm;overflow:hidden}
+.track i{display:block;height:100%;border-radius:1.2mm;background:#cbd5e1}
+.crow.now .track i{background:linear-gradient(90deg,#2A4F86,#6796CD)}
+/* verdict replaces mock+chart */
+.kpi-card{background:linear-gradient(165deg,#173767,#0F2547 75%);border-radius:4mm;padding:8mm 6mm;color:#e2e8f0;box-shadow:0 14mm 30mm -12mm rgba(5,10,22,.45)}
+.kpi-card .k{font-size:8pt;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan-hi);margin-bottom:4mm}
+.kpi{padding:4mm 0;border-top:1px solid rgba(148,163,184,.2)}
+.kpi:first-of-type{border-top:none}
+.kpi .n{font-size:34pt;font-weight:800;letter-spacing:-.03em;line-height:1;background:linear-gradient(135deg,#B8D0EA,#FFFFFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.kpi .l{font-size:8.5pt;color:#94a3b8;margin-top:1mm}
+/* roadmap */
+.road{position:relative;margin-top:12mm;padding-top:2mm}
+.road-line{position:absolute;top:11mm;left:8mm;right:8mm;height:.8mm;background:linear-gradient(90deg,#2A4F86,#6796CD,#2A4F86);border-radius:1mm}
+.steps{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5mm;position:relative}
+.step{text-align:left}
+.dot{width:10mm;height:10mm;border-radius:50%;background:#fff;border:2.2mm solid #2A4F86;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12pt;color:#2A4F86;margin-left:2mm;box-shadow:0 0 0 3.5mm #EDF1F6,0 2mm 8mm rgba(42,79,134,.25)}
+.step b{display:block;font-size:11pt;margin:4mm 0 1.5mm}
+.step p{font-size:8.8pt;color:var(--muted);line-height:1.55}
+.pill{display:inline-block;font-size:8pt;font-weight:700;color:#2A4F86;background:var(--cyan-bg);border:1px solid #B8D0EA;border-radius:99px;padding:1mm 3.5mm;margin-top:2.5mm}
+.proof{margin-top:10mm;background:#f8fafc;border:1px solid var(--line);border-radius:4mm;padding:5mm 6mm;font-size:9.5pt;color:var(--muted);line-height:1.6}
+.proof b{color:var(--cyan)}
+.dlv{font-size:8.3pt;font-weight:700;color:var(--cyan);margin-top:2mm;line-height:1.45}
+.viz{margin-top:6mm;border:1px solid var(--line);border-radius:4mm;padding:4mm 4mm 3mm;background:#fbfdff}
+.viz svg{width:100%;height:auto;display:block}
+.viz-cap{font-size:8pt;color:var(--soft);margin-top:2mm}
+/* contraportada */
+.back{display:flex;flex-direction:column;justify-content:center;min-height:230mm;text-align:left}
+.back h1{max-width:160mm;font-size:46pt}
+.back .kicker{font-size:10pt}
+.back .lead{font-size:14pt !important;max-width:145mm !important}
+.back-contacts{margin-top:10mm;font-size:16pt;color:#94a3b8}
+.back-contacts b{color:#e2e8f0}
+.next-steps{margin-top:10mm;display:grid;grid-template-columns:1fr 1fr 1fr;gap:5mm;max-width:165mm}
+.nstep{display:flex;gap:3.5mm;align-items:flex-start}
+.nn{width:10mm;height:10mm;border-radius:50%;border:.7mm solid #B8D0EA;color:#fff;font-weight:800;font-size:13pt;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nstep b{display:block;font-size:12pt;color:#fff}
+.nstep span{font-size:10pt;color:#94a3b8}
+.spacer{height:6mm}
+.toolbar{position:sticky;top:0;z-index:50;background:#0f172a;color:#e2e8f0;text-align:center;padding:3mm;font-size:10pt}
+.toolbar button{background:#2A4F86;color:#fff;border:none;border-radius:2mm;padding:2mm 6mm;font-size:10pt;font-weight:700;cursor:pointer}
+@media print{
+  @page{size:A4;margin:0}
+  body{background:#fff}
+  .page{margin:0;box-shadow:none;page-break-after:always;min-height:297mm}
+  .page:last-child{page-break-after:auto}
+  .noprint{display:none}
+}
+</style>
+</head>
+<body>
+<div class="toolbar noprint">Dossier Mindden · Imprimir → "Guardar como PDF" (márgenes: Ninguno) &nbsp;<button onclick="window.print()">Imprimir / PDF</button></div>
+
+<!-- PORTADA minimalista -->
+<div class="page cover-light"><div class="page-inner cover">
+<div><img class="logo" src="img/mindden_white.png" alt="Mindden" /></div>
+<p class="kicker">Dossier de soluciones</p>
+<h1>Plataformas que transforman <span class="grad">su negocio hoy</span></h1>
+<p class="tag">12 soluciones con IA integrada · Despliegue en días · Impacto medible</p>
+<div class="cover-foot"><span>Mindden Soft Tech · Ingeniería que ejecuta</span><span>info@mindden.com · +34 965 349 770</span></div>
+</div></div>
+
+<!-- QUIÉNES SOMOS -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Por qué Mindden</p>
+<h2>Capaces,<br /><span class="grad">no solo innovadores.</span></h2>
+<div class="bar"></div>
+<p class="lead">Ingeniería de Alicante que convierte el conocimiento operativo de sus clientes en capacidad tecnológica. Industria, retail, banca, energía, salud, logística y telecomunicaciones.</p>
+<p class="lead" style="margin-top:4mm">Más de 80 compañías en España confían en nosotros: del diagnóstico a la operación continua, cada caso entra con su KPI delante y cada entrega deja capacidad instalada en el cliente.</p>
+<blockquote class="mquote">«Todas las tecnológicas dicen ser innovadoras. Nosotros preferimos otra palabra: <b>capaces.</b>»</blockquote>
+<div class="areas">
+<div class="area"><b>Servicios gestionados</b><span>Su operación como servicio, con SLAs y responsable único.</span></div>
+<div class="area"><b>Soporte a proyectos</b><span>Células senior que responden por la entrega.</span></div>
+<div class="area"><b>Atención técnica 24×7</b><span>Soporte por niveles con IA en primera línea.</span></div>
+<div class="area"><b>IA aplicada</b><span>Agentes integrados en cada plataforma.</span></div>
+<div class="area"><b>Proyectos llave en mano</b><span>Software, datos, QA y apps con disciplina de fábrica.</span></div>
+<div class="area"><b>I+D propio</b><span>Plataformas como WEAVER y Engram nacidas de proyectos reales.</span></div>
+</div>
+<div class="callouts">
+<div class="callout"><div class="n">215</div><div class="l">Profesionales · 83% ingeniería</div></div>
+<div class="callout"><div class="n">+80</div><div class="l">Compañías que confían en nosotros</div></div>
+<div class="callout"><div class="n">24</div><div class="l">Casos de IA en producción</div></div>
+<div class="callout"><div class="n">9</div><div class="l">Años creciendo con clientes</div></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">2</span></div>
+
+<!-- MAPA índice -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ecosistema de soluciones</p>
+<h2>Un dominio,<br /><span class="grad">una plataforma.</span></h2>
+<div class="bar"></div>
+<p class="eco-hook">Identifique su reto. <span class="grad">Encuentre su solución.</span></p>
+<div class="eco-group">
+<h3>Operaciones</h3>
+<div class="eco-item"><span class="n">01</span><div><b>MINDDEN OCEAN</b><span>Plataforma NVOCC: tarifas, cotizaciones, bookings, consols LCL, BLs y tracking en un solo expediente.</span></div></div>
+<div class="eco-item"><span class="n">02</span><div><b>MINDDEN FLOW</b><span>Process mining con 8 agentes IA: descubre el flujo real de sus procesos y ataca los cuellos de botella.</span></div></div>
+<div class="eco-item"><span class="n">03</span><div><b>INDUSTRIAL MIND</b><span>Mantenimiento predictivo: sensores e IA que avisan 120 horas antes del fallo de máquina.</span></div></div>
+<div class="eco-item"><span class="n">04</span><div><b>AQUA INT</b><span>Plataforma IoT para redes de agua: telemetría en tiempo real, balances y detección de fugas.</span></div></div>
+<div class="eco-item"><span class="n">05</span><div><b>POWER INT</b><span>Gestión energética: valida facturas, ajusta potencias y recorta hasta un 15% del recibo.</span></div></div>
+</div>
+<div class="eco-group">
+<h3>Personas</h3>
+<div class="eco-item"><span class="n">06</span><div><b>MINDDEN PEOPLE</b><span>RRHH integral: ausencias, fichaje, nómina, contratos y portal del empleado en una plataforma.</span></div></div>
+<div class="eco-item"><span class="n">07</span><div><b>MINDDEN ACADEMY</b><span>Formación online tutorizada con exámenes anti-fraude, certificados y analítica en vivo.</span></div></div>
+<div class="eco-item"><span class="n">08</span><div><b>DOC SPHERE</b><span>Conocimiento conversacional: respuestas citadas de millones de documentos, 100% privado.</span></div></div>
+<div class="eco-item"><span class="n">09</span><div><b>MINDDEN TALENT</b><span>Reclutamiento: de candidatos dispersos a un pipeline con historial y sin duplicados.</span></div></div>
+</div>
+<div class="eco-group">
+<h3>Gestión</h3>
+<div class="eco-item"><span class="n">10</span><div><b>MINDDEN SUITE</b><span>Gestión empresarial en 4 módulos con dato único: del pedido al cobro sin re-tecleo.</span></div></div>
+<div class="eco-item"><span class="n">11</span><div><b>SENTINEL</b><span>QA integral: requisitos, casos, defectos y Kanban con trazabilidad completa y Scope Guardian.</span></div></div>
+<div class="eco-item"><span class="n">12</span><div><b>CO₂CONTROL</b><span>Huella de carbono RD 214/2025: tres alcances, simulador y expediente MITECO en un clic.</span></div></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">3</span></div>
+
+<!-- 01 OCEAN -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ficha 01/12 · Operaciones — NVOCC marítimo</p>
+<div class="ficha">
+<div>
+<div class="ficha-num">MINDDEN OCEAN</div>
+<h2>Del flete al cobro <span class="grad">en un solo expediente.</span></h2>
+<p class="pain">Cotizaciones sin rastro de tarifa, bookings sueltos, BLs como adjuntos anónimos y bloqueos de aduana que estallan en puerto.</p>
+<ul class="value">
+<li><span><b>Tarifas versionadas por lane</b> — W/M, mínimos y margen siempre visibles.</span></li>
+<li><span><b>LCL nativo</b> — múltiples bookings y BLs por consol.</span></li>
+<li><span><b>Documentos con release</b> — HBL, MBL, Waybill y SI con ciclo de vida.</span></li>
+</ul>
+<p class="ideal"><b>Ideal para:</b> transitarios NVOCC y logística internacional con operativa LCL/FCL.</p>
+<div class="mods"><span>Tarifas</span><span>Cotizaciones</span><span>Bookings</span><span>Consols</span><span>HBL / MBL</span><span>DG y aduana</span><span>Tracking</span><span>Export financiero</span></div>
+<p class="story">MINDDEN OCEAN es la plataforma que gestiona el ciclo completo del transporte marítimo consolidado: tarifas por lane, cotizaciones con W/M y mínimos, bookings, embarques LCL/FCL, contenedores con precinto, conocimientos de embarque y exportación financiera.</p>
+<p class="story cont">Todo vive en un único expediente operativo: lo que se vende es lo que se embarca. Los documentos (HBL, MBL, Sea Waybill, SI) tienen tipo, versión y estado de release, y la mercancía peligrosa y la aduana generan bloqueos visibles antes de la salida, no en puerto.</p>
+<div class="microflow"><div class="mf">Cotiza con W/M y margen</div><div class="mf-arrow">→</div><div class="mf">Consolida LCL por buque</div><div class="mf-arrow">→</div><div class="mf">Documenta y liquida</div></div>
+<p class="pract"><b>En la práctica:</b> un transitario cotiza Valencia → Karachi por la mañana y el viernes embarca el consol con el HBL emitido desde el propio expediente.</p>
+</div>
+<div class="kpi-card"><div class="k">Impacto</div>
+<div class="kpi"><div class="n">1</div><div class="l">expediente por embarque</div></div>
+<div class="kpi"><div class="n">70+</div><div class="l">pantallas operativas</div></div>
+<div class="kpi"><div class="n">11</div><div class="l">pasos del flujo completo</div></div>
+</div>
+<div class="verdict"><span class="vn">6 → 1</span><p>sistemas dispersos convertidos en <b>un solo expediente</b> por embarque</p></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">4</span></div>
+
+<!-- 02 FLOW -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ficha 02/12 · Operaciones — Process mining</p>
+<div class="ficha">
+<div>
+<div class="ficha-num">MINDDEN FLOW</div>
+<h2>Dónde se atascan <span class="grad">sus procesos.</span></h2>
+<p class="pain">Los procesos reales no coinciden con los manuales y nadie sabe dónde se pierde el tiempo ni el dinero.</p>
+<ul class="value">
+<li><span><b>8 agentes IA</b> — minería continua sobre sus sistemas reales.</span></li>
+<li><span><b>24 pantallas analíticas</b> — cuellos de botella a la vista.</span></li>
+<li><span><b>12 dominios verticales</b> — modelos por sector.</span></li>
+</ul>
+<p class="ideal"><b>Ideal para:</b> COO y dirección de operaciones con procesos repartidos en varios sistemas.</p>
+<div class="mods"><span>8 agentes IA</span><span>24 pantallas</span><span>12 dominios</span><span>Conectores ERP/CRM</span><span>Alertas de desviación</span></div>
+<p class="story">MINDDEN FLOW es process mining con 8 agentes de IA: lee los registros de sus ERP, CRM y aplicaciones y reconstruye cómo se ejecutan realmente sus procesos — variantes, retrabajos, tiempos muertos y sobrecostes — en 24 pantallas analíticas y 12 dominios verticales.</p>
+<p class="story cont">No se queda en el diagnóstico: detecta cuellos de botella, cuantifica su coste y propone dónde actuar primero, con alertas cuando un proceso se desvía de su cauce normal.</p>
+<div class="microflow"><div class="mf">Conecta sus sistemas</div><div class="mf-arrow">→</div><div class="mf">Descubre el flujo real</div><div class="mf-arrow">→</div><div class="mf">Actúa sobre el cuello</div></div>
+<p class="pract"><b>En la práctica:</b> una fábrica descubre aprobaciones ocultas que añadían días a cada pedido y las elimina del flujo.</p>
+</div>
+<div class="kpi-card"><div class="k">Impacto</div>
+<div class="kpi"><div class="n">8</div><div class="l">agentes IA operativos</div></div>
+<div class="kpi"><div class="n">24</div><div class="l">pantallas analíticas</div></div>
+<div class="kpi"><div class="n">12</div><div class="l">dominios verticales</div></div>
+</div>
+<div class="verdict"><span class="vn">24</span><p>pantallas analíticas con <b>el flujo real</b> de sus procesos</p></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">5</span></div>
+
+<!-- 03 INDUSTRIAL -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ficha 03/12 · Operaciones — Mantenimiento predictivo</p>
+<div class="ficha">
+<div>
+<div class="ficha-num">INDUSTRIAL MIND</div>
+<h2>Aviso 120 horas <span class="grad">antes del fallo.</span></h2>
+<p class="pain">Las paradas no planificadas detienen líneas enteras; el mantenimiento por calendario cambia piezas sanas.</p>
+<ul class="value">
+<li><span><b>4 sensores por máquina</b> — vibración, temperatura y consumo en vivo.</span></li>
+<li><span><b>IA predictiva</b> — patrones de fallo con 120 h de antelación.</span></li>
+<li><span><b>Implantación en 30 días</b> — sin parar planta.</span></li>
+</ul>
+<p class="ideal"><b>Ideal para:</b> jefes de planta y mantenimiento en PyME industrial.</p>
+<div class="mods"><span>Sensores IoT</span><span>Vibración y temperatura</span><span>Avisos 120 h</span><span>Cuadros de planta</span><span>Planes de mantenimiento</span></div>
+<p class="story">INDUSTRIAL MIND lleva el mantenimiento predictivo a la PyME industrial: cuatro sensores por máquina (vibración, temperatura, consumo) alimentan modelos de IA que detectan la degradación y avisan hasta 120 horas antes del fallo.</p>
+<p class="story cont">Se implanta en 30 días sin parar planta. Cada aviso genera su orden de trabajo planificada con el diagnóstico, el repuesto probable y la ventana de parada sugerida.</p>
+<div class="microflow"><div class="mf">Sensoriza la máquina</div><div class="mf-arrow">→</div><div class="mf">Predice el fallo</div><div class="mf-arrow">→</div><div class="mf">Repara planificado</div></div>
+<p class="pract"><b>En la práctica:</b> el aviso de vibración del motor M-114 se convierte en una orden planificada para el paro del fin de semana.</p>
+</div>
+<div class="kpi-card"><div class="k">Impacto</div>
+<div class="kpi"><div class="n">−70%</div><div class="l">paradas no planificadas</div></div>
+<div class="kpi"><div class="n">120 h</div><div class="l">antelación al fallo</div></div>
+<div class="kpi"><div class="n">30</div><div class="l">días de implantación</div></div>
+</div>
+<div class="verdict"><span class="vn">120 h</span><p>de anticipación <b>antes de cada fallo</b> de máquina</p></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">6</span></div>
+
+<!-- 04 AQUA -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ficha 04/12 · Operaciones — IoT agua</p>
+<div class="ficha">
+<div>
+<div class="ficha-num">AQUA INT</div>
+<h2>El ciclo integral del agua, <span class="grad">con inteligencia aplicada.</span></h2>
+<p class="pain">Fugas invisibles, fraude y presiones desequilibradas que se descubren cuando ya costaron miles de euros.</p>
+<ul class="value">
+<li><span><b>16 protocolos IoT</b> — la IA genera el conector.</span></li>
+<li><span><b>Dashboard en tiempo real</b> — caudales y presiones al segundo.</span></li>
+<li><span><b>Detección de anomalías</b> — alerta inmediata ante fugas.</span></li>
+</ul>
+<p class="ideal"><b>Ideal para:</b> utilities y gestores del ciclo integral del agua.</p>
+<div class="mods"><span>16 protocolos</span><span>SCADA / GIS</span><span>Balance hidráulico</span><span>Detección de fugas</span><span>Control de fraude</span></div>
+<p class="story">AQUA INT es la plataforma IoT para redes de agua: integra contadores y sensores en 16 protocolos (la IA genera el conector de cada fuente en unos 15 minutos) y muestra caudales, presiones y consumos en tiempo real, con más de 100.000 lecturas por segundo.</p>
+<p class="story cont">El balance hidráulico por sector revela fugas, fraude y desequilibrios de presión en cuanto aparecen, localizando el tramo probable para que la brigada vaya sobre seguro.</p>
+<div class="microflow"><div class="mf">Integra contadores</div><div class="mf-arrow">→</div><div class="mf">Balancea la red</div><div class="mf-arrow">→</div><div class="mf">Detecta la fuga</div></div>
+<p class="pract"><b>En la práctica:</b> el sector 7 muestra consumo nocturno anómalo y la brigada localiza la fuga antes del primer aviso de vecinos.</p>
+</div>
+<div class="kpi-card"><div class="k">Impacto</div>
+<div class="kpi"><div class="n">100K+</div><div class="l">lecturas por segundo</div></div>
+<div class="kpi"><div class="n">15 min</div><div class="l">integración por fuente</div></div>
+<div class="kpi"><div class="n">16</div><div class="l">protocolos IoT hablados</div></div>
+</div>
+<div class="verdict"><span class="vn">100K+</span><p>lecturas por segundo de <b>toda su red, en vivo</b></p></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">7</span></div>
+
+<!-- 05 POWER -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ficha 05/12 · Operaciones — Energía</p>
+<div class="ficha">
+<div>
+<div class="ficha-num">POWER INT</div>
+<h2>Eficiencia energética <span class="grad">con retorno medible.</span></h2>
+<p class="pain">Potencias mal contratadas, penalizaciones por reactiva y facturas que nadie valida antes de pagar.</p>
+<ul class="value">
+<li><span><b>19 workers en paralelo</b> — suministros, curvas y mercados a la vez.</span></li>
+<li><span><b>Validación de facturas</b> — cada concepto contra contrato.</span></li>
+<li><span><b>Enfoque ISO 50001</b> — eficiencia con método certificable.</span></li>
+</ul>
+<p class="ideal"><b>Ideal para:</b> industria y retail con múltiples suministros eléctricos.</p>
+<div class="mods"><span>19 workers</span><span>Curvas de carga</span><span>Validación de factura</span><span>Potencia óptima</span><span>ISO 50001</span></div>
+<p class="story">POWER INT es gestión energética inteligente: 19 procesos en paralelo analizan curvas de consumo de todos sus suministros, validan cada concepto de la factura contra contrato y medida, y calculan la potencia óptima a contratar.</p>
+<p class="story cont">Con enfoque certificable ISO 50001, recorta hasta un 15% de la factura y ahorra unas 10 horas semanales de gestión, además de anticipar averías a partir de derivas de consumo.</p>
+<div class="microflow"><div class="mf">Mide el consumo</div><div class="mf-arrow">→</div><div class="mf">Valida la factura</div><div class="mf-arrow">→</div><div class="mf">Ajusta la potencia</div></div>
+<p class="pract"><b>En la práctica:</b> la factura de mayo trae un término de potencia mal aplicado y se reclama con el contrato en la mano.</p>
+</div>
+<div class="kpi-card"><div class="k">Impacto</div>
+<div class="kpi"><div class="n">−15%</div><div class="l">en factura eléctrica</div></div>
+<div class="kpi"><div class="n">10 h/sem</div><div class="l">ahorradas en gestión</div></div>
+<div class="kpi"><div class="n">19</div><div class="l">procesos en paralelo</div></div>
+</div>
+<div class="verdict"><span class="vn">−15%</span><p>en factura eléctrica <b>validada concepto a concepto</b></p></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">8</span></div>
+
+<!-- 06 PEOPLE -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ficha 06/12 · Personas — RRHH</p>
+<div class="ficha">
+<div>
+<div class="ficha-num">MINDDEN PEOPLE</div>
+<h2>Personas, <span class="grad">no papeles.</span></h2>
+<p class="pain">Ausencias en un Excel, fichajes en otro sistema y contratos en archivadores: el mes se cierra a mano.</p>
+<ul class="value">
+<li><span><b>Todo el ciclo del empleado</b> — ausencias, fichaje, nómina y contratos.</span></li>
+<li><span><b>Compliance digital</b> — firmas y vencimientos al día.</span></li>
+<li><span><b>Portal del empleado</b> — autogestión sin pasar por RRHH.</span></li>
+</ul>
+<p class="ideal"><b>Ideal para:</b> departamentos de RRHH de 50 a 5.000 empleados.</p>
+<div class="mods"><span>Ausencias</span><span>Fichaje</span><span>Nómina</span><span>Contratos</span><span>Onboarding</span><span>Portal</span></div>
+<p class="story">MINDDEN PEOPLE cubre todo el ciclo del empleado en una sola plataforma: ausencias y vacaciones, fichaje, nómina, contratos, onboarding y compliance documental, de 50 a 5.000 empleados.</p>
+<p class="story cont">El portal del empleado traslada las solicitudes y la firma a un clic, con aprobaciones en cadena y vencimientos controlados: RRHH deja el papeleo y vuelve a gestionar personas, ahorrando unas 20 horas al mes.</p>
+<div class="microflow"><div class="mf">Solicita en portal</div><div class="mf-arrow">→</div><div class="mf">Aprueba en 1 clic</div><div class="mf-arrow">→</div><div class="mf">Cierra el mes solo</div></div>
+<p class="pract"><b>En la práctica:</b> las vacaciones de verano se solicitan, aprueban y descuentan de nómina sin un solo papel.</p>
+</div>
+<div class="kpi-card"><div class="k">Impacto</div>
+<div class="kpi"><div class="n">20 h/mes</div><div class="l">ahorradas en RRHH</div></div>
+<div class="kpi"><div class="n">100%</div><div class="l">compliance digital</div></div>
+<div class="kpi"><div class="n">1</div><div class="l">plataforma para todo RRHH</div></div>
+</div>
+<div class="verdict"><span class="vn">20 h</span><p>al mes devueltas a <b>gestionar personas</b></p></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">9</span></div>
+
+<!-- 07 ACADEMY -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ficha 07/12 · Personas — Formación</p>
+<div class="ficha">
+<div>
+<div class="ficha-num">MINDDEN ACADEMY</div>
+<h2>Múltiples academias, <span class="grad">un solo CMS.</span></h2>
+<p class="pain">Gestionar cursos, contenidos y alumnos entre landings estáticas y hojas sueltas impide escalar la formación y medirla.</p>
+<ul class="value">
+<li><span><b>Multi-academia real</b> — academias, módulos, secciones, quizzes y proyecto final.</span></li>
+<li><span><b>Progreso por alumno</b> — tracking por sección con checkmarks y evaluaciones.</span></li>
+<li><span><b>CMS + seguridad</b> — blog, medios y newsletter; roles admin/editor/alumno, 2FA y rate limiting.</span></li>
+</ul>
+<p class="ideal"><b>Ideal para:</b> formación corporativa y escuelas con catálogo multi-academia y miles de alumnos.</p>
+<div class="mods"><span>Academias</span><span>Módulos y quizzes</span><span>Progreso</span><span>Blog CMS</span><span>Roles y 2FA</span></div>
+<p class="story">MINDDEN ACADEMY es CMS y plataforma de aprendizaje en uno: web pública y panel de administración sobre la misma API (FastAPI + React, Docker), con academias, módulos, secciones, quizzes, blog, medios y newsletter gestionados sin código.</p>
+<p class="story cont">Cada alumno avanza con su progreso por sección, y la dirección lo ve todo en un dashboard con KPIs: 22 modelos de datos, 3 roles con permisos granulares y seguridad seria (2FA, rate limiting, secretos sin hardcodear).</p>
+<div class="microflow"><div class="mf">Asigna itinerario</div><div class="mf-arrow">→</div><div class="mf">Evalúa con garantías</div><div class="mf-arrow">→</div><div class="mf">Certifica y mide</div></div>
+<p class="pract"><b>En la práctica:</b> un alumno retoma su academia donde la dejó, con su progreso por sección intacto.</p>
+</div>
+<div class="kpi-card"><div class="k">Impacto</div>
+<div class="kpi"><div class="n">2</div><div class="l">frontends sobre una API</div></div>
+<div class="kpi"><div class="n">3</div><div class="l">roles con permisos</div></div>
+<div class="kpi"><div class="n">2FA</div><div class="l">acceso securizado</div></div>
+</div>
+<div class="verdict"><span class="vn">2 en 1</span><p>web pública y panel admin sobre <b>la misma API</b></p></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">10</span></div>
+
+<!-- 08 DOC SPHERE -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ficha 08/12 · Personas — Conocimiento IA</p>
+<div class="ficha">
+<div>
+<div class="ficha-num">DOC SPHERE</div>
+<h2>Pregunte. Verifique. <span class="grad">Decida.</span></h2>
+<p class="pain">El 80% del conocimiento está enterrado en carpetas y cada empleado obtiene una respuesta distinta.</p>
+<ul class="value">
+<li><span><b>Respuestas citadas</b> — documento, página y fragmento.</span></li>
+<li><span><b>Cero alucinaciones</b> — solo evidencia de sus documentos.</span></li>
+<li><span><b>100% privado</b> — on-premises, permisos por roles.</span></li>
+</ul>
+<p class="ideal"><b>Ideal para:</b> legal, RRHH, soporte y dirección de cualquier sector intensivo en documentos.</p>
+<div class="mods"><span>Chat RAG</span><span>Citas verificables</span><span>Drive / SharePoint</span><span>RBAC</span><span>MCP y API</span></div>
+<p class="story">DOC SPHERE convierte los documentos de la empresa en un asistente experto: se indexan millones de páginas (PDF, Word, Excel, escaneados con OCR, Drive, SharePoint) y el empleado pregunta en español y recibe la respuesta exacta con cita a documento, página y fragmento.</p>
+<p class="story cont">Cero alucinaciones por diseño — solo responde con evidencia — y 100% privado: desplegado en su infraestructura, respetando los permisos de cada usuario y conectable a Slack, Teams o su intranet por MCP y API.</p>
+<div class="microflow"><div class="mf">Indexa documentos</div><div class="mf-arrow">→</div><div class="mf">Responde con citas</div><div class="mf-arrow">→</div><div class="mf">Respeta permisos</div></div>
+<p class="pract"><b>En la práctica:</b> Legal responde una due diligence citando la cláusula exacta de cada contrato en minutos.</p>
+</div>
+<div class="kpi-card"><div class="k">Impacto</div>
+<div class="kpi"><div class="n">−80%</div><div class="l">tiempo buscando</div></div>
+<div class="kpi"><div class="n">1 M</div><div class="l">documentos indexados</div></div>
+<div class="kpi"><div class="n">24/7</div><div class="l">asistente disponible</div></div>
+</div>
+<div class="verdict"><span class="vn">−80%</span><p>de tiempo <b>buscando entre carpetas</b></p></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">11</span></div>
+
+<!-- 09 TALENT -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ficha 09/12 · Personas — Talento y selección</p>
+<div class="ficha">
+<div>
+<div class="ficha-num">MINDDEN TALENT</div>
+<h2>Todo su talento, <span class="grad">en un solo pipeline.</span></h2>
+<p class="pain">Miles de candidatos dispersos en hojas de cálculo y varios reclutadores en paralelo: duplicados, procesos perdidos y cero visibilidad del estado real.</p>
+<ul class="value">
+<li><span><b>Deduplicación automática</b> — email, teléfono y LinkedIn/InfoJobs antes de contactar.</span></li>
+<li><span><b>Pipeline con historial</b> — quién, qué y cuándo en cada cambio de etapa.</span></li>
+<li><span><b>Búsqueda experta</b> — por skills, seniority, inglés, salario y disponibilidad.</span></li>
+</ul>
+<p class="ideal"><b>Ideal para:</b> equipos de reclutamiento con miles de candidatos en hojas dispersas.</p>
+<div class="mods"><span>Posiciones</span><span>Candidatos</span><span>Pipeline</span><span>Deduplicación</span><span>CVs en MinIO</span><span>RGPD</span><span>Google Workspace</span></div>
+<p class="story">MINDDEN TALENT centraliza posiciones, candidatos, clientes y documentos: todos los procesos visibles en tiempo real, CVs y consentimientos archivados y cada etapa registrada con autor y fecha.</p>
+<p class="story cont">Roles SUPERADMIN, ADMIN, RECLUTADOR y LECTURA, login con Google Workspace, derecho al olvido y consentimiento RGPD nativos, e importación inicial asistida con informe de duplicados.</p>
+<div class="microflow"><div class="mf">Crea la posición</div><div class="mf-arrow">→</div><div class="mf">Asocia y filtra</div><div class="mf-arrow">→</div><div class="mf">Avanza con historial</div></div>
+<p class="pract"><b>En la práctica:</b> antes de llamar, el sistema avisa de que otro recruiter ya contactó a ese candidato hace 3 meses.</p>
+</div>
+<div>
+<div class="kpi-card"><div class="k">Impacto</div>
+<div class="kpi"><div class="n">1</div><div class="l">pipeline único de selección</div></div>
+<div class="kpi"><div class="n">0</div><div class="l">duplicados contactados dos veces</div></div>
+<div class="kpi"><div class="n">100%</div><div class="l">etapas registradas con autor</div></div>
+</div>
+<div class="verdict"><span class="vn">1</span><p>sistema para <b>todo el reclutamiento</b>, de la vacante al contrato</p></div>
+</div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">12</span></div>
+
+<!-- 10 SUITE -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ficha 10/12 · Gestión — Gestión empresarial</p>
+<div class="ficha">
+<div>
+<div class="ficha-num">MINDDEN SUITE</div>
+<h2>Su empresa entera <span class="grad">en una plataforma.</span></h2>
+<p class="pain">Comercial, finanzas, operaciones y RRHH en sistemas que no se hablan y obligan a conciliar a mano.</p>
+<ul class="value">
+<li><span><b>4 módulos integrados</b> — dato único de empresa.</span></li>
+<li><span><b>Facturación automática</b> — del albarán al cobro.</span></li>
+<li><span><b>IA transversal</b> — asistentes en cada módulo.</span></li>
+</ul>
+<p class="ideal"><b>Ideal para:</b> pymes que quieren un único sistema de gestión sin integraciones frágiles.</p>
+<div class="mods"><span>Comercial</span><span>Finanzas</span><span>Operaciones</span><span>RRHH</span><span>Facturación auto</span><span>Tesorería</span></div>
+<p class="story">MINDDEN SUITE es gestión empresarial integral en 4 módulos — comercial, finanzas, operaciones y RRHH — compartiendo un único dato de empresa, sin integraciones frágiles entre sistemas que no se hablan.</p>
+<p class="story cont">Del pedido al cobro sin re-tecleo: presupuestos, albaranes, facturación automática y tesorería encadenados, con asistentes de IA en cada módulo que aceleran el trabajo diario.</p>
+<div class="microflow"><div class="mf">Vende el pedido</div><div class="mf-arrow">→</div><div class="mf">Ejecuta la operación</div><div class="mf-arrow">→</div><div class="mf">Cobra sin re-tecleo</div></div>
+<p class="pract"><b>En la práctica:</b> el pedido 46 se convierte en albarán, factura y cobro conciliado sin salir de la plataforma.</p>
+</div>
+<div class="kpi-card"><div class="k">Impacto</div>
+<div class="kpi"><div class="n">4 en 1</div><div class="l">módulos integrados</div></div>
+<div class="kpi"><div class="n">0</div><div class="l">re-tecleo entre áreas</div></div>
+<div class="kpi"><div class="n">1</div><div class="l">dato único de empresa</div></div>
+</div>
+<div class="verdict"><span class="vn">4 en 1</span><p>módulos compartiendo <b>un único dato</b> de empresa</p></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">13</span></div>
+
+<!-- 11 SENTINEL -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ficha 11/12 · Gestión — Calidad</p>
+<div class="ficha">
+<div>
+<div class="ficha-num">SENTINEL</div>
+<h2>Todo el ciclo de calidad, <span class="grad">en un solo sistema.</span></h2>
+<p class="pain">Requisitos en un sitio, pruebas en otro y defectos por email: las auditorías duelen y los sobrecostes se ocultan.</p>
+<ul class="value">
+<li><span><b>Trazabilidad 100%</b> — requisito → evidencia, enlazado.</span></li>
+<li><span><b>Scope Guardian</b> — el alcance cambia, usted lo sabe antes.</span></li>
+<li><span><b>Kanban + KPIs</b> — calidad en tiempo real.</span></li>
+</ul>
+<p class="ideal"><b>Ideal para:</b> equipos de QA y software con exigencia de auditoría y certificaciones.</p>
+<div class="mods"><span>Requisitos</span><span>Casos de prueba</span><span>Defectos</span><span>Kanban</span><span>Scope Guardian</span><span>Informes</span></div>
+<p class="story">SENTINEL centraliza requisitos, casos de prueba, defectos y tableros Kanban: cada requisito enlaza con sus casos, cada ejecución deja su evidencia y cada defecto tiene dueño, estado y trazabilidad completa hasta la release.</p>
+<p class="story cont">Scope Guardian detecta los cambios de alcance antes de que se conviertan en sobrecostes, y los KPIs en tiempo real (cobertura, defectos, tiempos) dejan a la auditoría y a la dirección sin reportes manuales.</p>
+<div class="microflow"><div class="mf">Exige el requisito</div><div class="mf-arrow">→</div><div class="mf">Prueba y evidencia</div><div class="mf-arrow">→</div><div class="mf">Libera con KPIs</div></div>
+<p class="pract"><b>En la práctica:</b> la release 2.4 sale con un 87% de cobertura y cada defecto trazado a su requisito.</p>
+</div>
+<div class="kpi-card"><div class="k">Impacto</div>
+<div class="kpi"><div class="n">−80%</div><div class="l">reportes manuales</div></div>
+<div class="kpi"><div class="n">100%</div><div class="l">trazabilidad completa</div></div>
+<div class="kpi"><div class="n">1</div><div class="l">sistema para todo el ciclo QA</div></div>
+</div>
+<div class="verdict"><span class="vn">100%</span><p>de trazabilidad <b>del requisito a la evidencia</b></p></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">14</span></div>
+
+<!-- 12 CO2 -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Ficha 12/12 · Gestión — Sostenibilidad</p>
+<div class="ficha">
+<div>
+<div class="ficha-num">CO₂CONTROL</div>
+<h2>Su huella, en regla <span class="grad">y en un clic.</span></h2>
+<p class="pain">El RD 214/2025 obliga a calcular y registrar la huella (alcances 1, 2 y 3): hacerlo a mano lleva meses.</p>
+<ul class="value">
+<li><span><b>Conforme a RD 214/2025</b> — metodología GHG Protocol.</span></li>
+<li><span><b>Simulación de medidas</b> — el ahorro, antes de invertir.</span></li>
+<li><span><b>Expediente MITECO</b> — generado automáticamente.</span></li>
+</ul>
+<p class="ideal"><b>Ideal para:</b> dirección y cumplimiento obligados por el RD 214/2025.</p>
+<div class="mods"><span>Alcances 1 · 2 · 3</span><span>GHG Protocol</span><span>Simulador</span><span>MITECO</span><span>Planes de reducción</span></div>
+<p class="story">CO₂CONTROL calcula la huella de carbono de la organización en los tres alcances con metodología GHG Protocol, cumpliendo el RD 214/2025: consumos, flota, compras y cadena de valor quedan inventariados y trazados a su fuente.</p>
+<p class="story cont">El simulador cuantifica el ahorro de cada medida antes de invertir, y el expediente oficial para el MITECO se genera en un clic, recortando un 90% el tiempo de tramitación.</p>
+<div class="microflow"><div class="mf">Calcula la huella</div><div class="mf-arrow">→</div><div class="mf">Simula medidas</div><div class="mf-arrow">→</div><div class="mf">Presenta el expediente</div></div>
+<p class="pract"><b>En la práctica:</b> el informe de huella 2026 se presenta al MITECO en un clic, con los tres alcances documentados.</p>
+</div>
+<div class="kpi-card"><div class="k">Impacto</div>
+<div class="kpi"><div class="n">−90%</div><div class="l">tiempo de tramitación</div></div>
+<div class="kpi"><div class="n">1 clic</div><div class="l">expediente MITECO</div></div>
+<div class="kpi"><div class="n">3</div><div class="l">alcances GHG cubiertos</div></div>
+</div>
+<div class="verdict"><span class="vn">1 clic</span><p>para el <b>expediente MITECO</b> completo</p></div>
+</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">15</span></div>
+
+<!-- ROADMAP -->
+<div class="page"><div class="page-inner">
+<p class="kicker">Cómo trabajamos</p>
+<h2>De la primera reunión<br /><span class="grad">al resultado medido.</span></h2>
+<div class="bar"></div>
+<p class="lead" style="font-size:10.5pt">Trabajamos por fases cortas con un KPI acordado delante: usted ve valor en semanas, no en meses, y decide la continuidad con datos. Sin grandes consultorías previas ni compromisos a ciegas.</p>
+<div class="road">
+<div class="road-line"></div>
+<div class="steps">
+<div class="step"><div class="dot">1</div><b>Diagnóstico</b><p>Sesiones con sponsor y operación. Mapeamos procesos, sistemas y datos, y priorizamos los casos por impacto y esfuerzo.</p><div class="dlv">Entregable: mapa de casos priorizados con KPI objetivo.</div></div>
+<div class="step"><div class="dot">2</div><b>Prueba de valor</b><p>Piloto con sus datos reales sobre un alcance acotado. La plataforma responde con su información desde el primer día.</p><div class="dlv">Entregable: piloto funcionando y KPI medido.</div></div>
+<div class="step"><div class="dot">3</div><b>Industrialización</b><p>Despliegue integrado con sus sistemas: gobierno del dato, trazabilidad, roles y coste controlado por fase.</p><div class="dlv">Entregable: sistema en producción con usuarios formados.</div></div>
+<div class="step"><div class="dot">4</div><b>Operación continua</b><p>Soporte por niveles con IA en primera línea, 24×7, y evolución: cada caso de uso refuerza al siguiente.</p><div class="dlv">Entregable: SLA, monitorización y roadmap de mejora.</div></div>
+</div>
+</div>
+<div class="viz">
+<svg viewBox="0 0 340 96" role="img" aria-label="Valor acumulado por fase">
+<defs><linearGradient id="vg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6796CD" stop-opacity=".45"/><stop offset="1" stop-color="#6796CD" stop-opacity=".05"/></linearGradient></defs>
+<line x1="14" y1="78" x2="326" y2="78" stroke="#e2e8f0" stroke-width="1"/>
+<path d="M20,70 H120 V50 H220 V32 H320 V14 L320,78 L20,78 Z" fill="url(#vg)"/>
+<path d="M20,70 H120 V50 H220 V32 H320 V14" fill="none" stroke="#2A4F86" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="20" cy="70" r="5" fill="#fff" stroke="#2A4F86" stroke-width="2.5"/>
+<circle cx="120" cy="50" r="5" fill="#fff" stroke="#2A4F86" stroke-width="2.5"/>
+<circle cx="220" cy="32" r="5" fill="#fff" stroke="#2A4F86" stroke-width="2.5"/>
+<circle cx="320" cy="14" r="5" fill="#2A4F86"/>
+<text x="20" y="90" font-size="7" fill="#64748b" text-anchor="middle">Diagnóstico</text>
+<text x="120" y="90" font-size="7" fill="#64748b" text-anchor="middle">Prueba de valor</text>
+<text x="220" y="90" font-size="7" fill="#64748b" text-anchor="middle">Industrialización</text>
+<text x="320" y="90" font-size="7" fill="#64748b" text-anchor="end">Operación</text>
+<text x="322" y="10" font-size="8" font-weight="bold" fill="#2A4F86" text-anchor="end">valor ↑</text>
+</svg>
+<div class="viz-cap">El valor crece en cada fase: se empieza midiendo y se termina operando.</div>
+</div>
+<div class="proof">Resultados en producción: <b>−27%</b> tiempo de resolución en utilities · <b>−90%</b> tiempo de planificación en restauración · <b>−85%</b> roturas de stock en logística. Cada caso entra con su KPI delante y sale con su resultado medido: si el piloto no mueve el indicador, lo sabrá en semanas, no en meses.</div>
+</div><span class="page-brand">Mindden Soft Tech</span><span class="page-num">16</span></div>
+
+<!-- CONTRAPORTADA -->
+<div class="page dark"><div class="page-inner back">
+<p class="kicker">Siguiente paso</p>
+<h1>¿Listo para transformar <span class="grad">su operación?</span></h1>
+<p class="lead" style="margin-top:6mm;max-width:130mm">Cuéntenos qué quieren resolver. Empezamos por entender el problema, no por proponer una tecnología.</p>
+<div class="next-steps">
+<div class="nstep"><span class="nn">1</span><div><b>Conversación</b><span>15 minutos para conocer su caso.</span></div></div>
+<div class="nstep"><span class="nn">2</span><div><b>Diagnóstico</b><span>Sesión con su equipo y mapa de casos.</span></div></div>
+<div class="nstep"><span class="nn">3</span><div><b>Piloto</b><span>Sus datos reales con un KPI delante.</span></div></div>
+</div>
+<p class="back-contacts"><b>info@mindden.com</b> &nbsp;·&nbsp; <b>+34 965 349 770</b></p>
+</div></div>
+
+</body>
+</html>
